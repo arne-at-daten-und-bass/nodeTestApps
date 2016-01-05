@@ -1,0 +1,51 @@
+doctype html5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    div(id="wrapper")
+      header
+        section.login
+          if session.isLoggedIn
+            a(href="/users/logout") Logout #{session.user}
+          else
+            a(href="/users/login") Login
+            | |
+            a(href="/users/create") Create Account
+
+      div(id="navigation")
+        a(href="/posts/create") New Post
+        | |
+        a(href="/databases/create") New Database
+        | |
+        a(href="/persons/create") New Person
+
+      div(id="leftcolumn")
+        section.menu
+          ul
+            li
+              a(href="/") Home 
+            li 
+              a(href="/posts/show-all") All Posts
+            li
+              a(href="/databases/show-all") All Databases
+            li
+              a(href="/persons/show-all") All Persons
+            if session.isLoggedIn
+              li 
+                a(href="/users/show-all") All Users
+
+      div(id="content")
+        section.content
+          block content
+            
+
+      div(id="rightcolumn")
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+
+      div(id="footer")
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+
+

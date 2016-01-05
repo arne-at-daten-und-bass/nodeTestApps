@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+      form#formAddDatabase(name="addDatabase",method="post",action="/adddatabase")
+        input#inputDatabaseName(type="text", placeholder="Database Name", name="databaseName")
+        input#inputDatabaseType(type="text", placeholder="Database Type", name="databaseType")
+        input#inputDataPersistenceType(type="text", placeholder="Data Persistence Type", name="dataPersistenceType")
+        button#btnSubmitAddDatabase(type="submit") submit
+
+
+

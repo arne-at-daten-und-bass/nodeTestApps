@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1 Databases
+  p List of NoSQL dbs
+  if !(modelEntities && modelEntities.length)
+    p Nothing found 
+  else
+    ul.modelEntities
+      each modelEntity in modelEntities
+        li
+          h2
+            a(href="/databases/id/#{modelEntity.id}")=modelEntity.name

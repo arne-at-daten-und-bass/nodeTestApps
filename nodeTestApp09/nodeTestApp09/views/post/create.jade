@@ -1,0 +1,14 @@
+
+extends ../layout
+
+block content
+  form(method="post", action= post ? "/post/edit/"+post.id : "/post/create")
+    ul
+      li
+        label(for="title") Title
+        input#title(name="title", value=post ? post.title : '')
+      li
+        label(for="body") Body
+        textarea#body(name="body", value=post ? post.body : '')
+      li
+        input(type="submit", value="Save")

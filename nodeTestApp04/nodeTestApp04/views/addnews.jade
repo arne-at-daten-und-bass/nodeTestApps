@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+      form#formAddNews(name="addNews",method="post",action="/addnews")
+        input#inputNewsTitle(type="text", placeholder="Title", name="newsTitle")
+        input#inputNewsAuthor(type="text", placeholder="Author", name="newsAuthor")
+        input#inputNewsSource(type="text", placeholder="Source", name="newsSource")
+        input#inputNewsUrl(type="text", placeholder="Url", name="newsUrl")
+        input#inputNewsSnippet(type="text", placeholder="Snippet", name="newsSnippet")
+        button#btnSubmitAddNews(type="submit") submit
+
+
+

@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  h2= modelEntity.title
+  p= modelEntity.body
+  span= modelEntity.created.toGMTString()
+  p by #{modelEntity.author.fullname}
+  br
+  br
+  div
+    a(href="/posts/edit/" + modelEntity.id) Edit 
+    | | 
+    a(href="/posts/remove/" + modelEntity.id) Delete
+  br
+  br
+  .comments
+    h3 Comments
+    ul
+      each comment in comments
+        li
+          p.text= comment.text
+          p.author= comment.author
+    if session.isLoggedIn
+      h3 Leave a Comment
+      form(method="post", action="/posts/comment/" + modelEntity.id)
+        textarea(name="text")
+        input(type="submit", value="Save")

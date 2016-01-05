@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    each news, i in newsList
+      li Title: #{news.title}
+        ul
+          li Snippet: #{news.snippet}
+          li Author: #{news.author}
+          li Source: #{news.source}       
+          li
+            a(href="#{news.url}" target="blank")= news.url
+          li
+            a(href="/deletenews/" + "#{news._key}") Delete  

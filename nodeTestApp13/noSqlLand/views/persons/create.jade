@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+  form(method="post", action= modelEntity ? "/persons/edit/"+modelEntity.id : "/persons/create")
+    ul
+      li
+        label(for="firstName") First Name
+        input#firstName(name="firstName", value= modelEntity ? modelEntity.name.first : "")
+      p ---
+      li
+        label(for="lastName") Last Name
+        input#lastName(name="lastName", value= modelEntity ? modelEntity.name.last : "")
+      p ---
+      li
+        label(for="profession") Profession
+        input#profession(name="profession", value= modelEntity ? modelEntity.profession : "")
+      p ---
+      li
+        label(for="description") Description
+        textarea#description(name="description")= modelEntity ? modelEntity.description : ""
+      p ---
+      li
+        label(for="email") Email
+        input#email(name="email", value= modelEntity ? modelEntity.email : "")
+      p ---
+      li
+        label(for="twitter") Twitter
+        input#twitter(name="twitter", value= modelEntity ? modelEntity.twitter : "")
+      p ---
+      li 
+        input(type="submit", value="Save")

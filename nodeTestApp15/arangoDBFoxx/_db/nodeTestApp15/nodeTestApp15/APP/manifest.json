@@ -1,0 +1,18 @@
+{
+  "name": "nodeTestApp15",
+  "description": "App with Node and ArangoDB via HTTPS",
+  "author": "arnoldDB",
+  "version": "0.0.1",
+  "license": "Apache 2",
+  "controllers": {
+    "/posts": "controllers/posts.js",
+    "/persons": "controllers/persons.js",
+    "/databases": "controllers/databases.js",
+    "/credentials": "controllers/credentials.js"
+  },
+  "scripts": {
+    "setup": "scripts/setup.js",
+    "teardown": "scripts/teardown.js"
+  },
+  "tests": "test/**/*.js"
+}

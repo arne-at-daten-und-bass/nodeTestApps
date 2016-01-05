@@ -1,0 +1,12 @@
+
+extends ../layout
+
+block content
+  form#formCreateUser(name="createUser", method="post", action="/users/create", enctype="application/x-www-form-urlencoded")
+    h3 Edit User  
+    ul
+      li
+        input#email(name="email", type="text", placeholder="Your E-Mail")
+      li
+        input#pass(name="pass", type="password", placeholder="Your Password")
+    button#createUser(type="submit") Create User

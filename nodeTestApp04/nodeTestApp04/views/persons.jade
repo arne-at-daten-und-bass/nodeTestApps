@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    each person, i in personsList
+      li Name: #{person.first_name} #{person.last_name} 
+        ul
+          li Profession: #{person.profession}
+          li Virtual Adresses:
+            ul
+              li  E-Mail:  #{person.virtual_addresses.email} 
+              li  Twitter:  #{person.virtual_addresses.twitter}
+              li  Github:  #{person.virtual_addresses.github}  
+
+
+

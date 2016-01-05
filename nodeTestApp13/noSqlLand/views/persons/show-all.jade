@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  if !(modelEntities && modelEntities.length)
+    p Nothing found  
+  else
+    ul.modelEntities
+      each modelEntity in modelEntities
+        li
+          h2
+            a(href="/persons/id/#{modelEntity.id}")=modelEntity.fullname

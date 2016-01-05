@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  div
+    table(border=1)
+      thead
+        tr 
+          th ID
+          th Full Name
+          th First Name
+          th Last Name
+          th Edit
+          th Delete
+      tbody
+        each modelEntity, i in modelEntities
+          tr
+            td
+              a(href="/users/id/#{modelEntity.id}")=modelEntity._id
+            td= modelEntity.fullname
+            td= modelEntity.name.first
+            td= modelEntity.name.last
+            td
+              a(href="/users/edit/" + modelEntity._id) Edit
+            td 
+              a(href="/users/remove/" + modelEntity._id) Delete
+          

@@ -1,0 +1,77 @@
+/* This is
+a multi-line
+comment */
+
+header {
+    float: left;
+    height: 75px;
+    width: 998px;
+    background: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    text-align: right;
+}
+
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color:#333
+}
+
+p {
+    padding: 10px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#wrapper {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+#navigation {
+    float: left;
+    background: #FFFFFF;
+    height: 40px;
+    width: 998px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#content {
+    float: left;
+    background: #FFFFFF;
+    width: 698px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#leftcolumn {
+    float: left;
+    background: #FFFFFF;
+    width: 148px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#rightcolumn {
+    float: left;
+    background: #FFFFFF;
+    width: 148px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#footer {
+    /*
+    height: 40px;
+     */
+    width: 998px;
+    background: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    clear: both;
+}
+

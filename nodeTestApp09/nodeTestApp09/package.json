@@ -1,0 +1,21 @@
+{
+  "name": "node-test-app-09",
+  "private": true,
+  "version": "1.0.0",
+  "description": "See MongoDB University for node.js blog project with Mongoose (week7)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "email-validator": "^1.0.2",
+    "express": "^3.x",
+    "express-mongoose": "^0.1.0",
+    "jade": "^1.11.0",
+    "mongodb": "1.4",
+    "mongoose": "^4.0.7",
+    "routes": "^2.1.0"
+  }
+}

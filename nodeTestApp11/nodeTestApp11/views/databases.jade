@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}  
+  ul
+    each database, i in databasesList
+      li Name: #{database.name}
+        ul
+          li Database Type: #{database.database_type}
+          li Data Persistence Type: #{database.data_persistence_type}
+
+
+
+

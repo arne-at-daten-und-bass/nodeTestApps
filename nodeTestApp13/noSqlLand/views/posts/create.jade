@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  form(method="post", action= modelEntity ? "/posts/edit/"+modelEntity.id : "/posts/create")
+    ul
+      li
+        label(for="title") Title
+        input#title(name="title", value= modelEntity ? modelEntity.title : "")
+      p ---
+      li
+        label(for="body") Body
+        textarea#body(name="body")= modelEntity ? modelEntity.body : ""
+      p ---
+      li 
+        input(type="submit", value="Save")

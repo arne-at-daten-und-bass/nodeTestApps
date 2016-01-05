@@ -1,0 +1,8 @@
+extends layout
+
+block content
+	h1= title
+	form#formAddUser(name="addtopic", method="post", action="/addtopic")
+		input#inputUserName(type="text", placeholder="topic name", name="topicname")
+		input#inputUserEmail(type="text", placeholder="lead person", name="lead")
+		button#btnSubmit(type="submit") submit

@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h1.
+		Topics List
+	ul
+		each topic, i in topicslist
+			li
+				i=topic.topicname + " (" + topic.lead + ") "
