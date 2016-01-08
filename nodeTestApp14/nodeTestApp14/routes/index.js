@@ -26,8 +26,7 @@ function runCypherQuery(query, params, callback) {
   });
 }
 
-runCypherQuery(
-  'CREATE (someBody: Person { name: {name}, from: {company}, age: {age} } ) RETURN someBody', 
+runCypherQuery('CREATE (someBody: Person { name: {name}, from: {company}, age: {age} } ) RETURN someBody', 
   {
     name: 'Ghuffran',
     company: 'Modulus',
