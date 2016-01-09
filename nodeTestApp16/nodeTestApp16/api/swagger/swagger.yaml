@@ -26,9 +26,9 @@ paths:
       # used as the method name of the controller
       operationId: index
       parameters:
-        - name: title
+        - name: released
           in: query
-          description: filters the movie by title
+          description: filters movies by released da
           type: string
       responses:
         "200":
@@ -41,26 +41,26 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    get:
-      description: Returns a list of movies
-      # used as the method name of the controller
-      operationId: readOne
-      parameters:
-        - name: title
-          in: query
-          description: filters the movie by title
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/MoviesListBody"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+    # get:
+    #   description: Returns a list of movies
+    #   # used as the method name of the controller
+    #   operationId: readOne
+    #   parameters:
+    #     - name: released
+    #       in: query
+    #       description: filters the movie by released date
+    #       type: string
+    #   responses:
+    #     "200":
+    #       description: Success
+    #       schema:
+    #         # a pointer to a definition
+    #         $ref: "#/definitions/MoviesListBody"
+    #     # responses may fall through to errors
+    #     default:
+    #       description: Error
+    #       schema:
+    #         $ref: "#/definitions/ErrorResponse"
     post:
       description: Creates a new movie entry
       operationId: create
@@ -80,6 +80,68 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  /movies/{movieId}:
+    x-swagger-router-controller: movies
+    get:
+      description: Returns a single movie entry by a given id 
+      operationId: show
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved a movies details
+          schema:
+            $ref: "#/definitions/MovieBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Updates a single movie entry by a given id 
+      operationId: update
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+        - name: movie
+          required: true
+          in: body
+          description: Details to be updated
+          schema:
+            $ref: "#/definitions/MovieBody"
+      responses:
+        "200":
+          description: Successfully updated a movies details
+          schema:
+            $ref: "#/definitions/MovieBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Deletes a single movie entry by a given id
+      operationId: delete
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully deleted a movies 
+          schema:
+            $ref: "#/definitions/MovieBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
 
   /swagger:
     x-swagger-pipe: swagger_raw
