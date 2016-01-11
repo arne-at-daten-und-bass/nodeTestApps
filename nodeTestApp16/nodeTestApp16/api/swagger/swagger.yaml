@@ -14,10 +14,31 @@ schemes:
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
+  # - text/html
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+  # - text/html
 paths:
+  /:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: index
+    get:
+      description: Returns popoto
+      produces: 
+        - text/html
+      # used as the method name of the controller
+      operationId: index
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /movies:
     # binds a127 app logic to a route
     x-swagger-router-controller: movies

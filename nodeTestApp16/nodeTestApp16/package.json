@@ -9,6 +9,8 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "jade": "1.11.0",
+    "path": "0.12.7",
     "request": "2.67.0",
     "swagger-express-mw": "^0.1.0"
   },
