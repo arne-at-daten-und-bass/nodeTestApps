@@ -41,26 +41,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    # get:
-    #   description: Returns a list of movies
-    #   # used as the method name of the controller
-    #   operationId: readOne
-    #   parameters:
-    #     - name: released
-    #       in: query
-    #       description: filters the movie by released date
-    #       type: string
-    #   responses:
-    #     "200":
-    #       description: Success
-    #       schema:
-    #         # a pointer to a definition
-    #         $ref: "#/definitions/MoviesListBody"
-    #     # responses may fall through to errors
-    #     default:
-    #       description: Error
-    #       schema:
-    #         $ref: "#/definitions/ErrorResponse"
     post:
       description: Creates a new movie entry
       operationId: create
@@ -135,7 +115,7 @@ paths:
         "200":
           description: Successfully deleted a movies 
           schema:
-            $ref: "#/definitions/MovieBody"
+            $ref: "#/definitions/DeleteResponse"
         default:
           description: Error
           schema:
@@ -181,6 +161,13 @@ definitions:
     properties:
       movie:
         $ref: "#/definitions/Movie"
+
+  DeleteResponse:
+    required:
+      - nodes_deleted
+    properties:
+      nodes_deleted:
+        type: integer
 
   ErrorResponse:
     required:
