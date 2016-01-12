@@ -99,7 +99,6 @@ module.exports = {
     includeStats = true;
 
     function callback(error, responseBody) {
-      console.log(JSON.stringify(responseBody));
       res.json({
         nodes_deleted: responseBody.results[0].stats.nodes_deleted
       });
