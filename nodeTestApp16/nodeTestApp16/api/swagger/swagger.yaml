@@ -21,17 +21,41 @@ produces:
   # - text/html
 paths:
   /:
-    # binds a127 app logic to a route
     x-swagger-router-controller: index
     get:
-      description: Returns popoto
+      description: Returns main html
       produces: 
         - text/html
-      # used as the method name of the controller
       operationId: index
       responses:
         "200":
           description: Success
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /movies:
+    x-swagger-router-controller: movies
+    get:
+      description: Returns a list of movies
+      # HTML API:
+      produces: 
+        - text/html
+      operationId: readBulk
+      parameters:
+        - name: released
+          in: query
+          description: filters movies by released date
+          type: string
+      responses:
+        "200":
+          description: Success
+          # JSON only API:
+          # schema:
+          #   $ref: "#/definitions/MoviesListBody"
+          # HTML API:
           schema:
             type: string
         # responses may fall through to errors
@@ -39,44 +63,49 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /movies:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: movies
-    get:
-      description: Returns a list of movies
-      # used as the method name of the controller
-      operationId: index
-      parameters:
-        - name: released
-          in: query
-          description: filters movies by released da
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/MoviesListBody"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
     post:
       description: Creates a new movie entry
+      # HTML API:
+      consumes:
+        - application/x-www-form-urlencoded
+      # HTML API:
+      produces: 
+        - text/html
       operationId: create
+      # JSON only API:
+      # parameters:
+      #   - name: movie
+      #     required: true
+      #     in: body
+      #     description: a new movies details
+      #     schema:
+      #       $ref: "#/definitions/MovieBody"
+      # HTML API:
       parameters:
-        - name: movie
+        - name: title
           required: true
-          in: body
-          description: a new movies details
-          schema:
-            $ref: "#/definitions/MovieBody"
+          in: formData
+          description: a new movies title
+          type: string
+        - name: tagline
+          required: true
+          in: formData
+          description: a new movies tagline
+          type: string
+        - name: released
+          required: true
+          in: formData
+          description: a new movies released date
+          type: integer
       responses:
         "200":
           description: Successfully stored movie details
+          # JSON only API:
+          # schema:
+          #   $ref: "#/definitions/MovieBody"
+          # HTML API:
           schema:
-            $ref: "#/definitions/MovieBody"
+            type: string
         default:
           description: Error
           schema:
@@ -86,7 +115,10 @@ paths:
     x-swagger-router-controller: movies
     get:
       description: Returns a single movie entry by a given id 
-      operationId: show
+      operationId: read
+      # HTML API:
+      produces: 
+        - text/html
       parameters:
         - name: movieId
           required: true
@@ -95,12 +127,17 @@ paths:
       responses:
         "200":
           description: Successfully retrieved a movies details
+          # JSON only API:
+          # schema:
+          #   $ref: "#/definitions/MovieBody"
+          # HTML API:
           schema:
-            $ref: "#/definitions/MovieBody"
+            type: string
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    # JSON only API:
     put:
       description: Updates a single movie entry by a given id 
       operationId: update
@@ -124,6 +161,44 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    # HTML API:
+    post:
+      description: Updates a single movie entry by a given id 
+      consumes:
+        - application/x-www-form-urlencoded
+      produces: 
+        - text/html
+      operationId: update
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+        - name: title
+          required: true
+          in: formData
+          description: a new movies title
+          type: string
+        - name: tagline
+          required: true
+          in: formData
+          description: a new movies tagline
+          type: string
+        - name: released
+          required: true
+          in: formData
+          description: a new movies released date
+          type: integer
+      responses:
+        "200":
+          description: Successfully updated a movies details
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    # JSON only API:
     delete:
       description: Deletes a single movie entry by a given id
       operationId: delete
@@ -142,7 +217,28 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-
+  # HTML API:
+  /movies/remove/{movieId}:
+    x-swagger-router-controller: movies
+    get:
+      description: Deletes a single movie entry by a given id
+      produces: 
+        - text/html
+      operationId: delete
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully updated a movies details
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /swagger:
     x-swagger-pipe: swagger_raw

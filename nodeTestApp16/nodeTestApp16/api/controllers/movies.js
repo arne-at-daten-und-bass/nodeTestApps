@@ -2,7 +2,7 @@
 
 var request = require('request');
 
-var host = '172.17.0.5';
+var host = '172.17.0.8';
 var port = 7474;
 var dbRESTUrl ='http://' + host + ':' + port + '/db/data/transaction/commit';
 
@@ -24,7 +24,53 @@ function cypherRequest(query, params, includeStats, callback) {
 
 module.exports = {
 
-  index: function(req, res) {
+  create: function(req, res) {
+    var query = 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m'; 
+    // JSON only API:
+    // var params = req.swagger.params.movie.value.movie;
+    // HTML API:
+    var params = {
+      'title': req.swagger.params.title.value,
+      'released': parseInt(req.swagger.params.released.value),
+      'tagline': req.swagger.params.tagline.value
+    };
+
+    function callback(error, responseBody) {
+      // JSON only API:
+      // res.json({
+      //   movie: responseBody.results[0].data 
+      // });
+      // HTML API:
+      res.render('read', {
+        movie: responseBody.results[0].data[0].row[0]
+      });
+    }
+
+    cypherRequest(query, params, includeStats, callback);   
+  }, 
+
+  read: function(req, res) {
+    var query = 'MATCH m WHERE id(m)={id} RETURN m';
+    var params = {
+      'id': parseInt(req.swagger.params.movieId.value)
+    }; 
+
+    function callback(error, responseBody){
+      // JSON only API:
+      // res.json({
+      //   movie: responseBody.results[0].data[0].row[0]
+      // });
+      // HTML API:
+      res.render('create', {
+        movie: responseBody.results[0].data[0].row[0],
+        id: parseInt(req.swagger.params.movieId.value)
+      });
+    }
+
+    cypherRequest(query, params, includeStats, callback);
+  },
+
+  readBulk: function(req, res) {
     var query = 'MATCH (m:Movie {released: {released}}) RETURN m';
     var params = {
       'released': parseInt(req.swagger.params.released.value)
@@ -40,51 +86,44 @@ module.exports = {
       dataFromNeo4j.map(function(element, index) {
         dataToSwagger[index] = element.row;
       });
-      res.json({
+      // JSON only API:
+      // res.json({
+      //   movies: dataToSwagger
+      // });
+      // HTML API:
+      res.render('readBulk', {
         movies: dataToSwagger
       });
     }
 
     cypherRequest(query, params, includeStats, callback);
-  },  
-
-  create: function(req, res) {
-    var query = 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m'; 
-    var params = req.swagger.params.movie.value.movie;
-    function callback(error, responseBody) {
-        res.json({
-          movie: responseBody.results[0].data 
-        });
-    }
-
-    cypherRequest(query, params, includeStats, callback);   
-  },
-
-  show: function(req, res) {
-    var query = 'MATCH m WHERE id(m)={id} RETURN m';
-    var params = {
-      'id': parseInt(req.swagger.params.movieId.value)
-    }; 
-
-    function callback(error, responseBody){
-      res.json({
-        movie: responseBody.results[0].data
-      });
-    }
-
-    cypherRequest(query, params, includeStats, callback);
-  },
+  }, 
 
   update: function(req, res) {
     var query = 'MATCH m WHERE id(m)={id} SET m={props} RETURN m';
+    // JSON only API:
+    // var params = {
+    //   'id': parseInt(req.swagger.params.movieId.value),
+    //   'props': req.swagger.params.movie.value.movie
+    //   }; 
+    // HTML API:
     var params = {
       'id': parseInt(req.swagger.params.movieId.value),
-      'props': req.swagger.params.movie.value.movie
-      }; 
+      'props': {
+        'title': req.swagger.params.title.value,
+        'released': parseInt(req.swagger.params.released.value),
+        'tagline': req.swagger.params.tagline.value
+        }
+      };
 
     function callback(error, responseBody) {
-      res.json({
-        movie: responseBody.results[0].data
+      // JSON only API:
+      // res.json({
+      //   movie: responseBody.results[0].data
+      // });
+      // HTML API:
+      res.render('read', {
+        movie: responseBody.results[0].data[0].row[0]
       });
     }   
 
@@ -99,7 +138,11 @@ module.exports = {
     includeStats = true;
 
     function callback(error, responseBody) {
-      res.json({
+      // JSON only API:
+      // res.json({
+      //   nodes_deleted: responseBody.results[0].stats.nodes_deleted
+      // });
+      res.render('read', {
         nodes_deleted: responseBody.results[0].stats.nodes_deleted
       });
     }

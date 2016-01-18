@@ -10,39 +10,22 @@ html(lang='en')
     // Page styles
     link(href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en', rel='stylesheet')
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
-    link(rel='stylesheet', href='material.min.css')
-    link(rel='stylesheet', href='styles.css')
-    //- style.
-    //-   #view-source {
-    //-   position: fixed;
-    //-   display: block;
-    //-   right: 0;
-    //-   bottom: 0;
-    //-   margin-right: 40px;
-    //-   margin-bottom: 40px;
-    //-   z-index: 900;
-    //-   }
+    link(rel='stylesheet', href='/material.min.css')
+    link(rel='stylesheet', href='/styles.css')
   body
     .mdl-layout.mdl-js-layout.mdl-layout--fixed-header
       .android-header.mdl-layout__header.mdl-layout__header--waterfall
         .mdl-layout__header-row
           span.android-title.mdl-layout-title
-            img.android-logo-image(src='images/android-logo.png')
-          // Add spacer, to align navigation to the right in desktop
+          //- Add spacer, to align navigation to the right in desktop
           .android-header-spacer.mdl-layout-spacer
-          .android-search-box.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right.mdl-textfield--full-width
-            label.mdl-button.mdl-js-button.mdl-button--icon(for='search-field')
-              i.material-icons search
-            .mdl-textfield__expandable-holder
-              input#search-field.mdl-textfield__input(type='text')
-          // Top Navigation
+          //- Top Navigation
           .android-navigation-container
             nav.android-navigation.mdl-navigation
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Top Nav 1
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Top Nav 2
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Top Nav 3
           span.android-mobile-title.mdl-layout-title
-            img.android-logo-image(src='images/android-logo.png')
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
@@ -51,7 +34,6 @@ html(lang='en')
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title
-          img.android-logo-image(src='images/android-logo-white.png')
         nav.mdl-navigation
           a.mdl-navigation__link(href='') Side Nav 1
           a.mdl-navigation__link(href='') Side Nav 2
@@ -62,137 +44,6 @@ html(lang='en')
           .android-drawer-separator
           span.mdl-navigation__link(href='') Side Nav Header 2 
           a.mdl-navigation__link(href='') Side Nav 5
-      .android-content.mdl-layout__content
-        a(name='top')
-        .android-be-together-section.mdl-typography--text-center
-          .logo-font.android-slogan Main Slogan
-          .logo-font.android-sub-slogan Sub Slogan
-          //- .logo-font.android-create-character
-          //-   a(href='')
-          //-     img(src='images/andy.png')
-          //-     |  create your android character
-          a(href='#screens')
-            button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
-              i.material-icons expand_more
-        .android-screen-section.mdl-typography--text-center
-          a(name='screens')
-          .mdl-typography--display-1-color-contrast Display 1 color contrast
-          .android-screens
-            //- .android-wear.android-screen
-            //-   a.android-image-link(href='')
-            //-     img.android-screen-image(src='images/wear-silver-on.png')
-            //-     img.android-screen-image(src='images/wear-black-on.png')
-            //-   a.android-link.mdl-typography--font-regular.mdl-typography--text-uppercase(href='') Android Wear
-            //- .android-phone.android-screen
-            //-   a.android-image-link(href='')
-            //-     img.android-screen-image(src='images/nexus6-on.jpg')
-            //-   a.android-link.mdl-typography--font-regular.mdl-typography--text-uppercase(href='') Phones
-            //- .android-tablet.android-screen
-            //-   a.android-image-link(href='')
-            //-     img.android-screen-image(src='images/nexus9-on.jpg')
-            //-   a.android-link.mdl-typography--font-regular.mdl-typography--text-uppercase(href='') Tablets
-            //- .android-tv.android-screen
-            //-   a.android-image-link(href='')
-            //-     img.android-screen-image(src='images/tv-on.jpg')
-            //-   a.android-link.mdl-typography--font-regular.mdl-typography--text-uppercase(href='') Android TV
-            //- .android-auto.android-screen
-            //-   a.android-image-link(href='')
-            //-     img.android-screen-image(src='images/auto-on.jpg')
-            //-   a.android-link.mdl-typography--font-regular.mdl-typography--text-uppercase.mdl-typography--text-left(href='') Coming Soon: Android Auto
-        .android-wear-section
-          .android-wear-band
-            .android-wear-band-text
-              .mdl-typography--display-2.mdl-typography--font-thin Display 2
-              p.mdl-typography--headline.mdl-typography--font-thin
-                | Headline Headline Headline Headline
-              p
-                a.mdl-typography--font-regular.mdl-typography--text-uppercase.android-alt-link(href='')
-                  | Text uppercase
-                  i.material-icons chevron_right
-        .android-customized-section
-          .android-customized-section-text
-            .mdl-typography--font-light.mdl-typography--display-1-color-contrast Display 1 color contrast
-            p.mdl-typography--font-light
-              | Font ligth: Font ligth: Font ligth: Font ligth: Font ligth: Font ligth:
-              br
-              a.android-link.mdl-typography--font-light(href='') Font ligth as link
-          .android-customized-section-image
-        .android-more-section
-          .android-section-title.mdl-typography--display-1-color-contrast Display 1 color contrast
-          .android-card-container.mdl-grid
-            .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-              .mdl-card__media
-                img(src='images/more-from-1.png')
-              .mdl-card__title
-                h4.mdl-card__title-text Card title text
-              .mdl-card__supporting-text
-                span.mdl-typography--font-light.mdl-typography--subhead Font ligth Subhead
-              .mdl-card__actions
-                a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-                  | Text uppercase
-                  i.material-icons chevron_right
-            //- .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-            //-   .mdl-card__media
-            //-     img(src='images/more-from-4.png')
-            //-   .mdl-card__title
-            //-     h4.mdl-card__title-text Create your own Android character
-            //-   .mdl-card__supporting-text
-            //-     span.mdl-typography--font-light.mdl-typography--subhead Turn the little green Android mascot into you, your friends, anyone!
-            //-   .mdl-card__actions
-            //-     a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-            //-       | androidify.com
-            //-       i.material-icons chevron_right
-            //- .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-            //-   .mdl-card__media
-            //-     img(src='images/more-from-2.png')
-            //-   .mdl-card__title
-            //-     h4.mdl-card__title-text Get a clean customisable home screen
-            //-   .mdl-card__supporting-text
-            //-     span.mdl-typography--font-light.mdl-typography--subhead
-            //-       | A clean, simple, customisable home screen that comes with the power of Google Now: Traffic alerts, weather and much more, just a swipe away.
-            //-   .mdl-card__actions
-            //-     a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-            //-       | Download now
-            //-       i.material-icons chevron_right
-            //- .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-            //-   .mdl-card__media
-            //-     img(src='images/more-from-3.png')
-            //-   .mdl-card__title
-            //-     h4.mdl-card__title-text Millions to choose from
-            //-   .mdl-card__supporting-text
-            //-     span.mdl-typography--font-light.mdl-typography--subhead
-            //-       | Hail a taxi, find a recipe, run through a temple – Google Play has all the apps and games that let you make your Android device uniquely yours.
-            //-   .mdl-card__actions
-            //-     a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-            //-       | Find apps
-            //-       i.material-icons chevron_right
-        footer.android-footer.mdl-mega-footer
-          .mdl-mega-footer--top-section
-            .mdl-mega-footer--left-section
-              button.mdl-mega-footer--social-btn
-              button.mdl-mega-footer--social-btn
-              button.mdl-mega-footer--social-btn
-            .mdl-mega-footer--right-section
-              a.mdl-typography--font-light(href='#top')
-                | Font light as link back to top
-                i.material-icons expand_less
-          .mdl-mega-footer--middle-section
-            p.mdl-typography--font-light Satellite imagery: © 2014 Astrium, DigitalGlobe
-            //- p.mdl-typography--font-light Some features and devices may not be available in all areas
-          .mdl-mega-footer--bottom-section
-            a#version-dropdown.android-link.android-link-menu.mdl-typography--font-light
-              | Bottom left menu 
-              i.material-icons arrow_drop_up
-            ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='version-dropdown')
-              li.mdl-menu__item Bottom left menu 2
-              li.mdl-menu__item Bottom left menu 2
-            a#developers-dropdown.android-link.android-link-menu.mdl-typography--font-light
-              | Bottom right menu 
-              i.material-icons arrow_drop_up
-            ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='developers-dropdown')
-              li.mdl-menu__item Bottom right menu 1
-              li.mdl-menu__item Bottom right menu 2
-            a.android-link.mdl-typography--font-light(href='') Font light as link 1
-            a.android-link.mdl-typography--font-light(href='') Font light as link 2
-    //- a#view-source.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-color--accent.mdl-color-text--accent-contrast(href='https://github.com/google/material-design-lite/blob/master/templates/android-dot-com/', target='_blank') View Source
-    script(src='material.min.js')
+      block content
+
+    script(src='/material.min.js')

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .android-content.mdl-layout__content
+    ul
+      each movie in movies
+        li #{movie[0].title}
+          ul
+            li #{movie[0].tagline}
+            li #{movie[0].released}
