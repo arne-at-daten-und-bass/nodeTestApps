@@ -13,11 +13,11 @@ consumes:
 produces:
   - application/json
 paths:
-  # JSON only API:
+  # JSON only API: Index
   /api:
     x-swagger-pipe: swagger_raw
 
-  # HTML Web:
+  # HTML Web: Index
   /:
     x-swagger-router-controller: html_web_movies
     get:
@@ -27,7 +27,7 @@ paths:
       operationId: index
       responses:
         "200":
-          description: Success
+          description: Successfully GOT main html
           schema:
             type: string
         default:
@@ -35,7 +35,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  # JSON only API:
+  # JSON only API: Create and Read (several movies)
   /api/movies:
     x-swagger-router-controller: json_api_movies
     post:
@@ -64,7 +64,7 @@ paths:
         - name: released
           in: query
           description: filters movies by released date
-          type: string
+          type: integer
       responses:
         "200":
           description: Success
@@ -75,7 +75,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  # HTML Web:
+  # HTML Web: Create and Read (several movies)
   /movies/create:
     x-swagger-router-controller: html_web_movies
     get:
@@ -85,7 +85,7 @@ paths:
       operationId: getCreate
       responses:
         "200":
-          description: Successfully stored movie
+          description: Successfully GOT form for movie creation
           schema:
             type: string
         default:
@@ -124,8 +124,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-
-  # HTML Web:
   /movies:
     x-swagger-router-controller: html_web_movies
     get:
@@ -137,10 +135,10 @@ paths:
         - name: released
           in: query
           description: filters movies by released date
-          type: string
+          type: integer
       responses:
         "200":
-          description: Success
+          description: Successfully retrieved a list of movies
           schema:
             type: string
         default:
@@ -148,7 +146,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  # JSON only API:
+  # JSON only API: Read (one movie), Update(one movie), and Delete (one movie)
   /api/movies/{movieId}:
     x-swagger-router-controller: json_api_movies
     get:
@@ -209,7 +207,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  # HTML Web:
+  # HTML Web: Read (one movie), Update(one movie), and Delete (one movie)
   /movies/read/{movieId}:
     x-swagger-router-controller: html_web_movies
     get:
@@ -224,7 +222,7 @@ paths:
           type: string
       responses:
         "200":
-          description: Successfully retrieved a movie
+          description: Successfully GOT a movie
           schema:
             type: string
         default:
@@ -234,7 +232,7 @@ paths:
   /movies/update/{movieId}:
     x-swagger-router-controller: html_web_movies
     get:
-      description: Returns html view for movie creation from
+      description: Returns html view for a movie update form
       produces: 
         - text/html
       operationId: getUpdate
@@ -245,7 +243,7 @@ paths:
           type: string
       responses:
         "200":
-          description: Successfully stored movie details
+          description: Successfully GOT form for a movie update
           schema:
             type: string
         default:
@@ -267,17 +265,17 @@ paths:
         - name: title
           required: true
           in: formData
-          description: a new movies title
+          description: movie title to update 
           type: string
         - name: tagline
           required: true
           in: formData
-          description: a new movies tagline
+          description: movie tagline to update 
           type: string
         - name: released
           required: true
           in: formData
-          description: a new movies released date
+          description: movie released date to update 
           type: integer
       responses:
         "200":
@@ -291,7 +289,7 @@ paths:
   /movies/delete/{movieId}:
     x-swagger-router-controller: html_web_movies
     get:
-      description: Returns html view for a disabled movie deletion from
+      description: Returns html view for a disabled movie deletion form
       produces: 
         - text/html
       operationId: getDelete
@@ -302,7 +300,7 @@ paths:
           type: string
       responses:
         "200":
-          description: Successfully updated a movies details
+          description: Successfully GOT a form for a movie deletion
           schema:
             type: string
         default:
@@ -324,6 +322,190 @@ paths:
       responses:
         "200":
           description: Successfully deleted a movie 
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+### Persons ### 
+  # HTML Web: Create and Read (several persons)
+  /persons/create:
+    x-swagger-router-controller: html_web_persons
+    get:
+      description: Returns html view for a person creation form
+      produces: 
+        - text/html
+      operationId: getCreate
+      responses:
+        "200":
+          description: Successfully stored a person
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Creates a new person entry via Web (HTML in Browser)
+      consumes:
+        - application/x-www-form-urlencoded
+      produces: 
+        - text/html
+      operationId: create
+      parameters:
+        - name: born
+          required: true
+          in: formData
+          description: a new persons birth date
+          type: integer
+        - name: name
+          required: true
+          in: formData
+          description: a new persons full name
+          type: string
+      responses:
+        "200":
+          description: Successfully stored a new person
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /persons:
+    x-swagger-router-controller: html_web_persons
+    get:
+      description: Returns a list of persons
+      produces: 
+        - text/html
+      operationId: readBulk
+      parameters:
+        - name: born
+          in: query
+          description: filters persons by birth date
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+ # HTML Web: Read (one movie), Update(one movie), and Delete (one movie)
+  /persons/read/{personId}:
+    x-swagger-router-controller: html_web_persons
+    get:
+      description: Returns a single person entry by a given id 
+      operationId: read
+      produces: 
+        - text/html
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully GOT a person
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /persons/update/{personId}:
+    x-swagger-router-controller: html_web_persons
+    get:
+      description: Returns html view for a person update form
+      produces: 
+        - text/html
+      operationId: getUpdate
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully GOT person for update
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Updates a single person entry by a given id 
+      consumes:
+        - application/x-www-form-urlencoded
+      produces: 
+        - text/html
+      operationId: update
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+        - name: name
+          required: true
+          in: formData
+          description: the name to update
+          type: string
+        - name: born
+          required: true
+          in: formData
+          description: the birth date to update
+          type: integer
+      responses:
+        "200":
+          description: Successfully updated a person 
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /persons/delete/{personId}:
+    x-swagger-router-controller: html_web_persons
+    get:
+      description: Returns html view for a disabled person deletion from
+      produces: 
+        - text/html
+      operationId: getDelete
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully GOT a person for deletion
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Deletes a single person entry by a given id 
+      consumes:
+        - application/x-www-form-urlencoded
+      produces: 
+        - text/html
+      operationId: delete
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully deleted a person 
           schema:
             type: string
         default:

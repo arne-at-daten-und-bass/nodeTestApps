@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  .android-content.mdl-layout__content
+    .android-be-together-section.mdl-typography--text-center
+      .logo-font.android-sub-slogan #{slogan}:
+        form(name="createPerson", action="/persons/create",  method="post")
+          input(type="text", placeholder="Full Name", name="name")
+          input(type="number", placeholder="Birth Date", name="born")
+          button(type="submit") Submit

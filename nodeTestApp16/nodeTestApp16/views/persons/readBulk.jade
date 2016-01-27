@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  .android-content.mdl-layout__content
+    .logo-font.android-sub-slogan #{slogan}:
+    ul
+      each person in persons
+        li #{person[0].name}
+          ul
+            li #{person[0].born}

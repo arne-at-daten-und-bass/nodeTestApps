@@ -20,13 +20,26 @@ module.exports = {
     );
   },
 
-  createQuery: 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m',
-  readBulkQueryParam: 'MATCH (m:Movie {released: {released}}) RETURN m',
-  readBulkQueryNoParam: 'MATCH (m:Movie) RETURN m',
-  readQuery: 'MATCH m WHERE id(m)={id} RETURN m',
-  getUpdateQuery:'MATCH m WHERE id(m)={id} RETURN m',
-  updateQuery:'MATCH m WHERE id(m)={id} SET m={props} RETURN m',
-  getDeleteQuery: 'MATCH m WHERE id(m)={id} RETURN m',
-  deleteQuery: 'MATCH m WHERE id(m)={id} DELETE m'
+  movies: {
+    createQuery: 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m',
+    readBulkQueryParam: 'MATCH (m:Movie {released: {released}}) RETURN m',
+    readBulkQueryNoParam: 'MATCH (m:Movie) RETURN m',
+    readQuery: 'MATCH m WHERE id(m)={id} RETURN m',
+    getUpdateQuery:'MATCH m WHERE id(m)={id} RETURN m',
+    updateQuery:'MATCH m WHERE id(m)={id} SET m={props} RETURN m',
+    getDeleteQuery: 'MATCH m WHERE id(m)={id} RETURN m',
+    deleteQuery: 'MATCH m WHERE id(m)={id} DELETE m'
+  },
+
+  persons: {
+    createQuery: 'CREATE (p:Person { born: {born}, name: {name} }) RETURN p',
+    readBulkQueryParam: 'MATCH (p:Person {born: {born}}) RETURN p',
+    readBulkQueryNoParam: 'MATCH (p:Person) RETURN p',
+    readQuery: 'MATCH p WHERE id(p)={id} RETURN p',
+    getUpdateQuery:'MATCH p WHERE id(p)={id} RETURN p',
+    updateQuery:'MATCH p WHERE id(p)={id} SET p={props} RETURN p',
+    getDeleteQuery: 'MATCH p WHERE id(p)={id} RETURN p',
+    deleteQuery: 'MATCH p WHERE id(p)={id} DELETE p'
+  }
 
 };
