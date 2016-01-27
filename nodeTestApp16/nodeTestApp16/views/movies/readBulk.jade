@@ -1,7 +1,8 @@
-extends layout
+extends ../layout
 
 block content
   .android-content.mdl-layout__content
+    .logo-font.android-sub-slogan #{slogan}:
     ul
       each movie in movies
         li #{movie[0].title}

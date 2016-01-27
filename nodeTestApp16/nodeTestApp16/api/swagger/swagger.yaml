@@ -2,26 +2,24 @@ swagger: "2.0"
 info:
   version: "0.0.1"
   title: nodeTestApp16
-# during dev, should point to your local machine
 host: dockerHostIp:10010
-# basePath prefixes all resource paths 
 basePath: /
-# 
 schemes:
   # tip: remove http to make production-grade
   - http
   - https
-# format of bodies a client can send (Content-Type)
 consumes:
   - application/json
-  # - text/html
-# format of the responses to the client (Accepts)
 produces:
   - application/json
-  # - text/html
 paths:
+  # JSON only API:
+  /api:
+    x-swagger-pipe: swagger_raw
+
+  # HTML Web:
   /:
-    x-swagger-router-controller: index
+    x-swagger-router-controller: html_web_movies
     get:
       description: Returns main html
       produces: 
@@ -36,13 +34,31 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /movies:
-    x-swagger-router-controller: movies
+
+  # JSON only API:
+  /api/movies:
+    x-swagger-router-controller: json_api_movies
+    post:
+      description: Creates a new movie entry via JSON API
+      operationId: create
+      parameters:
+        - name: movie
+          required: true
+          in: body
+          description: a new movies details
+          schema:
+            $ref: "#/definitions/MovieBody"
+      responses:
+        "200":
+          description: Successfully stored movie
+          schema:
+            $ref: "#/definitions/MovieBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     get:
-      description: Returns a list of movies
-      # HTML API:
-      produces: 
-        - text/html
+      description: Returns a list of movies via JSON API
       operationId: readBulk
       parameters:
         - name: released
@@ -52,35 +68,37 @@ paths:
       responses:
         "200":
           description: Success
-          # JSON only API:
-          # schema:
-          #   $ref: "#/definitions/MoviesListBody"
-          # HTML API:
+          schema:
+            $ref: "#/definitions/MoviesListBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  # HTML Web:
+  /movies/create:
+    x-swagger-router-controller: html_web_movies
+    get:
+      description: Returns html view for movie creation from
+      produces: 
+        - text/html
+      operationId: getCreate
+      responses:
+        "200":
+          description: Successfully stored movie
           schema:
             type: string
-        # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
-      description: Creates a new movie entry
-      # HTML API:
+      description: Creates a new movie entry via Web (HTML in Browser)
       consumes:
         - application/x-www-form-urlencoded
-      # HTML API:
       produces: 
         - text/html
       operationId: create
-      # JSON only API:
-      # parameters:
-      #   - name: movie
-      #     required: true
-      #     in: body
-      #     description: a new movies details
-      #     schema:
-      #       $ref: "#/definitions/MovieBody"
-      # HTML API:
       parameters:
         - name: title
           required: true
@@ -99,11 +117,7 @@ paths:
           type: integer
       responses:
         "200":
-          description: Successfully stored movie details
-          # JSON only API:
-          # schema:
-          #   $ref: "#/definitions/MovieBody"
-          # HTML API:
+          description: Successfully stored movie
           schema:
             type: string
         default:
@@ -111,14 +125,35 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /movies/{movieId}:
-    x-swagger-router-controller: movies
+  # HTML Web:
+  /movies:
+    x-swagger-router-controller: html_web_movies
+    get:
+      description: Returns a list of movies
+      produces: 
+        - text/html
+      operationId: readBulk
+      parameters:
+        - name: released
+          in: query
+          description: filters movies by released date
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  # JSON only API:
+  /api/movies/{movieId}:
+    x-swagger-router-controller: json_api_movies
     get:
       description: Returns a single movie entry by a given id 
       operationId: read
-      # HTML API:
-      produces: 
-        - text/html
       parameters:
         - name: movieId
           required: true
@@ -126,18 +161,13 @@ paths:
           type: string
       responses:
         "200":
-          description: Successfully retrieved a movies details
-          # JSON only API:
-          # schema:
-          #   $ref: "#/definitions/MovieBody"
-          # HTML API:
+          description: Successfully retrieved a movie
           schema:
-            type: string
+            $ref: "#/definitions/MovieBody"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    # JSON only API:
     put:
       description: Updates a single movie entry by a given id 
       operationId: update
@@ -154,14 +184,74 @@ paths:
             $ref: "#/definitions/MovieBody"
       responses:
         "200":
-          description: Successfully updated a movies details
+          description: Successfully updated a movie
           schema:
             $ref: "#/definitions/MovieBody"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    # HTML API:
+    delete:
+      description: Deletes a single movie entry by a given id
+      operationId: delete
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully deleted a movie
+          schema:
+            $ref: "#/definitions/DeleteResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  # HTML Web:
+  /movies/read/{movieId}:
+    x-swagger-router-controller: html_web_movies
+    get:
+      description: Returns a single movie entry by a given id 
+      operationId: read
+      produces: 
+        - text/html
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved a movie
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /movies/update/{movieId}:
+    x-swagger-router-controller: html_web_movies
+    get:
+      description: Returns html view for movie creation from
+      produces: 
+        - text/html
+      operationId: getUpdate
+      parameters:
+        - name: movieId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully stored movie details
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       description: Updates a single movie entry by a given id 
       consumes:
@@ -191,17 +281,20 @@ paths:
           type: integer
       responses:
         "200":
-          description: Successfully updated a movies details
+          description: Successfully updated a movie 
           schema:
             type: string
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    # JSON only API:
-    delete:
-      description: Deletes a single movie entry by a given id
-      operationId: delete
+  /movies/delete/{movieId}:
+    x-swagger-router-controller: html_web_movies
+    get:
+      description: Returns html view for a disabled movie deletion from
+      produces: 
+        - text/html
+      operationId: getDelete
       parameters:
         - name: movieId
           required: true
@@ -209,19 +302,17 @@ paths:
           type: string
       responses:
         "200":
-          description: Successfully deleted a movies 
+          description: Successfully updated a movies details
           schema:
-            $ref: "#/definitions/DeleteResponse"
+            type: string
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-
-  # HTML API:
-  /movies/remove/{movieId}:
-    x-swagger-router-controller: movies
-    get:
-      description: Deletes a single movie entry by a given id
+    post:
+      description: Deletes a single movie entry by a given id 
+      consumes:
+        - application/x-www-form-urlencoded
       produces: 
         - text/html
       operationId: delete
@@ -232,7 +323,7 @@ paths:
           type: string
       responses:
         "200":
-          description: Successfully updated a movies details
+          description: Successfully deleted a movie 
           schema:
             type: string
         default:
