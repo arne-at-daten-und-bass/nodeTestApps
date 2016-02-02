@@ -22,28 +22,34 @@ html(lang='en')
           //- Top Navigation
           .android-navigation-container
             nav.android-navigation.mdl-navigation
-              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Top Nav 1
-              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Top Nav 2
-              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Top Nav 3
+              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Home
+              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') About
+              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Imprint
           span.android-mobile-title.mdl-layout-title
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
-            li.mdl-menu__item Top Nav 4
-            li.mdl-menu__item(disabled='') Top Nav 5
+            li.mdl-menu__item Github Code
+            li.mdl-menu__item(disabled='') Login
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title
         nav.mdl-navigation
-          a.mdl-navigation__link(href='') Side Nav 1
-          a.mdl-navigation__link(href='') Side Nav 2
-          a.mdl-navigation__link(href='') Side Nav 3
+          a.mdl-navigation__link(href='') The Movie Graph
           .android-drawer-separator
-          span.mdl-navigation__link(href='') Side Nav Header 1
-          a.mdl-navigation__link(href='') Side Nav 4
+          span.mdl-navigation__link(href='') Movies
+          a.mdl-navigation__link(href='') Create
+          a.mdl-navigation__link(href='') Read (all)
+          a.mdl-navigation__link(href='') Read (one)
+          a.mdl-navigation__link(href='') Update (one)
+          a.mdl-navigation__link(href='') Delete (one)
           .android-drawer-separator
-          span.mdl-navigation__link(href='') Side Nav Header 2 
-          a.mdl-navigation__link(href='') Side Nav 5
+          span.mdl-navigation__link(href='') Persons
+          a.mdl-navigation__link(href='') Create
+          a.mdl-navigation__link(href='') Read (all)
+          a.mdl-navigation__link(href='') Read (one)
+          a.mdl-navigation__link(href='') Update (one)
+          a.mdl-navigation__link(href='') Delete (one)
       block content
 
     script(src='/material.min.js')

@@ -38,12 +38,6 @@ module.exports = {
     neo.cypherRequest(query, params, resultType, includeStats, callback);   
   }, 
 
-  visualize: function(req, res) {
-    res.render('visualize', 
-      { slogan: 'Visual' 
-    });  
-  },
-
   readBulk: function(req, res) {
     var query = neo.movies.readBulkQueryParam;
     var params = {

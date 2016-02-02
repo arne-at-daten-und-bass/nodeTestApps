@@ -17,6 +17,22 @@ paths:
   /api:
     x-swagger-pipe: swagger_raw
 
+  # JSON only API: Graph as JSON for visualization
+  /graph:
+    x-swagger-router-controller: json_api_movies
+    get:
+      description: Returns JSON of graph with IDed nodes and links (TODO type description)
+      operationId: graph
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   # HTML Web: Index
   /:
     x-swagger-router-controller: html_web_movies
@@ -28,37 +44,6 @@ paths:
       responses:
         "200":
           description: Successfully GOT main html
-          schema:
-            type: string
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  # HTML Web: VIZ
-  /visualize:
-    x-swagger-router-controller: html_web_movies
-    get:
-      description: Returns main visualize
-      produces: 
-        - text/html
-      operationId: visualize
-      responses:
-        "200":
-          description: Successfully GOT visualize
-          schema:
-            type: string
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /graph:
-    x-swagger-router-controller: json_api_movies
-    get:
-      description: Returns JSON of graph with IDed nodes and links (TODO type description)
-      operationId: graph
-      responses:
-        "200":
-          description: Successfully GOT visualize
           schema:
             type: string
         default:
