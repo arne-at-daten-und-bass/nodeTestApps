@@ -5,7 +5,7 @@ block content
     .logo-font.android-sub-slogan #{slogan}:
     ul
       each movie in movies
-        li #{movie[0].title}
+        li #{movie.title}
           ul
-            li #{movie[0].tagline}
-            li #{movie[0].released}
+            li #{movie.tagline}
+            li #{movie.released}

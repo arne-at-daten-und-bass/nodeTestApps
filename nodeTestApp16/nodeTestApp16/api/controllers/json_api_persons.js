@@ -9,12 +9,12 @@ var resultType = ["row"];
 module.exports = {
 
   create: function(req, res) {
-    var query = neo.movies.createQuery;
-    var params = req.swagger.params.movie.value.movie;
+    var query = neo.persons.createQuery;
+    var params = req.swagger.params.person.value.person;
 
     function callback(error, responseBody) {
       res.json({
-        movie: responseBody.results[0].data 
+        person: responseBody.results[0].data 
       });
     }
 
@@ -41,20 +41,20 @@ module.exports = {
   },
 
   readBulk: function(req, res) {
-    var query = neo.movies.readBulkQueryParam;
+    var query = neo.persons.readBulkQueryParam;
     var params = {
-      'released': parseInt(req.swagger.params.released.value)
+      'born': parseInt(req.swagger.params.born.value)
     };
-    if(req.swagger.params.released.value === undefined) {
-      query = neo.movies.readBulkQueryNoParam;
+    if(req.swagger.params.born.value === undefined) {
+      query = neo.persons.readBulkQueryNoParam;
     }  
 
     function callback(error, responseBody) {
-      var movies = [];
-      movies = neo.helpers.readBulk(error, responseBody);
+      var persons = [];
+      persons = neo.helpers.readBulk(error, responseBody);
 
       res.json({
-        movies:  movies
+        persons:  persons
       });
     }
 
@@ -62,14 +62,14 @@ module.exports = {
   }, 
 
   read: function(req, res) {
-    var query = neo.movies.readQuery;
+    var query = neo.persons.readQuery;
     var params = {
-      'id': parseInt(req.swagger.params.movieId.value)
+      'id': parseInt(req.swagger.params.personId.value)
     }; 
 
     function callback(error, responseBody){
       res.json({
-        movie: responseBody.results[0].data[0].row[0]
+        person: responseBody.results[0].data[0].row[0]
       });
     }
 
@@ -77,15 +77,15 @@ module.exports = {
   },
 
   update: function(req, res) {
-    var query = neo.movies.updateQuery;
+    var query = neo.persons.updateQuery;
     var params = {
-      'id': parseInt(req.swagger.params.movieId.value),
-      'props': req.swagger.params.movie.value.movie
+      'id': parseInt(req.swagger.params.personId.value),
+      'props': req.swagger.params.person.value.person
       }; 
 
     function callback(error, responseBody) {
       res.json({
-        movie: responseBody.results[0].data
+        person: responseBody.results[0].data
       });
     }   
 
@@ -93,9 +93,9 @@ module.exports = {
   },
 
   delete: function(req, res) {
-    var query = neo.movies.deleteQuery;
+    var query = neo.persons.deleteQuery;
     var params = {
-      'id': parseInt(req.swagger.params.movieId.value)
+      'id': parseInt(req.swagger.params.personId.value)
     };
     
     includeStats = true;

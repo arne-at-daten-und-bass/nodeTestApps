@@ -34,7 +34,39 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  # HTML Web: VIZ
+  /visualize:
+    x-swagger-router-controller: html_web_movies
+    get:
+      description: Returns main visualize
+      produces: 
+        - text/html
+      operationId: visualize
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /graph:
+    x-swagger-router-controller: json_api_movies
+    get:
+      description: Returns JSON of graph with IDed nodes and links (TODO type description)
+      operationId: graph
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
+### Movies ### 
   # JSON only API: Create and Read (several movies)
   /api/movies:
     x-swagger-router-controller: json_api_movies
@@ -330,6 +362,46 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 ### Persons ### 
+  # JSON only API: Create and Read (several persons)
+  /api/persons:
+    x-swagger-router-controller: json_api_persons
+    post:
+      description: Creates a new person entry via JSON API
+      operationId: create
+      parameters:
+        - name: person
+          required: true
+          in: body
+          description: a new persons details
+          schema:
+            $ref: "#/definitions/PersonBody"
+      responses:
+        "200":
+          description: Successfully stored person
+          schema:
+            $ref: "#/definitions/PersonBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      description: Returns a list of persons via JSON API
+      operationId: readBulk
+      parameters:
+        - name: born
+          in: query
+          description: filters persons by birth date
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/PersonsListBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   # HTML Web: Create and Read (several persons)
   /persons/create:
     x-swagger-router-controller: html_web_persons
@@ -396,7 +468,68 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
- # HTML Web: Read (one movie), Update(one movie), and Delete (one movie)
+  # JSON only API: Read (one person), Update(one person), and Delete (one person)
+  /api/persons/{personId}:
+    x-swagger-router-controller: json_api_persons
+    get:
+      description: Returns a single person entry by a given id 
+      operationId: read
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved a person
+          schema:
+            $ref: "#/definitions/PersonBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Updates a single person entry by a given id 
+      operationId: update
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+        - name: person
+          required: true
+          in: body
+          description: Details to be updated
+          schema:
+            $ref: "#/definitions/PersonBody"
+      responses:
+        "200":
+          description: Successfully updated a person
+          schema:
+            $ref: "#/definitions/PersonBody"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Deletes a single person entry by a given id
+      operationId: delete
+      parameters:
+        - name: personId
+          required: true
+          in: path
+          type: string
+      responses:
+        "200":
+          description: Successfully deleted a person
+          schema:
+            $ref: "#/definitions/DeleteResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+ # HTML Web: Read (one person), Update(one person), and Delete (one person)
   /persons/read/{personId}:
     x-swagger-router-controller: html_web_persons
     get:
@@ -525,7 +658,11 @@ definitions:
       movies:
         type: array
         items:
-          $ref: "#/definitions/Movie"
+          $ref: "#/definitions/MovieEntry"
+
+  MovieEntry:
+    type: object
+    $ref: "#/definitions/Movie"    
 
   Movie:
     required:
@@ -551,6 +688,41 @@ definitions:
     properties:
       movie:
         $ref: "#/definitions/Movie"
+
+  PersonsListBody:
+    required:
+      - persons
+    properties:
+      persons:
+        type: array
+        items:
+          $ref: "#/definitions/PersonEntry"
+
+  PersonEntry:
+    type: object
+    $ref: "#/definitions/Person"    
+
+  Person:
+    required:
+      - name
+      - born
+    properties:
+      name:
+        type: string
+      born:
+        type: integer
+      rank:
+        type: integer
+        default: 5
+        minimum: 1
+        maximum: 10
+
+  PersonBody:
+    required:
+      - person
+    properties:
+      person:
+        $ref: "#/definitions/Person"
 
   DeleteResponse:
     required:

@@ -3,6 +3,7 @@
 var neo = require('../helpers/neo');
 
 var includeStats = false;
+var resultType = ["row"];
 
 // HTML Web:
 module.exports = {
@@ -27,7 +28,7 @@ module.exports = {
       });
     }
 
-    neo.cypherRequest(query, params, includeStats, callback);   
+    neo.cypherRequest(query, params, resultType, includeStats, callback);   
   }, 
 
   readBulk: function(req, res) {
@@ -40,21 +41,16 @@ module.exports = {
     }  
 
     function callback(error, responseBody) {
-      var dataFromNeo4j = [];
-      var dataToSwagger = [];
-      
-      dataFromNeo4j = responseBody.results[0].data;
-      dataFromNeo4j.map(function (element, index) {
-        dataToSwagger[index] = element.row;
-      });
+      var persons = [];
+      persons = neo.helpers.readBulk(error, responseBody);
 
       res.render('persons/readBulk', {
         slogan: 'All The Persons',
-        persons: dataToSwagger
+        persons: persons
       });
     }
 
-    neo.cypherRequest(query, params, includeStats, callback);
+    neo.cypherRequest(query, params, resultType, includeStats, callback);
   }, 
 
   read: function(req, res) {
@@ -70,7 +66,7 @@ module.exports = {
       });
     }
 
-    neo.cypherRequest(query, params, includeStats, callback);
+    neo.cypherRequest(query, params, resultType, includeStats, callback);
   },
 
   getUpdate: function(req, res) {
@@ -87,7 +83,7 @@ module.exports = {
       });
     }
 
-    neo.cypherRequest(query, params, includeStats, callback);
+    neo.cypherRequest(query, params, resultType, includeStats, callback);
   },
 
   update: function(req, res) {
@@ -107,7 +103,7 @@ module.exports = {
       });
     }   
 
-    neo.cypherRequest(query, params, includeStats, callback);
+    neo.cypherRequest(query, params, resultType, includeStats, callback);
   },
 
   getDelete: function(req, res) {
@@ -124,7 +120,7 @@ module.exports = {
       });
     }
 
-    neo.cypherRequest(query, params, includeStats, callback);
+    neo.cypherRequest(query, params, resultType, includeStats, callback);
   },
 
   delete: function(req, res) {
@@ -142,7 +138,7 @@ module.exports = {
       });
     }
 
-    neo.cypherRequest(query, params, includeStats, callback);   
+    neo.cypherRequest(query, params, resultType, includeStats, callback);   
   }
 
 };
