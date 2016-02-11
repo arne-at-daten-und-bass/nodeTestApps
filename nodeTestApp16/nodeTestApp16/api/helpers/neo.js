@@ -27,6 +27,7 @@ var params = {};
 
 var cypherRequest = function(query, params, resultType, includeStats, callback) {
   console.log(query);
+  console.log(JSON.stringify(params));
   request.post({
     headers: headers,
     url: config.db.url,
@@ -93,8 +94,10 @@ module.exports = {
     );
   },
 
-  movies: {
-    queries: function() {
+  // movies: {
+  //   queries: function() {
+  queries: {
+    movies: function() {
       return {
         create:          function() { return movieCreateQuery; },
         readBulkParam:   function() { return movieReadBulkQueryParam; },
@@ -106,7 +109,15 @@ module.exports = {
         delete:          function() { return movieDeleteQuery; }
       };
     },
-    params: function() {
+    persons: function() {
+
+    },
+    graph: function() {
+
+    }
+  },
+  params: {
+    movies: function() {
       return {
         create: function(title, released, tagline) {
           params = { title: title, released: released, tagline: tagline };      return params; },
@@ -124,59 +135,128 @@ module.exports = {
           params = { id: parseInt(id) };                                        return params; }
       };
     },
-    callbacks: function(res) {
-      return {
-        create: function (error, responseBody) {
-          res.render('movies/read', {
-            slogan: 'New Movie created',
-            movie: responseBody.results[0].data[0].row[0]
-          });
-        },
-        readBulk: function (error, responseBody) {
-          var movies = [];
-          movies = readBulk(error, responseBody);
+    persons: function() {
 
-          res.render('movies/readBulk', {
-            slogan: 'All The Movies',
-            movies: movies
-          });
-        },
-        read: function (error, responseBody){
-          res.render('movies/read', {
-            slogan: 'Movie',
-            movie: responseBody.results[0].data[0].row[0]
-          });
-        },
-        getUpdate: function (error, responseBody){
-          console.log(responseBody);
-          res.render('movies/update', { 
-            slogan: 'Update a Movie',
-            id: parseInt(params.id),
-            movie: responseBody.results[0].data[0].row[0]
-          });
-        },
-        update: function (error, responseBody) {
-          res.render('movies/read', {
-            slogan: 'Movie updated',
-            movie: responseBody.results[0].data[0].row[0]
-          });
-        },
-        getDelete: function (error, responseBody){
-          res.render('movies/delete', { 
-            slogan: 'Delete a Movie (and all its relationships)',
-            id: parseInt(params.id),
-            movie: responseBody.results[0].data[0].row[0]
-          });
-        },
-        delete: function (error, responseBody) {
-          res.render('movies/deleted', {
-            slogan: 'Amount of deleted movies',
-            nodes_deleted: responseBody.results[0].stats.nodes_deleted
-          });
-        }
-      };
     },
-    requests: function() {
+    graph: function() {
+
+    }
+  },
+  callbacks: {
+    movies: { 
+      create: function(res) {
+        return {
+          api: function(error, responseBody) {
+            res.json({
+              movie: responseBody.results[0].data 
+            });
+          },          
+          web: function(error, responseBody) {
+            res.render('movies/read', {
+              slogan: 'New Movie created',
+              movie: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      readBulk: function(res) {
+        return { 
+          api: function(error, responseBody) {
+            var movies = [];
+            movies = readBulk(error, responseBody);
+
+            res.json({
+              movies:  movies
+            });
+          }, 
+          web: function(error, responseBody) {
+            var movies = [];
+            movies = readBulk(error, responseBody);
+
+            res.render('movies/readBulk', {
+              slogan: 'All The Movies',
+              movies: movies
+            });
+          }
+        };
+      },
+      read: function(res) {
+        return {
+          api: function(error, responseBody) {
+            res.json({
+              movie: responseBody.results[0].data[0].row[0]
+            });
+          },
+          web: function(error, responseBody) {
+            res.render('movies/read', {
+              slogan: 'Movie',
+              movie: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      getUpdate: function(res) {
+        return {
+          web: function(error, responseBody) {
+            res.render('movies/update', { 
+              slogan: 'Update a Movie',
+              id: parseInt(params.id),
+              movie: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      update: function(res) {
+        return {
+          api: function (error, responseBody) {
+            res.json({
+              movie: responseBody.results[0].data
+            });
+          },   
+          web: function (error, responseBody) {
+            res.render('movies/read', {
+              slogan: 'Movie updated',
+              movie: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      getDelete: function(res) {
+        return {
+          web: function (error, responseBody){
+            res.render('movies/delete', { 
+              slogan: 'Delete a Movie (and all its relationships)',
+              id: parseInt(params.id),
+              movie: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      delete: function(res) {
+        return { 
+          api: function(error, responseBody) {
+            res.json({
+              nodes_deleted: responseBody.results[0].stats.nodes_deleted
+            });
+          },        
+          web: function (error, responseBody) {
+            res.render('movies/deleted', {
+              slogan: 'Amount of deleted movies',
+              nodes_deleted: responseBody.results[0].stats.nodes_deleted
+            });
+          }
+        };
+      }
+    },
+    persons: function() {
+
+    },
+    graph: function() {
+
+    }
+  },
+  requests: {
+    movies: function() {
       return {
         create: function(query, params, resultType, includeStats, callback) {
           cypherRequest(query, params, resultType, includeStats, callback);   
@@ -200,9 +280,15 @@ module.exports = {
           cypherRequest(query, params, resultType, includeStats, callback);
         }
       };
-    }
+    },
+    persons: function() {
 
+    },
+    graph: function() {
+
+    }
   },
+
   persons: {
     createQuery: 'CREATE (p:Person { born: {born}, name: {name} }) RETURN p',
     readBulkQueryParam: 'MATCH (p:Person {born: {born}}) RETURN p',
