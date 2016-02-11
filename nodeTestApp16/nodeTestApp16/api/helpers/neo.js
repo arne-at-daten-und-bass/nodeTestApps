@@ -3,17 +3,90 @@
 var request = require('request');
 var config = require('../../config/');
 
-module.exports = {
-
-  cypherRequest: function (query, params, resultType, includeStats, callback) {
-    request.post({
-      headers: {
+var headers = {
         'Authorization': process.env.DB_PASS,
         'Content-Type': 'application/json',
-        'Accept': 'application/json; charset=UTF-8'},
-      url: config.db.url,
+        'Accept': 'application/json; charset=UTF-8'
+      };
+
+var cypherBatchUrl = 'https://' + config.db.ip  + ':' + config.db.https.port +'/db/data/batch';
+var cypherBatchJobMethod = 'POST';
+var cypherBatchJobUrl = '/cypher';
+var cypherBatchId = 0;
+
+var movieCreateQuery = 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m';
+var movieReadBulkQueryParam = 'MATCH (m:Movie {released: {released}}) RETURN m';
+var movieReadBulkQueryNoParam = 'MATCH (m:Movie) RETURN m';
+var movieReadQuery = 'MATCH m WHERE id(m)={id} RETURN m';
+var movieGetUpdateQuery = 'MATCH m WHERE id(m)={id} RETURN m';
+var movieUpdateQuery = 'MATCH m WHERE id(m)={id} SET m={props} RETURN m';
+var movieGetDeleteQuery = 'MATCH m WHERE id(m)={id} RETURN m';
+var movieDeleteQuery = 'MATCH m WHERE id(m)={id} DETACH DELETE m';
+
+var params = {};
+
+var cypherRequest = function(query, params, resultType, includeStats, callback) {
+  console.log(query);
+  request.post({
+    headers: headers,
+    url: config.db.url,
+    ca: config.db.https.caRead,
+    json: {statements: [{statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats}]}},
+    function(err, res) {
+      callback(err, res.body);
+    }
+  );
+};
+
+function readBulk(error, responseBody) {
+  var dataFromNeo4j = [];
+  var dataToSwagger = [];
+  
+  dataFromNeo4j = responseBody.results[0].data;
+  dataFromNeo4j.map(function (element, index) {
+    dataToSwagger[index] = element.row[0];
+  });
+
+  return dataToSwagger;
+}
+
+module.exports = {
+
+  // cypherRequest: function (query, params, resultType, includeStats, callback) {
+  //   console.log(query);
+  //   request.post({
+  //     headers: headers,
+  //     url: config.db.url,
+  //     ca: config.db.https.caRead,
+  //     json: {statements: [{statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats}]}},
+  //     function(err, res) {
+  //       callback(err, res.body);
+  //     }
+  //   );
+  // },
+
+  cypherBatch: function (query0, params0, query1, params1, callback) {
+    request.post({
+      headers: headers,
+      url: cypherBatchUrl,
       ca: config.db.https.caRead,
-      json: {statements: [{statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats}]}},
+      json: [ {
+        'method' : cypherBatchJobMethod,
+        'to': cypherBatchJobUrl,
+        'body' : {
+          'query' : query0,
+          'params' : params0
+        },
+        'id' : cypherBatchId++
+      },
+      {
+        'method' : cypherBatchJobMethod,
+        'to': cypherBatchJobUrl,
+        'body' : {
+          'query' : query1,
+          'params' : params1
+        },
+        'id' : cypherBatchId++}]},
       function(err, res) {
         callback(err, res.body);
       }
@@ -21,16 +94,115 @@ module.exports = {
   },
 
   movies: {
-    createQuery: 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m',
-    readBulkQueryParam: 'MATCH (m:Movie {released: {released}}) RETURN m',
-    readBulkQueryNoParam: 'MATCH (m:Movie) RETURN m',
-    readQuery: 'MATCH m WHERE id(m)={id} RETURN m',
-    getUpdateQuery:'MATCH m WHERE id(m)={id} RETURN m',
-    updateQuery:'MATCH m WHERE id(m)={id} SET m={props} RETURN m',
-    getDeleteQuery: 'MATCH m WHERE id(m)={id} RETURN m',
-    deleteQuery: 'MATCH m WHERE id(m)={id} DELETE m'
-  },
+    queries: function() {
+      return {
+        create:          function() { return movieCreateQuery; },
+        readBulkParam:   function() { return movieReadBulkQueryParam; },
+        readBulkNoParam: function() { return movieReadBulkQueryNoParam; },
+        read:            function() { return movieReadQuery; },
+        getUpdate:       function() { return movieGetUpdateQuery; },
+        update:          function() { return movieUpdateQuery; },
+        getDelete:       function() { return movieGetDeleteQuery; },
+        delete:          function() { return movieDeleteQuery; }
+      };
+    },
+    params: function() {
+      return {
+        create: function(title, released, tagline) {
+          params = { title: title, released: released, tagline: tagline };      return params; },
+        readBulkParam: function(released) {
+          params = {released: released };                                       return params; },
+        read: function(id) {
+          params = { id: parseInt(id) };                                        return params; },
+        getUpdate: function(id) {
+          params = { id: parseInt(id) };                                        return params; },
+        update: function(id, title, released, tagline) {
+          params = {id: parseInt(id), props: {title: title, released: released, tagline: tagline} }; return params; },
+        getDelete: function(id) {
+          params = { id: parseInt(id) };                                        return params; },
+        delete: function(id) {
+          params = { id: parseInt(id) };                                        return params; }
+      };
+    },
+    callbacks: function(res) {
+      return {
+        create: function (error, responseBody) {
+          res.render('movies/read', {
+            slogan: 'New Movie created',
+            movie: responseBody.results[0].data[0].row[0]
+          });
+        },
+        readBulk: function (error, responseBody) {
+          var movies = [];
+          movies = readBulk(error, responseBody);
 
+          res.render('movies/readBulk', {
+            slogan: 'All The Movies',
+            movies: movies
+          });
+        },
+        read: function (error, responseBody){
+          res.render('movies/read', {
+            slogan: 'Movie',
+            movie: responseBody.results[0].data[0].row[0]
+          });
+        },
+        getUpdate: function (error, responseBody){
+          console.log(responseBody);
+          res.render('movies/update', { 
+            slogan: 'Update a Movie',
+            id: parseInt(params.id),
+            movie: responseBody.results[0].data[0].row[0]
+          });
+        },
+        update: function (error, responseBody) {
+          res.render('movies/read', {
+            slogan: 'Movie updated',
+            movie: responseBody.results[0].data[0].row[0]
+          });
+        },
+        getDelete: function (error, responseBody){
+          res.render('movies/delete', { 
+            slogan: 'Delete a Movie (and all its relationships)',
+            id: parseInt(params.id),
+            movie: responseBody.results[0].data[0].row[0]
+          });
+        },
+        delete: function (error, responseBody) {
+          res.render('movies/deleted', {
+            slogan: 'Amount of deleted movies',
+            nodes_deleted: responseBody.results[0].stats.nodes_deleted
+          });
+        }
+      };
+    },
+    requests: function() {
+      return {
+        create: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);   
+        },
+        readBulk: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        read: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        getUpdate: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        update: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        getDelete: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        delete: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        }
+      };
+    }
+
+  },
   persons: {
     createQuery: 'CREATE (p:Person { born: {born}, name: {name} }) RETURN p',
     readBulkQueryParam: 'MATCH (p:Person {born: {born}}) RETURN p',
@@ -39,11 +211,20 @@ module.exports = {
     getUpdateQuery:'MATCH p WHERE id(p)={id} RETURN p',
     updateQuery:'MATCH p WHERE id(p)={id} SET p={props} RETURN p',
     getDeleteQuery: 'MATCH p WHERE id(p)={id} RETURN p',
-    deleteQuery: 'MATCH p WHERE id(p)={id} DELETE p'
+    deleteQuery: 'MATCH p WHERE id(p)={id} DETACH DELETE p'
   },
 
   graph: {
-    readAllQuery: 'MATCH path = (n)-[r]->(m) RETURN path'
+    readAllQuery: 'MATCH path = (n)-[r]->(m) RETURN path',
+    readAllPersonsQuery: 'MATCH (p:Person) RETURN p.name ORDER BY p.name',
+    readAllMoviessQuery: 'MATCH (m:Movie) RETURN m.title ORDER BY m.title',
+    allRelationshipTypes: ['ACTED_IN', 'DIRECTED', 'FOLLOWS', 'PRODUCED', 'REVIEWED', 'WROTE'],
+    create_ACTED_IN_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:ACTED_IN {roles: [{property}] }]->(m) RETURN p.name, type(r), m.title, r.roles',
+    create_DIRECTED_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:DIRECTED]->(m) RETURN p.name, type(r), m.title',
+    create_FOLLOWS_Query: 'MATCH (p:Person { name: {source} }), (p2:Person { name: {target} }) CREATE (p)-[r:FOLLOWS]->(p2) RETURN p.name, type(r), p2.name',
+    create_PRODUCED_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:PRODUCED]->(m) RETURN p.name, type(r), m.title',
+    create_REVIEWED_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:REVIEWED {summary: {property} }]->(m) RETURN p.name, type(r), m.title, r.summary',
+    create_WROTE_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:WROTE]->(m) RETURN p.name, type(r), m.title'
   },
 
   helpers: {
