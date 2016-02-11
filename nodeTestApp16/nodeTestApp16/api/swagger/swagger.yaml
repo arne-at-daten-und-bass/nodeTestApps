@@ -19,7 +19,7 @@ paths:
 
   # JSON only API: Graph as JSON for visualization
   /graph:
-    x-swagger-router-controller: json_api_movies
+    x-swagger-router-controller: json_api_graph
     get:
       description: Returns JSON of graph with IDed nodes and links (TODO type description)
       operationId: graph
