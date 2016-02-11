@@ -53,51 +53,63 @@ module.exports = {
   }, 
 
   read: function(req, res) {
-    var query = neo.movies.queries().read();
-    var params = {
-      'id': parseInt(req.swagger.params.movieId.value)
-    }; 
+    var query = neo.queries.movies().read();
+    // var query = neo.movies.queries().read();
+    var params = neo.params.movies().read(req.swagger.params.movieId.value);
+    // var params = {
+    //   'id': parseInt(req.swagger.params.movieId.value)
+    // }; 
 
-    function callback(error, responseBody){
-      res.json({
-        movie: responseBody.results[0].data[0].row[0]
-      });
-    }
+    var callback = neo.callbacks.movies.read(res).api;
+    // function callback(error, responseBody){
+    //   res.json({
+    //     movie: responseBody.results[0].data[0].row[0]
+    //   });
+    // }
 
-    neo.cypherRequest(query, params, resultType, includeStats, callback);
+    neo.requests.movies().read(query, params, resultType, includeStats, callback);
+    // neo.cypherRequest(query, params, resultType, includeStats, callback);
   },
 
   update: function(req, res) {
-    var query = neo.movies.queries().update();
-    var params = {
-      'id': parseInt(req.swagger.params.movieId.value),
-      'props': req.swagger.params.movie.value.movie
-      }; 
+    var query = neo.queries.movies().update();
+    // var query = neo.movies.queries().update();
+    var params = neo.params.movies().update(req.swagger.params.movieId.value, req.swagger.params.movie.value.movie.title, req.swagger.params.movie.value.movie.released, req.swagger.params.movie.value.movie.tagline);
+    // var params = {
+    //   'id': parseInt(req.swagger.params.movieId.value),
+    //   'props': req.swagger.params.movie.value.movie
+    //   }; 
 
-    function callback(error, responseBody) {
-      res.json({
-        movie: responseBody.results[0].data
-      });
-    }   
+    var callback = neo.callbacks.movies.update(res).api;
+    // function callback(error, responseBody) {
+    //   res.json({
+    //     movie: responseBody.results[0].data
+    //   });
+    // }   
 
-    neo.cypherRequest(query, params, resultType, includeStats, callback);
+    neo.requests.movies().update(query, params, resultType, includeStats, callback);
+    // neo.cypherRequest(query, params, resultType, includeStats, callback);
   },
 
   delete: function(req, res) {
-    var query = neo.movies.queries().delete();
-    var params = {
-      'id': parseInt(req.swagger.params.movieId.value)
-    };
+    var query = neo.queries.movies().delete();
+    // var query = neo.movies.queries().delete();
+    var params = neo.params.movies().delete(req.swagger.params.movieId.value);
+    // var params = {
+    //   'id': parseInt(req.swagger.params.movieId.value)
+    // };
     
     includeStats = true;
 
-    function callback(error, responseBody) {
-      res.json({
-        nodes_deleted: responseBody.results[0].stats.nodes_deleted
-      });
-    }
+    var callback = neo.callbacks.movies.delete(res).api;
+    // function callback(error, responseBody) {
+    //   res.json({
+    //     nodes_deleted: responseBody.results[0].stats.nodes_deleted
+    //   });
+    // }
 
-    neo.cypherRequest(query, params, resultType, includeStats, callback);   
+    neo.requests.movies().delete(query, params, resultType, includeStats, callback);
+    // neo.cypherRequest(query, params, resultType, includeStats, callback);   
   }
 
 };
