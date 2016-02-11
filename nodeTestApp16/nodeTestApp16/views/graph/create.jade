@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  .android-content.mdl-layout__content
+    .android-be-together-section.mdl-typography--text-center
+      .logo-font.android-sub-slogan #{slogan}:
+      .mdl-typography--font-light
+        br
+        form(name='createRelationship', action='/graph/relationship/create',  method='post')
+          select#source(name='source')        
+          select#type(name='type', style='text-transform: lowercase;')
+          select#target(name='target')
+          label#asLabel(for='property') &nbsp; as &nbsp;
+          input#property(type='text', name='property', placeholder='Role',)
+          button(type='submit') Submit
+        script.
+          app.buildOptions(!{JSON.stringify(persons)}, !{JSON.stringify(relationships)}, !{JSON.stringify(movies)});
+
+

@@ -114,7 +114,7 @@ module.exports = {
 
     function callback(error, responseBody){
       res.render('persons/delete', { 
-        slogan: 'Delete a Person',
+        slogan: 'Delete a Person (and all its relationships)',
         id: parseInt(req.swagger.params.personId.value),
         person: responseBody.results[0].data[0].row[0]
       });

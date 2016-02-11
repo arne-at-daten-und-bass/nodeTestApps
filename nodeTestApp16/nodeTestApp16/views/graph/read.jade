@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  .android-content.mdl-layout__content
+    .android-be-together-section.mdl-typography--text-center
+      .logo-font.android-sub-slogan #{slogan}:
+      #source.logo-font.android-sub-slogan #{relationship.row[0]}
+      #type(style='text-transform: lowercase;').logo-font.android-sub-slogan #{relationship.row[1]}
+      #target.logo-font.android-sub-slogan '#{relationship.row[2]}'
+      #property.logo-font.android-sub-slogan 
+
+  script.
+    app.toogleView(!{JSON.stringify(relationship)});
