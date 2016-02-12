@@ -62,35 +62,35 @@ var app = (function() {
   }
 
   function toogleView(value) {
-      target = document.getElementById('target');
-      property = document.getElementById('property');
+    target = document.getElementById('target');
+    property = document.getElementById('property');
 
-      switch(value.row[1]) {
-        case 'ACTED_IN':
-          property.style.display = 'block';
-          property.innerHTML = 'as ' + value.row[3][0] + '.';
-          break;
-        case 'DIRECTED':
-          property.style.display = 'none';
-          break;
-        case 'PRODUCED':
-          property.style.display = 'none';
-          break;
-        case 'REVIEWED':
-          property.style.display = 'block';
-          property.innerHTML = 'with Summary: ' + value.row[3] + '.';
-          break;
-        case 'WROTE':
-          property.style.display = 'none';
-          break;
-        case 'FOLLOWS':
-          target.innerHTML = value.row[2];
-          property.style.display = 'none';
-          break;
-        default:
-          console.log('default');
-      }
+    switch(value.row[1]) {
+      case 'ACTED_IN':
+        property.style.display = 'block';
+        property.innerHTML = 'as ' + value.row[3][0] + '.';
+        break;
+      case 'DIRECTED':
+        property.style.display = 'none';
+        break;
+      case 'PRODUCED':
+        property.style.display = 'none';
+        break;
+      case 'REVIEWED':
+        property.style.display = 'block';
+        property.innerHTML = 'with Summary: ' + value.row[3] + '.';
+        break;
+      case 'WROTE':
+        property.style.display = 'none';
+        break;
+      case 'FOLLOWS':
+        target.innerHTML = value.row[2];
+        property.style.display = 'none';
+        break;
+      default:
+        console.log('default');
     }
+  }
 
   function buildOptions(personslocal, relationshipslocal, movieslocal) {
     personsList = optionBuilder(personslocal);

@@ -38,6 +38,7 @@ module.exports = {
     };
     if(req.swagger.params.born.value === undefined) {
       query = neo.persons.readBulkQueryNoParam;
+      params = {};
     }  
 
     function callback(error, responseBody) {

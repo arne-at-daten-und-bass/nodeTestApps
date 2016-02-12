@@ -15,13 +15,35 @@ var cypherBatchJobUrl = '/cypher';
 var cypherBatchId = 0;
 
 var movieCreateQuery = 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m';
-var movieReadBulkQueryParam = 'MATCH (m:Movie {released: {released}}) RETURN m';
+var movieReadBulkQueryParam = 'MATCH (m:Movie { released: {released} }) RETURN m';
 var movieReadBulkQueryNoParam = 'MATCH (m:Movie) RETURN m';
 var movieReadQuery = 'MATCH m WHERE id(m)={id} RETURN m';
 var movieGetUpdateQuery = 'MATCH m WHERE id(m)={id} RETURN m';
 var movieUpdateQuery = 'MATCH m WHERE id(m)={id} SET m={props} RETURN m';
 var movieGetDeleteQuery = 'MATCH m WHERE id(m)={id} RETURN m';
 var movieDeleteQuery = 'MATCH m WHERE id(m)={id} DETACH DELETE m';
+
+var personCreateQuery = 'CREATE (p:Person { name: {name}, born: {born} }) RETURN p';
+var personReadBulkQueryParam ='MATCH (p:Person { born: {born} }) RETURN p';
+var personReadBulkQueryNoParam = 'MATCH (p:Person) RETURN p';
+var personReadQuery = 'MATCH p WHERE id(p)={id} RETURN p';
+var personGetUpdateQuery ='MATCH p WHERE id(p)={id} RETURN p';
+var personUpdateQuery ='MATCH p WHERE id(p)={id} SET p={props} RETURN p';
+var personGetDeleteQuery ='MATCH p WHERE id(p)={id} RETURN p';
+var personDeleteQuery = 'MATCH p WHERE id(p)={id} DETACH DELETE p';
+
+var graphArrayOfAllRelationshipTypes = ['ACTED_IN', 'DIRECTED', 'FOLLOWS', 'PRODUCED', 'REVIEWED', 'WROTE'];
+
+var graphReadAllQuery = 'MATCH path = (n)-[r]->(m) RETURN path';
+var graphReadAllPersonsQuery ='MATCH (p:Person) RETURN p.name ORDER BY p.name';
+var graphReadAllMoviesQuery = 'MATCH (m:Movie) RETURN m.title ORDER BY m.title';
+var graphCreate_ACTED_IN_Query = 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:ACTED_IN {roles: [{property}] }]->(m) RETURN p.name, type(r), m.title, r.roles';
+var graphCreate_DIRECTED_Query = 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:DIRECTED]->(m) RETURN p.name, type(r), m.title';
+var graphCreate_FOLLOWS_Query = 'MATCH (p:Person { name: {source} }), (p2:Person { name: {target} }) CREATE (p)-[r:FOLLOWS]->(p2) RETURN p.name, type(r), p2.name';
+var graphCreate_PRODUCED_Query = 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:PRODUCED]->(m) RETURN p.name, type(r), m.title';
+var graphCreate_REVIEWED_Query = 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:REVIEWED {summary: {property} }]->(m) RETURN p.name, type(r), m.title, r.summary';
+var graphCreate_WROTE_Query = 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:WROTE]->(m) RETURN p.name, type(r), m.title';
+
 
 var params = {};
 
@@ -39,6 +61,34 @@ var cypherRequest = function(query, params, resultType, includeStats, callback) 
   );
 };
 
+var cypherBatch = function(query0, params0, query1, params1, callback) {
+  request.post({
+    headers: headers,
+    url: cypherBatchUrl,
+    ca: config.db.https.caRead,
+    json: [ {
+      'method' : cypherBatchJobMethod,
+      'to': cypherBatchJobUrl,
+      'body' : {
+        'query' : query0,
+        'params' : params0
+      },
+      'id' : cypherBatchId++
+    },
+    {
+      'method' : cypherBatchJobMethod,
+      'to': cypherBatchJobUrl,
+      'body' : {
+        'query' : query1,
+        'params' : params1
+      },
+      'id' : cypherBatchId++}]},
+    function(err, res) {
+      callback(err, res.body);
+    }
+  );
+},
+
 function readBulk(error, responseBody) {
   var dataFromNeo4j = [];
   var dataToSwagger = [];
@@ -51,51 +101,58 @@ function readBulk(error, responseBody) {
   return dataToSwagger;
 }
 
+function idIndex(array, id) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].id === id) {
+      return i;
+    }
+  }
+  return null;
+},
+
+function nodeLinks(error, response) {
+  var nodes = [];
+  var links = [];
+
+  response.results[0].data.forEach(function (row) {
+
+    row.graph.nodes.forEach(function (n) {
+      if(idIndex(nodes, n.id) === null) {
+        if(n.labels[0] === 'Movie') {
+          nodes.push({
+            'id': n.id,
+            'label': n.labels[0],
+            'title': n.properties.title,
+            'tagline': n.properties.tagline,
+            'released': n.properties.released
+          });
+        }
+        if(n.labels[0] === 'Person') {
+          nodes.push({
+            'id': n.id,
+            'label': n.labels[0],
+            'name': n.properties.name,
+            'born': n.properties.born
+          });
+        }
+      }
+    });
+
+    links = links.concat(row.graph.relationships.map(function(r) {
+      return {
+        'source': idIndex(nodes, r.startNode),
+        'target': idIndex(nodes, r.endNode),
+        'value': r.type
+      };
+    }));
+  });
+
+  return {'nodes':nodes, 'links':links};
+}
+
+
 module.exports = {
 
-  // cypherRequest: function (query, params, resultType, includeStats, callback) {
-  //   console.log(query);
-  //   request.post({
-  //     headers: headers,
-  //     url: config.db.url,
-  //     ca: config.db.https.caRead,
-  //     json: {statements: [{statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats}]}},
-  //     function(err, res) {
-  //       callback(err, res.body);
-  //     }
-  //   );
-  // },
-
-  cypherBatch: function (query0, params0, query1, params1, callback) {
-    request.post({
-      headers: headers,
-      url: cypherBatchUrl,
-      ca: config.db.https.caRead,
-      json: [ {
-        'method' : cypherBatchJobMethod,
-        'to': cypherBatchJobUrl,
-        'body' : {
-          'query' : query0,
-          'params' : params0
-        },
-        'id' : cypherBatchId++
-      },
-      {
-        'method' : cypherBatchJobMethod,
-        'to': cypherBatchJobUrl,
-        'body' : {
-          'query' : query1,
-          'params' : params1
-        },
-        'id' : cypherBatchId++}]},
-      function(err, res) {
-        callback(err, res.body);
-      }
-    );
-  },
-
-  // movies: {
-  //   queries: function() {
   queries: {
     movies: function() {
       return {
@@ -110,10 +167,30 @@ module.exports = {
       };
     },
     persons: function() {
-
+      return {
+        create:          function() { return personCreateQuery; },
+        readBulkParam:   function() { return personReadBulkQueryParam; },
+        readBulkNoParam: function() { return personReadBulkQueryNoParam; },
+        read:            function() { return personReadQuery; },
+        getUpdate:       function() { return personGetUpdateQuery; },
+        update:          function() { return personUpdateQuery; },
+        getDelete:       function() { return personGetDeleteQuery; },
+        delete:          function() { return personDeleteQuery; }
+      };
     },
     graph: function() {
-
+      return {
+        readAll:                  function() { return graphReadAllQuery; },
+        readAllPersons:           function() { return graphReadAllPersonsQuery; },
+        readAllMovies:            function() { return graphReadAllMoviesQuery; },
+        readAllRelationshipTypes: function() { return graphArrayOfAllRelationshipTypes; },
+        create_ACTED_IN:          function() { return graphCreate_ACTED_IN_Query; },
+        create_DIRECTED:          function() { return graphCreate_DIRECTED_Query; },
+        create_FOLLOWS:           function() { return graphCreate_FOLLOWS_Query; },
+        create_PRODUCED:          function() { return graphCreate_PRODUCED_Query; },
+        create_REVIEWED:          function() { return graphCreate_REVIEWED_Query; },
+        create_WROTE:             function() { return graphCreate_WROTE_Query; }
+      };
     }
   },
   params: {
@@ -128,7 +205,9 @@ module.exports = {
         getUpdate: function(id) {
           params = { id: parseInt(id) };                                        return params; },
         update: function(id, title, released, tagline) {
-          params = {id: parseInt(id), props: {title: title, released: released, tagline: tagline} }; return params; },
+          params = { 
+            id: parseInt(id), 
+            props: { title: title, released: released, tagline: tagline } };    return params; },
         getDelete: function(id) {
           params = { id: parseInt(id) };                                        return params; },
         delete: function(id) {
@@ -136,10 +215,30 @@ module.exports = {
       };
     },
     persons: function() {
-
+      return {
+        create: function (name, born) { 
+          params = {  name: name, born: born };   return params; },
+        readBulkParam: function (born) {
+          params = { born: born };                return params; },
+        read: function(id) {
+          params = { id: parseInt(id) };          return params; },
+        getUpdate: function(id) {
+          params = { id: parseInt(id) };          return params; },
+        update: function(id, name, born) {
+          params = { 
+            id: parseInt(id), 
+            props: { name: name, born: born } };  return params; },
+        getDelete: function(id) {
+          params = { id: parseInt(id) };          return params; },
+        delete: function(id) {
+          params = { id: parseInt(id) };          return params; }
+      };
     },
     graph: function() {
-
+      return {
+        create: function (source, type, target, property) {
+          params = { source: source, type: type, target: target, property: property };   return params; }
+      };
     }
   },
   callbacks: {
@@ -208,12 +307,12 @@ module.exports = {
       },
       update: function(res) {
         return {
-          api: function (error, responseBody) {
+          api: function(error, responseBody) {
             res.json({
               movie: responseBody.results[0].data
             });
           },   
-          web: function (error, responseBody) {
+          web: function(error, responseBody) {
             res.render('movies/read', {
               slogan: 'Movie updated',
               movie: responseBody.results[0].data[0].row[0]
@@ -223,7 +322,7 @@ module.exports = {
       },
       getDelete: function(res) {
         return {
-          web: function (error, responseBody){
+          web: function(error, responseBody){
             res.render('movies/delete', { 
               slogan: 'Delete a Movie (and all its relationships)',
               id: parseInt(params.id),
@@ -239,7 +338,7 @@ module.exports = {
               nodes_deleted: responseBody.results[0].stats.nodes_deleted
             });
           },        
-          web: function (error, responseBody) {
+          web: function(error, responseBody) {
             res.render('movies/deleted', {
               slogan: 'Amount of deleted movies',
               nodes_deleted: responseBody.results[0].stats.nodes_deleted
@@ -248,11 +347,125 @@ module.exports = {
         };
       }
     },
-    persons: function() {
+    persons: {
+      create: function(res) {
+        return {
+          api: function(error, responseBody) {
+            res.json({
+            person: responseBody.results[0].data 
+            });
+          },
+          web: function(error, responseBody) {
+            res.render('persons/read', {
+              slogan: 'New Actor created',
+              person: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      readBulk: function(res) {
+        return {
+          api: function(error, responseBody) {
+            var persons = [];
+            persons = neo.helpers.readBulk(error, responseBody);
 
+            res.json({
+              persons:  persons
+            });
+          },
+          web: function(error, responseBody) {
+            var persons = [];
+            persons = neo.helpers.readBulk(error, responseBody);
+
+            res.render('persons/readBulk', {
+              slogan: 'All The Persons',
+              persons: persons
+            });
+          }
+        };
+      },
+      read: function(res) {
+        return {
+          api: function(error, responseBody) {
+            res.json({
+              person: responseBody.results[0].data[0].row[0]
+            });
+          },
+          web: function(error, responseBody){
+            res.render('persons/read', {
+              slogan: 'Person',
+              person: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      getUpdate: function(res) {
+        return {
+          web: function(error, responseBody){
+            res.render('persons/update', { 
+              slogan: 'Update a Person',
+              id: parseInt(req.swagger.params.personId.value),
+              person: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      update: function(res) {
+        return {
+          api: function (error, responseBody) {
+            res.json({
+              person: responseBody.results[0].data
+            });
+          },
+          web: function(error, responseBody) {
+            res.render('persons/read', {
+              slogan: 'Person updated',
+              person: responseBody.results[0].data[0].row[0]
+            });
+          }  
+        };
+      },
+      getDelete: function(res) {
+        return {
+          web: function (error, responseBody) {
+            res.render('persons/delete', { 
+              slogan: 'Delete a Person (and all its relationships)',
+              id: parseInt(req.swagger.params.personId.value),
+              person: responseBody.results[0].data[0].row[0]
+            });
+          }
+        };
+      },
+      delete: function(res) {
+        return {
+          api: function(error, responseBody) {
+            res.json({
+              nodes_deleted: responseBody.results[0].stats.nodes_deleted
+            });
+          },
+          web: function (error, responseBody) {
+            res.render('persons/deleted', {
+              slogan: 'Amount of deleted person',
+              nodes_deleted: responseBody.results[0].stats.nodes_deleted
+            });
+          }
+        };
+      }
     },
-    graph: function() {
-
+    graph: {
+      readGraph: function (res) {
+        return {
+          api: function (error, response) {
+            var graph = {};
+            graph = nodeLinks(error, response);
+            
+            res.json({
+              slogan: 'Visual',
+              graph: graph
+            });
+          }
+        };
+      }
     }
   },
   requests: {
@@ -282,100 +495,44 @@ module.exports = {
       };
     },
     persons: function() {
-
+      return {
+        create: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);   
+        },
+        readBulk: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        read: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        getUpdate: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        update: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        getDelete: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        delete: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        }
+      };
     },
     graph: function() {
-
-    }
-  },
-
-  persons: {
-    createQuery: 'CREATE (p:Person { born: {born}, name: {name} }) RETURN p',
-    readBulkQueryParam: 'MATCH (p:Person {born: {born}}) RETURN p',
-    readBulkQueryNoParam: 'MATCH (p:Person) RETURN p',
-    readQuery: 'MATCH p WHERE id(p)={id} RETURN p',
-    getUpdateQuery:'MATCH p WHERE id(p)={id} RETURN p',
-    updateQuery:'MATCH p WHERE id(p)={id} SET p={props} RETURN p',
-    getDeleteQuery: 'MATCH p WHERE id(p)={id} RETURN p',
-    deleteQuery: 'MATCH p WHERE id(p)={id} DETACH DELETE p'
-  },
-
-  graph: {
-    readAllQuery: 'MATCH path = (n)-[r]->(m) RETURN path',
-    readAllPersonsQuery: 'MATCH (p:Person) RETURN p.name ORDER BY p.name',
-    readAllMoviessQuery: 'MATCH (m:Movie) RETURN m.title ORDER BY m.title',
-    allRelationshipTypes: ['ACTED_IN', 'DIRECTED', 'FOLLOWS', 'PRODUCED', 'REVIEWED', 'WROTE'],
-    create_ACTED_IN_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:ACTED_IN {roles: [{property}] }]->(m) RETURN p.name, type(r), m.title, r.roles',
-    create_DIRECTED_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:DIRECTED]->(m) RETURN p.name, type(r), m.title',
-    create_FOLLOWS_Query: 'MATCH (p:Person { name: {source} }), (p2:Person { name: {target} }) CREATE (p)-[r:FOLLOWS]->(p2) RETURN p.name, type(r), p2.name',
-    create_PRODUCED_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:PRODUCED]->(m) RETURN p.name, type(r), m.title',
-    create_REVIEWED_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:REVIEWED {summary: {property} }]->(m) RETURN p.name, type(r), m.title, r.summary',
-    create_WROTE_Query: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:WROTE]->(m) RETURN p.name, type(r), m.title'
-  },
-
-  helpers: {
-
-    readBulk: function callback(error, responseBody) {
-      var dataFromNeo4j = [];
-      var dataToSwagger = [];
-      
-      dataFromNeo4j = responseBody.results[0].data;
-      dataFromNeo4j.map(function (element, index) {
-        dataToSwagger[index] = element.row[0];
-      });
-
-      return dataToSwagger;
-    },
-
-    idIndex: function (array, id) {
-      for (var i = 0; i < array.length; i++) {
-        if (array[i].id === id) {
-          return i;
+      return {
+        getCreate: function(query0, params0, query1, params1, callback) {
+          cypherBatch(query0, params0, query1, params1, callback);
+        },
+        create: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
+        },
+        readGraph: function(query, params, resultType, includeStats, callback) {
+          cypherRequest(query, params, resultType, includeStats, callback);
         }
-      }
-      return null;
-    },
-    
-    nodeLinks: function (error, response) {
-      var nodes = [];
-      var links = [];
-
-      response.results[0].data.forEach(function (row) {
-
-        row.graph.nodes.forEach(function (n) {
-          if(module.exports.helpers.idIndex(nodes, n.id) === null) {
-            if(n.labels[0] === 'Movie') {
-              nodes.push({
-                'id': n.id,
-                'label': n.labels[0],
-                'title': n.properties.title,
-                'tagline': n.properties.tagline,
-                'released': n.properties.released
-              });
-            }
-            if(n.labels[0] === 'Person') {
-              nodes.push({
-                'id': n.id,
-                'label': n.labels[0],
-                'name': n.properties.name,
-                'born': n.properties.born
-              });
-            }
-          }
-        });
-
-        links = links.concat(row.graph.relationships.map(function(r) {
-          return {
-            'source': module.exports.helpers.idIndex(nodes, r.startNode),
-            'target': module.exports.helpers.idIndex(nodes, r.endNode),
-            'value': r.type
-          };
-        }));
-      });
-
-      return {'nodes':nodes, 'links':links};
+      };
     }
+  },
 
-  }
 
 };

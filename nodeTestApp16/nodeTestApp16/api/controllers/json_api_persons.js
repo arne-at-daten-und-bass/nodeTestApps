@@ -21,25 +21,6 @@ module.exports = {
     neo.cypherRequest(query, params, resultType, includeStats, callback);  
   },
 
-  graph: function(req, res) {
-    var query = neo.graph.readAllQuery;
-    var params = {};
-    
-    resultType = ["graph"];
-
-    function callback(error, response) {
-      var graph = {};
-      graph = neo.helpers.nodeLinks(error, response) ;
-      
-      res.json({
-        slogan: 'Visual',
-        graph: graph
-      });
-    }
-
-    neo.cypherRequest(query, params, resultType, includeStats, callback);
-  },
-
   readBulk: function(req, res) {
     var query = neo.persons.readBulkQueryParam;
     var params = {

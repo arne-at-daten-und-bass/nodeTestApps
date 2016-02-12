@@ -8,8 +8,8 @@ var resultType = ["row"];
 // JSON only API:
 module.exports = {
 
-  graph: function(req, res) {
-    var query = neo.graph.readAllQuery();
+  readGraph: function(req, res) {
+    var query = neo.graph.readAllQuery;
     var params = {};
     
     resultType = ["graph"];
@@ -24,7 +24,7 @@ module.exports = {
       });
     }
 
-    neo.cypherRequest(query, params, resultType, includeStats, callback);
+    neo.requests.movies().readBulk(query, params, resultType, includeStats, callback);;
   }
 
 }

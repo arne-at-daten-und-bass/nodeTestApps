@@ -24,12 +24,13 @@ module.exports = {
 
   readBulk: function(req, res) {
     var query = neo.queries.movies().readBulkParam();
+    var params = neo.params.movies().readBulkParam(req.swagger.params.released.value);
 
     if(req.swagger.params.released.value === undefined) {
       query = neo.queries.movies().readBulkNoParam();
+      params = {};
     }
      
-    var params = neo.params.movies().readBulkParam(req.swagger.params.released.value);
     var callback = neo.callbacks.movies.readBulk(res).web;
     neo.requests.movies().readBulk(query, params, resultType, includeStats, callback);
   }, 
