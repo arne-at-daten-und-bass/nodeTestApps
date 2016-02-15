@@ -14,12 +14,13 @@ var cypherBatchJobMethod = 'POST';
 var cypherBatchJobUrl = '/cypher';
 var cypherBatchId = 0;
 
-var movieCreateQuery = 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m';
+// var movieCreateQuery = 'CREATE (m:Movie { title: {title}, released: {released}, tagline: {tagline} }) RETURN m';
+var movieCreateQuery = 'CREATE (m:Movie {properties}) RETURN m';
 var movieReadBulkQueryParam = 'MATCH (m:Movie { released: {released} }) RETURN m';
 var movieReadBulkQueryNoParam = 'MATCH (m:Movie) RETURN m';
 var movieReadQuery = 'MATCH m WHERE id(m)={id} RETURN m';
 var movieGetUpdateQuery = 'MATCH m WHERE id(m)={id} RETURN m';
-var movieUpdateQuery = 'MATCH m WHERE id(m)={id} SET m={props} RETURN m';
+var movieUpdateQuery = 'MATCH m WHERE id(m)={id} SET m={properties} RETURN m';
 var movieGetDeleteQuery = 'MATCH m WHERE id(m)={id} RETURN m';
 var movieDeleteQuery = 'MATCH m WHERE id(m)={id} DETACH DELETE m';
 
@@ -46,6 +47,20 @@ var graphCreate_WROTE_Query = 'MATCH (p:Person { name: {source} }), (m:Movie { t
 
 
 var params = {};
+
+function movieParams (paramsObject) {
+  params = {
+    id: typeof paramsObject.movieId === 'undefined' ? -1 : parseInt(paramsObject.movieId.value),
+    released: typeof paramsObject.released === 'undefined' || typeof paramsObject.released.value === 'undefined' ? -1  : parseInt(paramsObject.released.value),
+    properties: { 
+      title: typeof paramsObject.title === 'undefined' ? -1 : paramsObject.title.value, 
+      released: typeof paramsObject.released === 'undefined' || typeof paramsObject.released.value === 'undefined' ? -1  : parseInt(paramsObject.released.value), 
+      tagline: typeof paramsObject.tagline === 'undefined' ? -1 : paramsObject.tagline.value
+    } 
+  };
+  console.log(params);
+  return params;
+}
 
 var cypherRequest = function(query, params, resultType, includeStats, callback) {
   console.log(query);
@@ -87,7 +102,7 @@ var cypherBatch = function(query0, params0, query1, params1, callback) {
       callback(err, res.body);
     }
   );
-},
+};
 
 function readBulk(error, responseBody) {
   var dataFromNeo4j = [];
@@ -108,7 +123,7 @@ function idIndex(array, id) {
     }
   }
   return null;
-},
+}
 
 function nodeLinks(error, response) {
   var nodes = [];
@@ -155,6 +170,7 @@ module.exports = {
 
   queries: {
     movies: function() {
+      var hallo = "Hallo";
       return {
         create:          function() { return movieCreateQuery; },
         readBulkParam:   function() { return movieReadBulkQueryParam; },
@@ -194,25 +210,31 @@ module.exports = {
     }
   },
   params: {
-    movies: function() {
-      return {
-        create: function(title, released, tagline) {
-          params = { title: title, released: released, tagline: tagline };      return params; },
-        readBulkParam: function(released) {
-          params = {released: released };                                       return params; },
-        read: function(id) {
-          params = { id: parseInt(id) };                                        return params; },
-        getUpdate: function(id) {
-          params = { id: parseInt(id) };                                        return params; },
-        update: function(id, title, released, tagline) {
-          params = { 
-            id: parseInt(id), 
-            props: { title: title, released: released, tagline: tagline } };    return params; },
-        getDelete: function(id) {
-          params = { id: parseInt(id) };                                        return params; },
-        delete: function(id) {
-          params = { id: parseInt(id) };                                        return params; }
-      };
+    movies: function(paramsObject) {
+      params = movieParams(paramsObject); 
+      return params; 
+        // create: function(title, released, tagline) {
+        //   params = {properties: { title: title, released: released, tagline: tagline } };      return params; },
+        // create: function(paramsObject) {
+        //   params = movieParams(paramsObject); return params;
+        // },
+        // // {
+        // // movieParams(paramsObject);      return params; },
+        // readBulkParam: function(released) {
+        //   params = {released: released };                                       return params; },
+        // read: function(id) {
+        //   params = { id: parseInt(id) };                                        return params; },
+        // getUpdate: function(id) {
+        //   params = { id: parseInt(id) };                                        return params; },
+        // update: function(id, title, released, tagline) {
+        //   params = { 
+        //     id: parseInt(id), 
+        //     props: { title: title, released: released, tagline: tagline } };    return params; },
+        // getDelete: function(id) {
+        //   params = { id: parseInt(id) };                                        return params; },
+        // delete: function(id) {
+        //   params = { id: parseInt(id) };                                        return params; }
+        // }
     },
     persons: function() {
       return {
@@ -367,7 +389,7 @@ module.exports = {
         return {
           api: function(error, responseBody) {
             var persons = [];
-            persons = neo.helpers.readBulk(error, responseBody);
+            persons = readBulk(error, responseBody);
 
             res.json({
               persons:  persons
@@ -375,7 +397,7 @@ module.exports = {
           },
           web: function(error, responseBody) {
             var persons = [];
-            persons = neo.helpers.readBulk(error, responseBody);
+            persons = readBulk(error, responseBody);
 
             res.render('persons/readBulk', {
               slogan: 'All The Persons',
@@ -404,7 +426,7 @@ module.exports = {
           web: function(error, responseBody){
             res.render('persons/update', { 
               slogan: 'Update a Person',
-              id: parseInt(req.swagger.params.personId.value),
+              id: parseInt(params.id),
               person: responseBody.results[0].data[0].row[0]
             });
           }
@@ -430,7 +452,7 @@ module.exports = {
           web: function (error, responseBody) {
             res.render('persons/delete', { 
               slogan: 'Delete a Person (and all its relationships)',
-              id: parseInt(req.swagger.params.personId.value),
+              id: parseInt(params.id),
               person: responseBody.results[0].data[0].row[0]
             });
           }
@@ -533,6 +555,5 @@ module.exports = {
       };
     }
   },
-
 
 };
