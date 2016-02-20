@@ -7,8 +7,21 @@ var https = require('https');
 var forceSSL = require('express-force-ssl');
 var app_config = require('./config');
 
-var options = {key: process.env.WEB_HTTPS_KEY, cert: process.env.WEB_HTTPS_CRT};
+//----
+var newConfig = require('./config/config_new');
+// console.log(newConfig.toString());
+// var globalConfig = newConfig.environment();
+// console.log(globalConfig.directory);
 
+// console.log(app_config.environment.test); 
+// app_config.environment.test = "changed";
+// console.log(app_config.environment.test); 
+
+
+// var devConfig = config.
+// console.log(devConfig.directory)
+
+var options = {key: process.env.WEB_HTTPS_KEY, cert: process.env.WEB_HTTPS_CRT};
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
