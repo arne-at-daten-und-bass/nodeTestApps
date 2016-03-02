@@ -5,21 +5,7 @@ var router = express.Router();
 var path = require('path');
 var https = require('https');
 var forceSSL = require('express-force-ssl');
-var app_config = require('./config');
-
-//----
-var newConfig = require('./config/config_new');
-// console.log(newConfig.toString());
-// var globalConfig = newConfig.environment();
-// console.log(globalConfig.directory);
-
-// console.log(app_config.environment.test); 
-// app_config.environment.test = "changed";
-// console.log(app_config.environment.test); 
-
-
-// var devConfig = config.
-// console.log(devConfig.directory)
+var app_config = require('./config/app');
 
 var options = {key: process.env.WEB_HTTPS_KEY, cert: process.env.WEB_HTTPS_CRT};
 
@@ -32,10 +18,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Force to use ONLY HTTPS
-app.set("forceSSLOptions", { httpsPort: app_config.web.https.port });
+app.set("forceSSLOptions", { httpsPort: app_config.web().https.port });
 app.use(forceSSL);
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/en', express.static(path.join(__dirname, 'public')));
+app.use('/es', express.static(__dirname + '/public')); //@TODO: Harmonize path or '+'
+app.use('/de', express.static(__dirname + '/public'));
+app.use('/fr', express.static(__dirname + '/public'));
 
 var config = {
   appRoot: __dirname // required config
@@ -56,7 +46,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 });
 
 // Create HTTPS Server with options from above and port from (non-swagger) config file app_config
-var httpsServer = https.createServer(options, app);
-httpsServer.listen(app_config.web.https.port);
+var httpsServer = https.createServer({key: process.env.WEB_HTTPS_KEY, cert: process.env.WEB_HTTPS_CRT}, app);
+httpsServer.listen(app_config.web().https.port);
 
 // module.exports = app; 

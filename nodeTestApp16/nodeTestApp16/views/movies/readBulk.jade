@@ -2,7 +2,11 @@ extends ../layout
 
 block content
   .android-content.mdl-layout__content
-    .logo-font.android-sub-slogan #{slogan}:
+    .logo-font.android-sub-slogan #{localesStrings['All Movies']}
+    //- @TODO: React to released param if given 
+    //- if paramsFromSwagger | paramsToNeo.released:
+    //-   p #{paramsFromSwagger.released}
+    //- else
     ul
       each movie in movies
         li #{movie.title}

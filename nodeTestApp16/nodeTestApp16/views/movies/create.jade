@@ -3,9 +3,9 @@ extends ../layout
 block content
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{slogan}:
-        form(name="createMovie", action="/movies/create",  method="post")
-          input(type="text", placeholder="Movie Title", name="title")
-          input(type="text", placeholder="Movie Tagline", name="tagline")
-          input(type="number", placeholder="Released Date", name="released")
-          button(type="submit") Submit
+      .logo-font.android-sub-slogan #{localesStrings['Create a new Movie']}:
+        form(name="createMovie", action="/#{locale}/movies/create",  method="post")
+          input(type="text", placeholder="#{localesStrings['Movie Title']}", name="title")
+          input(type="text", placeholder="#{localesStrings['Movie Tagline']}", name="tagline")
+          input(type="number", placeholder="#{localesStrings['Movie Release Year']}", name="released")
+          button(type="submit") #{localesCommands['Create']}

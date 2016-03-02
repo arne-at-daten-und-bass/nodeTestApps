@@ -27,4 +27,4 @@ module.exports = {
     neo.requests.movies().readBulk(query, params, resultType, includeStats, callback);;
   }
 
-}
+};

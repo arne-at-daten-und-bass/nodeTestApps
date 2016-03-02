@@ -8,12 +8,6 @@ var resultType = ["row"];
 // HTML Web:
 module.exports = {
 
-  index: function(req, res) {
-    res.render('index', 
-      { slogan: 'Movie World' 
-    });  
-  },
-
   getCreate: function(req, res) {
     var query0 = neo.graph.readAllPersonsQuery;
     var params0 = {};
