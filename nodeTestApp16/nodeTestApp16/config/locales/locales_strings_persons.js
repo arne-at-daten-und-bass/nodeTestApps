@@ -21,9 +21,9 @@ var localesStringsPersons = {
   },
   'Birth Date': {
     'en': {'EN': 'Birth Date'},
-    'es': {'ES': ''},
+    'es': {'ES': 'cumpleaños'},
     'de': {'DE': 'Geburtsjahr'},
-    // 'fr': {'FR': 'Slogan du Film'},
+    'fr': {'FR': 'Anniversaire'},
   },
   'All Persons': {
     'en': {'EN': 'All persons'},
