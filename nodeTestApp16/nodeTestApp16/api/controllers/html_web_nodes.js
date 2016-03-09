@@ -1,14 +1,14 @@
 'use strict';
 
-var neo = require('../helpers/neo'); // .call({}, dbConfig);
-
-var includeStats = false;
-var resultType = ["row"];
-
+// HTML Web Only:
 var htmlWebNodes = function (localesUtils) {
   var that = this;
-  var locale = 'en'; // @TODO: Move locale (enum) to app or context config
+
+  var locale = localesUtils.getDefaultLocale(); 
   var locales = localesUtils.setLocales('noLocale', locale);
+
+  var includeStats = false;
+  var resultType = ["row"];
 
   return {
 
@@ -34,8 +34,8 @@ var htmlWebNodes = function (localesUtils) {
       locales = localesUtils.setLocales(locale, req.swagger.params.locale.value); 
       locale = req.swagger.params.locale.value;
 
-      var query = (req.swagger.params.released.value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;
-      var params = (req.swagger.params.released.value) ? that.params.otherParams().set(req.swagger.params) : {} ;
+      var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;
+      var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams().set(req.swagger.params) : {} ;
       var callback = that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);

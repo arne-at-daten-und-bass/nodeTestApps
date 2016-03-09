@@ -7,7 +7,7 @@ var localesStringsMovies = {
     'de': {'DE': 'Willlkommen'},
     'fr': {'FR': 'Bienvenue'},
   },
-  'Movie': {
+  '<Instance>': {
     'en': {'EN': 'Movie'},
     'es': {'ES': 'Película'},
     'de': {'DE': 'Film'},
@@ -43,7 +43,7 @@ var localesStringsMovies = {
     'de': {'DE': 'Film speichern'},
     'fr': {'FR': 'Enregistrer un film'},
   },
-  'New Movie created': {
+  'New <Instance> created': {
     'en': {'EN': 'New movie created'},
     'es': {'ES': 'Película grabada'},
     'de': {'DE': 'Film gespeichert'},
@@ -55,7 +55,7 @@ var localesStringsMovies = {
     'de': {'DE': 'Film aktualisieren'},
     'fr': {'FR': 'Actualiser le film'},
   },
-  'Movie updated': {
+  '<Instance> updated': {
     'en': {'EN': 'Movie updated' },
     'es': {'ES': 'Película actualizada'},
     'de': {'DE': 'Film aktualisiert'},
@@ -67,7 +67,7 @@ var localesStringsMovies = {
     'de': {'DE': 'Film löschen (inklusive aller Verweise auf diesen)'},
     'fr': {'FR': 'Effacer le film (et toutes ses relations)'},
   },
-  'Movie Deleted':  {
+  '<Instance> Deleted':  {
     'en': {'EN': 'Movie Deleted'},
     'es': {'ES': 'Película borrada'},
     'de': {'DE': 'Film gelöscht'},

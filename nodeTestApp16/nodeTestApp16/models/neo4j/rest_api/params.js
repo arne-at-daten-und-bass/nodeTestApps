@@ -5,33 +5,36 @@ var paramsToNeo = {};
 var params = {
   // rm nodeType and instead use forEach over this.properties for every nodeType
   inBodyParams: function() {
-    // var paramsToNeo = {};
+    // var paramsToNeo;
     return {
-      set: function(paramsFromSwagger) { //nodeType
-        paramsToNeo = {
-          id: typeof paramsFromSwagger.id === 'undefined' ? -1 : parseInt(paramsFromSwagger.id.value),
-          released: typeof paramsFromSwagger.released === 'undefined' || typeof paramsFromSwagger.released.value === 'undefined' ? -1  : parseInt(paramsFromSwagger.released.value),
-          properties: {
-            title: typeof paramsFromSwagger.movie.value.movie.title === 'undefined' ? -1 : paramsFromSwagger.movie.value.movie.title,
-            released: typeof paramsFromSwagger.movie.value.movie.released === 'undefined' ? -1  : parseInt(paramsFromSwagger.movie.value.movie.released),
-            tagline: typeof paramsFromSwagger.movie.value.movie.tagline === 'undefined' ? -1 : paramsFromSwagger.movie.value.movie.tagline,
-          },
-        };
+      set: function(paramsFromSwagger, nodeType) { //nodeType
+        // paramsToNeo = {
+        //   id: typeof paramsFromSwagger.id === 'undefined' ? -1 : parseInt(paramsFromSwagger.id.value),
+        //   released: typeof paramsFromSwagger.released === 'undefined' || typeof paramsFromSwagger.released.value === 'undefined' ? -1  : parseInt(paramsFromSwagger.released.value),
+        //   properties: {
+        //     title: typeof paramsFromSwagger.movie.value.movie.title === 'undefined' ? -1 : paramsFromSwagger.movie.value.movie.title,
+        //     released: typeof paramsFromSwagger.movie.value.movie.released === 'undefined' ? -1  : parseInt(paramsFromSwagger.movie.value.movie.released),
+        //     tagline: typeof paramsFromSwagger.movie.value.movie.tagline === 'undefined' ? -1 : paramsFromSwagger.movie.value.movie.tagline,
+        //   },
+        // };
+        // console.log(paramsFromSwagger);
+        paramsToNeo = {};
 
-        // Object.keys(paramsFromSwagger).forEach(function(key) {
-        //   if(key === 'id') { 
-        //       paramsToNeo[key] = parseInt(paramsFromSwagger[key].value); 
-        //     } else {
-        //       paramsToNeo[key] = paramsFromSwagger[key].value;
-        //     }
-        // });
+        Object.keys(paramsFromSwagger).forEach(function(key) {
+          if(key === 'id') { 
+              paramsToNeo[key] = parseInt(paramsFromSwagger[key].value); 
+            } else {
+              paramsToNeo[key] = paramsFromSwagger[key].value;
+            }
+        });
 
-        // paramsToNeo.properties = {};
+        paramsToNeo.properties = {};
 
-        // Object.keys(paramsFromSwagger[nodeType].value[nodeType]).forEach(function(key) {
-        //   paramsToNeo.properties[key] = paramsFromSwagger[nodeType].value[nodeType].value;
-        // });
+        Object.keys(paramsFromSwagger[nodeType].value[nodeType]).forEach(function(key) {
+          paramsToNeo.properties[key] = paramsFromSwagger[nodeType].value[nodeType][key];
+        });
 
+        // console.log(paramsToNeo);
         return paramsToNeo;
       },
 
@@ -42,7 +45,7 @@ var params = {
   },
 
   otherParams: function() {
-    // var paramsToNeo = {};
+    // var paramsToNeo;
 
     return {
       set: function(paramsFromSwagger) {
@@ -56,8 +59,8 @@ var params = {
         //   },
         // };
         
-        // change 'released' ref in neq query to 'inQueryParams.released'
         // var that = {};
+        paramsToNeo = {};
         paramsToNeo.properties = {};
         Object.keys(paramsFromSwagger).forEach(function(key) {
         // for (var key in paramsFromSwagger ) {

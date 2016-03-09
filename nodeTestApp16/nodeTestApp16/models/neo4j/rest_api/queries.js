@@ -25,7 +25,7 @@ var queries = {
       getUpate: 'MATCH p WHERE id(p)={id} RETURN p',
       update: 'MATCH p WHERE id(p)={id} SET p={properties} RETURN p',
       getDelete: 'MATCH p WHERE id(p)={id} RETURN p',
-      delete: 'MATCH p WHERE id(p)={id} DETACH DELETE p',
+      delete: 'MATCH p WHERE id(p)={id} WITH p, p.name AS name, p.born AS born DETACH DELETE p RETURN name, born',
     };
 
     return queries;

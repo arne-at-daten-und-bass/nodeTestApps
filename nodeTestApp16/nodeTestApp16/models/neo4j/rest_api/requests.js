@@ -7,7 +7,7 @@ var requests = {
     return { 
       cypherRequest: function(query, params, resultType, includeStats, callback) {
         console.log(query);
-        console.log(JSON.stringify(params));
+        // console.log(JSON.stringify(params));
         request.post({
           headers: dbConfig.headers,
           url: dbConfig.https.url,

@@ -2,7 +2,11 @@ extends ../layout
 
 block content
   .android-content.mdl-layout__content
-    .logo-font.android-sub-slogan #{slogan}:
+    .logo-font.android-sub-slogan #{localesStrings['All Persons']}:
+    //- @TODO: React to born param if given 
+    //- if paramsFromSwagger | paramsToNeo.born:
+    //-   p #{paramsFromSwagger.born}
+    //- else
     ul
       each person in persons
         li #{person.name}

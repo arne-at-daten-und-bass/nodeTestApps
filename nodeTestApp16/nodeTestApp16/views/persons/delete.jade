@@ -1,12 +1,12 @@
 extends ../layout
 
 block content
-  - var action = "/persons/delete/" + parseInt(id)
+  - var action = "/" + locale + "/persons/delete/" + parseInt(id)
   - var name = person.name
   - var born = person.born
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{slogan}:
+      .logo-font.android-sub-slogan #{localesStrings['Delete a Person (and all its relationships)']}:
         form(name="deletePerson", action=action,  method="post")
           input(type="text", value=name , name="name", disabled )
           input(type="number", value=born, name="born", disabled)

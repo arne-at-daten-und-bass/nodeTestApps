@@ -1,6 +1,6 @@
 'use strict';
 
-var callbacks = {  // switch order of arguments according to web/api etc  
+var callbacks = {  // @TODO: switch order of arguments according to web/api etc  
   nodes: function (res, nodeType, template, locales, crudType, nodeId) {
     return {
       api: function(error, responseBodyFromNeo) {
@@ -11,6 +11,7 @@ var callbacks = {  // switch order of arguments according to web/api etc
             var nodes = [];
             nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
             responseObjectToSwagger[nodeType] = nodes;
+            console.log(JSON.stringify(responseObjectToSwagger));
             break;
           case 'delete':
             responseObjectToSwagger = {
@@ -20,7 +21,7 @@ var callbacks = {  // switch order of arguments according to web/api etc
           default:
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
         }
-
+        // console.log(JSON.stringify(responseObjectToSwagger));
         return res.json(responseObjectToSwagger);
       },
 
@@ -35,7 +36,7 @@ var callbacks = {  // switch order of arguments according to web/api etc
         // console.log(JSON.stringify(crudType));
         switch (crudType){
           case 'create':
-            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['New Movie created'];
+            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['New <Instance> created'];
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
             break;
           case 'readBulk':
@@ -45,19 +46,19 @@ var callbacks = {  // switch order of arguments according to web/api etc
             responseObjectToSwagger[nodeType] = nodes;
             break;
           case 'read':
-            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['Movie'];
+            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance>'];
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
             break;
           case 'update':
-            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['Movie updated'];
+            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance> updated'];
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
             break;
           case 'delete':
             var deletedNodeProperties = {};
             deletedNodeProperties = callbacks.utils.getDeletedNodeProperties(error, responseBodyFromNeo);
             
-            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['Movie Deleted'];
-            responseObjectToSwagger.nodes_deleted = responseBodyFromNeo.results[0].stats.nodes_deleted,
+            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance> Deleted'];
+            responseObjectToSwagger.nodes_deleted = responseBodyFromNeo.results[0].stats.nodes_deleted;
             responseObjectToSwagger[nodeType] = deletedNodeProperties;
             break;
           default:
@@ -66,7 +67,7 @@ var callbacks = {  // switch order of arguments according to web/api etc
         // console.log(JSON.stringify(responseObjectToSwagger));
         return res.render(template, responseObjectToSwagger);
       },
-    }
+    };
   },
   graph: {
 
@@ -135,12 +136,17 @@ var callbacks = {  // switch order of arguments according to web/api etc
       return { nodes:nodes, links:links };
     },
     getDeletedNodeProperties: function (error, responseBodyFromNeo) {
-      return {
-        title: responseBodyFromNeo.results[0].data[0].row[0],
-        released: responseBodyFromNeo.results[0].data[0].row[1],
-        tagline: responseBodyFromNeo.results[0].data[0].row[2]
-      };
-    }
+      var dataFromNeo4jColumns = [];
+      var dataFromNeo4jRows = [];
+      var dataToSwagger = {};
+
+      dataFromNeo4jColumns = responseBodyFromNeo.results[0].columns;
+      dataFromNeo4jRows = responseBodyFromNeo.results[0].data[0].row;
+      dataFromNeo4jRows.forEach(function(value, index) {        
+        dataToSwagger[dataFromNeo4jColumns[index]] = dataFromNeo4jRows[index];
+      });
+      return dataToSwagger;
+    },
   },
 };
 
