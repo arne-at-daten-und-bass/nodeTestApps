@@ -1,9 +1,10 @@
 'use strict';
 
-var callbacks = {  // @TODO: switch order of arguments according to web/api etc  
+var callbacks = {  // @TODO: switch order of arguments according to web/api etc  see below also for graph
   nodes: function (res, nodeType, template, locales, crudType, nodeId) {
+    
     return {
-      api: function(error, responseBodyFromNeo) {
+      api: function (error, responseBodyFromNeo) {
         var responseObjectToSwagger = {};
 
         switch (crudType){
@@ -25,7 +26,7 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc
         return res.json(responseObjectToSwagger);
       },
 
-      web: function(error, responseBodyFromNeo) {
+      web: function (error, responseBodyFromNeo) {
         var responseObjectToSwagger = {
           locale: locales.locale,
           localesStrings: locales.localesStrings,
@@ -69,8 +70,28 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc
       },
     };
   },
-  graph: {
+  graph: function (res, nodeType, template, locales, crudType, nodeId) {
+    
+    return {
+      api: function (error, responseBodyFromNeo) {
+        var responseObjectToSwagger = {};
 
+        switch (crudType) {
+          case 'readGraph':
+            responseObjectToSwagger.graph = callbacks.utils.nodeLinks(error, responseBodyFromNeo);
+            break;
+          case 'create':
+            break;
+          default:
+            console.log('Default case.');
+        }
+
+        return res.json(responseObjectToSwagger);
+      },
+      web: function (error, responseBodyFromNeo) {
+        // body...
+      }
+    };
   },
   utils: {
     readBulk: function(error, responseBodyFromNeo) {

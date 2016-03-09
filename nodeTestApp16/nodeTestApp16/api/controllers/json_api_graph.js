@@ -1,30 +1,21 @@
 'use strict';
 
-var neo = require('../helpers/neo');
-
-var includeStats = false;
-var resultType = ["row"];
-
 // JSON only API:
-module.exports = {
+module.exports = function () {
+  var that = this;  
 
-  readGraph: function(req, res) {
-    var query = neo.graph.readAllQuery;
-    var params = {};
-    
-    resultType = ["graph"];
+  var includeStats = false;
+  var resultType = ["row"];
 
-    function callback(error, response) {
-      var graph = {};
-      graph = neo.helpers.nodeLinks(error, response) ;
-      
-      res.json({
-        slogan: 'Visual',
-        graph: graph
-      });
+  return {
+    readGraph: function(req, res) {
+      var query = that.queries.readAllGraph;
+      var params = {};
+      var callback = that.callbacks.graph(res, '', '', '', 'readGraph').api;
+
+      resultType = ["graph"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }
-
-    neo.requests.movies().readBulk(query, params, resultType, includeStats, callback);;
-  }
-
+  };
 };

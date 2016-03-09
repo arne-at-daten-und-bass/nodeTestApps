@@ -17,12 +17,7 @@ var localesUtils = function (defaultLocale, localesMenu, localesCommands, locale
         locales.localesStrings = this.filterStrings(localeOfCurrentReq, localesStrings);
         locales.localesCommands = this.filterStrings(localeOfCurrentReq, localesCommands);
         locales.localesUnits = typeof localesUnits === 'undefined' ? -1 : this.filterStrings(localeOfCurrentReq, localesCommands);
-      }
-
-      // @TODO: Set Slogan for read template here if CRUDTYPE has changed
-      // if (crudType !== crudTypeOfCurrentReq) {
-
-      // }    
+      }   
 
       return locales;
     },

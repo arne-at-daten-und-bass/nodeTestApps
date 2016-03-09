@@ -26,7 +26,7 @@ paths:
 ## HTML WEB ##
   # HTML Web: Index
   /:
-    x-swagger-router-controller: html_web_index
+    x-swagger-router-controller: context_html_web_index
     get:
       description: Redirects to localized main html (locale is detected according to req.acceptsLanguages() in express.js)
       produces: 
@@ -42,7 +42,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /{locale}:
-    x-swagger-router-controller: html_web_index
+    x-swagger-router-controller: context_html_web_index
     get:
       description: Returns a localized main html
       produces: 
@@ -63,20 +63,20 @@ paths:
 ### Graph ### 
 
 ## JSON only API: Graph as JSON for visualization ##
-  # /graph:
-  #   x-swagger-router-controller: json_api_graph
-  #   get:
-  #     description: Returns JSON of graph with IDed nodes and links (TODO type description)
-  #     operationId: readGraph
-  #     responses:
-  #       "200":
-  #         description: Successfully GOT visualize
-  #         schema:
-  #           type: string
-  #       default:
-  #         description: Error
-  #         schema:
-  #           $ref: "#/definitions/ErrorResponse"
+  /graph:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of graph with IDed nodes and links (TODO type description)
+      operationId: readGraph
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 ## HTML Web: Create one and Read (several) relationships(s)
   # /graph/relationship/create:

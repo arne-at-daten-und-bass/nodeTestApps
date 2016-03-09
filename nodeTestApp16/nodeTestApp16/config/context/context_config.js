@@ -15,7 +15,7 @@ var localesStringsPersons = require('../locales/locales_strings_persons');
 var localesUtils = require('../locales/utils/locales_utils');
 
 var context = {
-  global: {
+  index: {
     crudTypes: [],      // @TODO: Not used yet, better taken from Swagger ? Does each nodetype require own CRUDs? Global?
     supportedLocales: ['en', 'es', 'de', 'fr'], //@TODO: Already meaningful used???
     defaultLocale: 'en',
@@ -49,9 +49,20 @@ var context = {
     }
   },
   graph: {
-    relationshipTypes: [],
+    relationshipTypes: ['ACTED_IN', 'DIRECTED', 'FOLLOWS', 'PRODUCED', 'REVIEWED', 'WROTE'],
+    queries: queries.graph(),
+    params: params,
+    callbacks: callbacks,
+    requests: requests.db(dbConfig),
   },
 };
+
+
+var context_html_web_index = require('../../api/controllers/html_web_index')
+                               .call(context.index); 
+
+var context_json_api_graph = require('../../api/controllers/json_api_graph')
+                               .call(context.graph); 
 
 var context_json_api_movies = require('../../api/controllers/json_api_nodes')
                                .call(context.nodes.movies); 
@@ -60,12 +71,14 @@ var context_json_api_persons = require('../../api/controllers/json_api_nodes')
                                .call(context.nodes.persons); 
 
 var context_html_web_movies = require('../../api/controllers/html_web_nodes')
-                               .call(context.nodes.movies, localesUtils(context.global.defaultLocale, localesMenuApp, localesCommandsApp, localesStringsMovies));
+                               .call(context.nodes.movies, localesUtils(context.index.defaultLocale, localesMenuApp, localesCommandsApp, localesStringsMovies));
 
 var context_html_web_persons = require('../../api/controllers/html_web_nodes')
-                               .call(context.nodes.persons, localesUtils(context.global.defaultLocale, localesMenuApp, localesCommandsApp, localesStringsPersons));
+                               .call(context.nodes.persons, localesUtils(context.index.defaultLocale, localesMenuApp, localesCommandsApp, localesStringsPersons));
 
 module.exports = {
+  context_html_web_index: context_html_web_index,
+  context_json_api_graph: context_json_api_graph,
   context_json_api_movies: context_json_api_movies,
   context_json_api_persons: context_json_api_persons,
   context_html_web_movies: context_html_web_movies,
