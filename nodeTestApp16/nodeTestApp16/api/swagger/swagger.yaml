@@ -59,6 +59,61 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /{locale}/about:
+    x-swagger-router-controller: context_html_web_index
+    get:
+      description: Returns a localized main html
+      produces: 
+        - text/html
+      operationId: about
+      parameters:
+        - $ref: "#/parameters/locale"
+      responses:
+        "200":
+          description: Successfully GOT a localized about html
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /{locale}/contact:
+    x-swagger-router-controller: context_html_web_index
+    get:
+      description: Returns a localized main html
+      produces: 
+        - text/html
+      operationId: contact
+      parameters:
+        - $ref: "#/parameters/locale"
+      responses:
+        "200":
+          description: Successfully GOT a localized contact html
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /{locale}/imprint:
+    x-swagger-router-controller: context_html_web_index
+    get:
+      description: Returns a localized main html
+      produces: 
+        - text/html
+      operationId: imprint
+      parameters:
+        - $ref: "#/parameters/locale"
+      responses:
+        "200":
+          description: Successfully GOT a localized imprint html
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 
 ### Graph ### 
 

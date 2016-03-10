@@ -15,15 +15,15 @@ var localesStringsPersons = {
   },
   'Birth Date': {
     'en': {'EN': 'Birth Date'},
-    'es': {'ES': 'cumpleaños'},
+    'es': {'ES': 'Cumpleaños'},
     'de': {'DE': 'Geburtsjahr'},
     'fr': {'FR': 'Anniversaire'},
   },
   'All Persons': {
-    'en': {'EN': 'All persons'},
-    'es': {'ES': 'Todas las personas'},
+    'en': {'EN': 'All Persons'},
+    'es': {'ES': 'Todas las Personas'},
     'de': {'DE': 'Alle Personen'},
-    'fr': {'FR': 'Tous les persons'},
+    'fr': {'FR': 'Tous les Persons'},
   },
   'Create a new Person': {
     'en': {'EN': 'Create a new Person'},

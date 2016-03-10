@@ -19,7 +19,7 @@ block content
       script(src="//d3js.org/d3.v3.min.js" charset="utf-8")
       script.
         var width = 960,
-            height = 700;
+            height = 600;
 
         var color = d3.scale.category20();
 
@@ -117,26 +117,29 @@ block content
     //-           | Text uppercase
     //-           i.material-icons chevron_right
     footer.android-footer.mdl-mega-footer
-      //- .mdl-mega-footer--top-section
-      //-   .mdl-mega-footer--left-section
-      //-     button.mdl-mega-footer--social-btn
+      .mdl-mega-footer--top-section
+        .mdl-mega-footer--left-section
+          a(href='https://twitter.com/daten_und_bass', target='blank')
+            button.mdl-mega-footer--social-btn.social-btn.social-btn__twitter
       //-   .mdl-mega-footer--right-section
       //-     a.mdl-typography--font-light(href='#top')
       //-       | Back to top
       //-       i.material-icons expand_less
       .mdl-mega-footer--middle-section
-        p.mdl-typography--font-light #{localesMenu['The Movie Graph']} © 2016 d&b daten&bass
+        p.mdl-typography--font-light #{localesMenu['The Movie Graph']} © 2016 daten&bass
         //- p.mdl-typography--font-light Some features and devices may not be available in all areas
       .mdl-mega-footer--bottom-section
         a#version-dropdown.android-link.android-link-menu.mdl-typography--font-light
           | #{localesMenu['Users']} 
           i.material-icons arrow_drop_up
         ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='version-dropdown')
-          li.mdl-menu__item(href='') #{localesMenu['Home']}
+          li.mdl-menu__item
+            a.mdl-menu__item(href='/#{locale}') #{localesMenu['Home']}
         a#developers-dropdown.android-link.android-link-menu.mdl-typography--font-light
           | #{localesMenu['Developers']} 
           i.material-icons arrow_drop_up
         ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='developers-dropdown')
-          li.mdl-menu__item(href='') #{localesMenu['Github Code']}
-        a.android-link.mdl-typography--font-light(href='') #{localesMenu['Imprint']}
-        a.android-link.mdl-typography--font-light(href='') #{localesMenu['Contact']}
+          li.mdl-menu__item
+            a.mdl-menu__item(href='https://github.com/daten-und-bass', target='blank') #{localesMenu['Github Code']}
+        a.android-link.mdl-typography--font-light(href='/#{locale}/imprint') #{localesMenu['Imprint']}
+        a.android-link.mdl-typography--font-light(href='/#{locale}/contact') #{localesMenu['Contact']}

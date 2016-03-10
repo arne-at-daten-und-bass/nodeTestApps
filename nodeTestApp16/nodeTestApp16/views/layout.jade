@@ -25,12 +25,19 @@ html(lang='en')
             nav.android-navigation.mdl-navigation
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='/#{locale}') #{localesMenu['Home']}
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='/#{locale}/about') #{localesMenu['About']}
+              a.mdl-navigation__link.mdl-typography--text-uppercase(disabled='') #{localesMenu['Login']}
           span.android-mobile-title.mdl-layout-title
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
-            i.material-icons more_vert
+            i.material-icons language
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
-            li.mdl-menu__item(href='') #{localesMenu['Github Code']}
-            li.mdl-menu__item(disabled='') #{localesMenu['Login']}
+            li.mdl-menu__item
+              a.mdl-navigation__link(href='/en') English
+            li.mdl-menu__item
+              a.mdl-navigation__link(href='/de') Deutsch
+            li.mdl-menu__item
+              a.mdl-navigation__link(href='/es') Español 
+            li.mdl-menu__item
+              a.mdl-navigation__link(href='/fr') Français 
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title

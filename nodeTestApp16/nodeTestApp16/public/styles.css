@@ -178,7 +178,8 @@ a img{
 
 .android-be-together-section {
   position: relative;
-  height: 800px;
+  /*height: 800px;*/
+  height: 600px;
   width: auto;
   background-color: #f3f3f3;
   /*background: url('images/slide01.jpg') center 30% no-repeat;*/
@@ -546,4 +547,23 @@ a img{
   .android-footer .mdl-mega-footer--bottom-section {
     display: none;
   }
+}
+
+/* AW: Self added because of missing social media classes/buttons support */
+
+.social-btn {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  /*margin: 0 16px;*/
+  margin: 0 0px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.46;
+  border-radius: 2px;
+}
+.social-btn__twitter {
+  background-image: url('https://www.gstatic.com/images/icons/material/system/2x/post_twitter_black_24dp.png');
 }
