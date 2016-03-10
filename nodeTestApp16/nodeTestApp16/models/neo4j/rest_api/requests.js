@@ -14,7 +14,7 @@ var requests = {
           ca: process.env.DB_HTTPS_CA,
           json: { statements: [{ statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats }] }, 
         }, function(err, res) {
-          console.log(JSON.stringify(res.body));
+          // console.log(JSON.stringify(res.body));
             callback(err, res.body);
           }
         );
@@ -23,7 +23,7 @@ var requests = {
       cypherBatch: function(query0, params0, query1, params1, callback) {
         request.post({
           headers: dbConfig.headers,
-          url: dbConfig.batch.job.url,
+          url: dbConfig.batch.url,
           ca: process.env.DB_HTTPS_CA,
           json: [ {
             method: dbConfig.batch.job.method,
@@ -43,6 +43,8 @@ var requests = {
             id: 1,
           }, ], 
         }, function(err, res) {
+            // console.log(err);
+            // console.log(res);
             callback(err, res.body);
           }
         );

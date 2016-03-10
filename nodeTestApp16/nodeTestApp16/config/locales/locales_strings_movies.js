@@ -1,12 +1,6 @@
 'use strict';
 
 var localesStringsMovies = {
-  'Welcome': {
-    'en': {'EN': 'Welcome'},
-    'es': {'ES': 'Bienvenida'},
-    'de': {'DE': 'Willlkommen'},
-    'fr': {'FR': 'Bienvenue'},
-  },
   '<Instance>': {
     'en': {'EN': 'Movie'},
     'es': {'ES': 'Película'},

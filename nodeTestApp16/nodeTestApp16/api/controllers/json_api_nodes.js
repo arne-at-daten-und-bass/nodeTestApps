@@ -11,7 +11,7 @@ var jsonApiNodes = function () {
 
     create: function(req, res) {
       var query = that.queries.create;
-      var params = that.params.inBodyParams().set(req.swagger.params, that.nodeType);
+      var params = that.params.inBodyParams.set(req.swagger.params, that.nodeType);
       var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'create').api;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
@@ -20,7 +20,7 @@ var jsonApiNodes = function () {
     //@FIX (Maybe a Swagger Bug ... worked with less movies): Not working without Params (Malformed response), but does work with Params given
     readBulk: function(req, res) {
       var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;;
-      var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams().set(req.swagger.params) : {} ;
+      var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
       var callback = that.callbacks.nodes(res, that.nodeTypePlural, 'abc', 'def', 'readBulk').api;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
@@ -28,7 +28,7 @@ var jsonApiNodes = function () {
 
     read: function(req, res) {
       var query = that.queries.read;
-      var params = that.params.otherParams().set(req.swagger.params);
+      var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'read').api;
       
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
@@ -36,7 +36,7 @@ var jsonApiNodes = function () {
 
     update: function(req, res) {
       var query = that.queries.update;
-      var params = that.params.inBodyParams().set(req.swagger.params, that.nodeType);
+      var params = that.params.inBodyParams.set(req.swagger.params, that.nodeType);
       var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'update').api;
       
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
@@ -44,7 +44,7 @@ var jsonApiNodes = function () {
 
     delete: function(req, res) {
       var query = that.queries.delete;
-      var params = that.params.otherParams().set(req.swagger.params);
+      var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'delete').api;
 
       includeStats = true;

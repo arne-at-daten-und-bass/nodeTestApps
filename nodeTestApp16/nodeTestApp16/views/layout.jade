@@ -6,7 +6,7 @@ html(lang='en')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='description', content='nodeTestApp16')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title nodeTestApp16
+    title #{localesMenu['The Movie Graph']}
     // Page styles
     link(href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en', rel='stylesheet')
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
@@ -23,34 +23,28 @@ html(lang='en')
           //- Top Navigation
           .android-navigation-container
             nav.android-navigation.mdl-navigation
-              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Home
-              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') About
-              a.mdl-navigation__link.mdl-typography--text-uppercase(href='') Imprint
+              a.mdl-navigation__link.mdl-typography--text-uppercase(href='/#{locale}') #{localesMenu['Home']}
+              a.mdl-navigation__link.mdl-typography--text-uppercase(href='/#{locale}/about') #{localesMenu['About']}
           span.android-mobile-title.mdl-layout-title
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
             i.material-icons more_vert
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
-            li.mdl-menu__item Github Code
-            li.mdl-menu__item(disabled='') Login
+            li.mdl-menu__item(href='') #{localesMenu['Github Code']}
+            li.mdl-menu__item(disabled='') #{localesMenu['Login']}
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title
         nav.mdl-navigation
-          a.mdl-navigation__link(href='') The Movie Graph
+          a.mdl-navigation__link(href='/#{locale}') #{localesMenu['The Movie Graph']}
+          a.mdl-navigation__link(href='/#{locale}/graph/relationship/create') #{localesMenu['Create a Relationship']}
           .android-drawer-separator
-          span.mdl-navigation__link(href='') Movies
-          a.mdl-navigation__link(href='') Create
-          a.mdl-navigation__link(href='') Read (all)
-          a.mdl-navigation__link(href='') Read (one)
-          a.mdl-navigation__link(href='') Update (one)
-          a.mdl-navigation__link(href='') Delete (one)
+          span.mdl-navigation__link(href='') #{localesMenu['Movies']}
+          a.mdl-navigation__link(href='/#{locale}/movies/create') #{localesMenu['Create a Movie']}
+          a.mdl-navigation__link(href='/#{locale}/movies') #{localesMenu['All Movies']}
           .android-drawer-separator
-          span.mdl-navigation__link(href='') Persons
-          a.mdl-navigation__link(href='') Create
-          a.mdl-navigation__link(href='') Read (all)
-          a.mdl-navigation__link(href='') Read (one)
-          a.mdl-navigation__link(href='') Update (one)
-          a.mdl-navigation__link(href='') Delete (one)
+          span.mdl-navigation__link(href='') #{localesMenu['Persons']}
+          a.mdl-navigation__link(href='/#{locale}/persons/create') #{localesMenu['Create a Person']}
+          a.mdl-navigation__link(href='/#{locale}/persons') #{localesMenu['All Persons']}
       block content
 
     script(src='/material.min.js')

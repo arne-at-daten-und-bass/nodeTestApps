@@ -1,7 +1,7 @@
 'use strict';
 
 // JSON only API:
-module.exports = function () {
+var jsonApiGraph = function () {
   var that = this;  
 
   var includeStats = false;
@@ -19,3 +19,5 @@ module.exports = function () {
     }
   };
 };
+
+module.exports = jsonApiGraph;

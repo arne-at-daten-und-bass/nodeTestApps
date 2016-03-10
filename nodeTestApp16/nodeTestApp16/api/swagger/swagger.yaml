@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
+  version: "0.0.4"
   title: nodeTestApp16
 host: dockerHostIp:10010
 basePath: /
@@ -79,59 +79,62 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 ## HTML Web: Create one and Read (several) relationships(s)
-  # /graph/relationship/create:
-  #   x-swagger-router-controller: html_web_graph
-  #   get:
-  #     description: Returns html view for a relationship (from person to movie) creation form
-  #     produces: 
-  #       - text/html
-  #     operationId: getCreate
-  #     responses:
-  #       "200":
-  #         description: Successfully GOT view for relationship creation form
-  #         schema:
-  #           type: string
-  #       default:
-  #         description: Error
-  #         schema:
-  #           $ref: "#/definitions/ErrorResponse"
-  #   post:
-  #     description: Creates a new relationship entry via Web (HTML in Browser)
-  #     consumes:
-  #       - application/x-www-form-urlencoded
-  #     produces: 
-  #       - text/html
-  #     operationId: create
-  #     parameters:
-  #       - name: source
-  #         required: true
-  #         in: formData
-  #         description: a new relationships startpoint (person)
-  #         type: string
-  #       - name: type
-  #         required: true
-  #         in: formData
-  #         description: a new relationships type
-  #         type: string
-  #       - name: target
-  #         required: true
-  #         in: formData
-  #         description: a new relationships endpoint (movie or person)
-  #         type: string
-  #       - name: property
-  #         required: false
-  #         in: formData
-  #         description: a new relationships property (only for 'ACTED_IN' and 'REVIEWED')
-  #         type: string
-  #     responses:
-  #       "200":
-  #         description: Successfully stored a new relationship
-  #         schema:
-  #           type: string
-  #       default:
-  #         description: Error
-  #         schema:
-  #           $ref: "#/definitions/ErrorResponse"
+  /{locale}/graph/relationship/create:
+    x-swagger-router-controller: context_html_web_graph
+    get:
+      description: Returns html view for a relationship (from person to movie) creation form
+      produces: 
+        - text/html
+      operationId: getCreate
+      parameters:
+        - $ref: "#/parameters/locale"
+      responses:
+        "200":
+          description: Successfully GOT view for relationship creation form
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Creates a new relationship entry via Web (HTML in Browser)
+      consumes:
+        - application/x-www-form-urlencoded
+      produces: 
+        - text/html
+      operationId: create
+      parameters:
+        - $ref: "#/parameters/locale"
+        - name: source
+          required: true
+          in: formData
+          description: a new relationships startpoint (person)
+          type: string
+        - name: type
+          required: true
+          in: formData
+          description: a new relationships type
+          type: string
+        - name: target
+          required: true
+          in: formData
+          description: a new relationships endpoint (movie or person)
+          type: string
+        - name: property
+          required: false
+          in: formData
+          description: a new relationships property (only for 'ACTED_IN' and 'REVIEWED')
+          type: string
+      responses:
+        "200":
+          description: Successfully stored a new relationship
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 ### Nodes ###
 

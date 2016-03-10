@@ -13,8 +13,7 @@ var appConfig = {
     return environment;
   },
 
-  web: function() 
-  {
+  web: function() {
     var web = {
       ip: '172.17.0.2', // not used
       http: {

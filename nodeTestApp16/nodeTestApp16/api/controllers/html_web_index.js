@@ -1,22 +1,30 @@
 'use strict';
 
-var htmlWebIndex = function () {
+var htmlWebIndex = function (localesUtils) {
   var that = this;
+
+  var locale = localesUtils.getDefaultLocale(); 
+  var locales = localesUtils.setLocales('noLocale', locale, that.strings);
 
   return {
     index: function(req, res) {
-      // var locale = req.acceptsLanguages( 'en', 'es', 'de', 'fr' );
-      var locale = req.acceptsLanguages(that.supportedLocales);
-      if (locale) {
-        res.redirect('/' + locale);
+      var guessedLocale = req.acceptsLanguages(that.supportedLocales);
+
+      if (guessedLocale) {
+        res.redirect('/' + guessedLocale);
       } else {
         res.redirect(that.defaultLocale);
       }
     },
 
     index_locale: function(req, res) {
+      locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
+      locale = req.swagger.params.locale.value;
+
       res.render('index', 
-        { slogan: 'Movie World' 
+        { locale: locale,
+          localesMenu: locales.localesMenu,
+          localesCommands: locales.localesCommands,
       });  
     },
   };

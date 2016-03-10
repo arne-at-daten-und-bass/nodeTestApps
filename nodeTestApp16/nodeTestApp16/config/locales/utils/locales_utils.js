@@ -2,22 +2,24 @@
 
 var locales = {};
 
-var localesUtils = function (defaultLocale, localesMenu, localesCommands, localesStrings, localesUnits) {
+var localesUtils = function (defaultLocale, localesMenu, localesCommands, localesUnits) {
 
   return {
     getDefaultLocale: function () {
       return defaultLocale;
     },
-    setLocales: function (locale, localeOfCurrentReq) {
+    // @TODO: Optimize (try a localesStrings check and filtering each language only once at startup and hold refs to it)
+    setLocales: function (locale, localeOfCurrentReq, localesStrings) {
       
       if (locale !== localeOfCurrentReq) {
+        locales = {};
         locales.defaultLocale = defaultLocale;
         locales.locale = localeOfCurrentReq;
-        locales.localesMenu = localesMenu;
-        locales.localesStrings = this.filterStrings(localeOfCurrentReq, localesStrings);
+        locales.localesMenu = this.filterStrings(localeOfCurrentReq, localesMenu);
         locales.localesCommands = this.filterStrings(localeOfCurrentReq, localesCommands);
         locales.localesUnits = typeof localesUnits === 'undefined' ? -1 : this.filterStrings(localeOfCurrentReq, localesCommands);
-      }   
+      } 
+      locales.localesStrings = this.filterStrings(localeOfCurrentReq, localesStrings);  
 
       return locales;
     },

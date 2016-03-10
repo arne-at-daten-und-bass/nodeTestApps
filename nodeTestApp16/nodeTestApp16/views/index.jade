@@ -5,7 +5,7 @@ block content
     a(name='top')
     .android-be-together-section.mdl-typography--text-center
       //- .logo-font.android-slogan #{slogan}
-      div(style="margin-bottom:20px;").logo-font.android-sub-slogan #{slogan}
+      div(style="margin-bottom:20px;").logo-font.android-sub-slogan #{localesMenu['The Movie Graph']}
       style.
         .node {
           stroke: #fff;
@@ -72,73 +72,71 @@ block content
       //-   a(href='')
       //-     img(src='images/andy.png')
       //-     |  create your android character
-      a(href='#screens')
-        button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
-          i.material-icons expand_more
-    .android-screen-section.mdl-typography--text-center
-      a(name='screens')
-      .mdl-typography--display-1-color-contrast Display 1 color contrast
-        form(name="addMovie", action="/movies",  method="post")
-          input(type="text", placeholder="Movie Title", name="title")
-          input(type="text", placeholder="Movie Tagline", name="tagline")
-          input(type="number", placeholder="Released Date", name="released")
-          button(type="submit") Submit
-      .android-screens
-    .android-wear-section
-      .android-wear-band
-        .android-wear-band-text
-          .mdl-typography--display-2.mdl-typography--font-thin Display 2
-          p.mdl-typography--headline.mdl-typography--font-thin
-            | Headline Headline Headline Headline
-          p
-            a.mdl-typography--font-regular.mdl-typography--text-uppercase.android-alt-link(href='')
-              | Text uppercase
-              i.material-icons chevron_right
-    .android-customized-section
-      .android-customized-section-text
-        .mdl-typography--font-light.mdl-typography--display-1-color-contrast Display 1 color contrast
-        p.mdl-typography--font-light
-          | Font ligth: Font ligth: Font ligth: Font ligth: Font ligth: Font ligth:
-          br
-          a.android-link.mdl-typography--font-light(href='') Font ligth as link
-      .android-customized-section-image
-    .android-more-section
-      .android-section-title.mdl-typography--display-1-color-contrast Display 1 color contrast
-      .android-card-container.mdl-grid
-        .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-          .mdl-card__media
-            img(src='/images/more-from-1.png')
-          .mdl-card__title
-            h4.mdl-card__title-text Card title text
-          .mdl-card__supporting-text
-            span.mdl-typography--font-light.mdl-typography--subhead Font ligth Subhead
-          .mdl-card__actions
-            a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-              | Text uppercase
-              i.material-icons chevron_right
+      //- a(href='#screens')
+      //-   button.android-fab.mdl-button.mdl-button--colored.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect
+      //-     i.material-icons expand_more
+    //- .android-screen-section.mdl-typography--text-center
+    //-   a(name='screens')
+    //-   .mdl-typography--display-1-color-contrast Display 1 color contrast
+    //-     form(name="addMovie", action="/movies",  method="post")
+    //-       input(type="text", placeholder="Movie Title", name="title")
+    //-       input(type="text", placeholder="Movie Tagline", name="tagline")
+    //-       input(type="number", placeholder="Released Date", name="released")
+    //-       button(type="submit") Submit
+    //-   .android-screens
+    //- .android-wear-section
+    //-   .android-wear-band
+    //-     .android-wear-band-text
+    //-       .mdl-typography--display-2.mdl-typography--font-thin Display 2
+    //-       p.mdl-typography--headline.mdl-typography--font-thin
+    //-         | Headline Headline Headline Headline
+    //-       p
+    //-         a.mdl-typography--font-regular.mdl-typography--text-uppercase.android-alt-link(href='')
+    //-           | Text uppercase
+    //-           i.material-icons chevron_right
+    //- .android-customized-section
+    //-   .android-customized-section-text
+    //-     .mdl-typography--font-light.mdl-typography--display-1-color-contrast Display 1 color contrast
+    //-     p.mdl-typography--font-light
+    //-       | Font ligth: Font ligth: Font ligth: Font ligth: Font ligth: Font ligth:
+    //-       br
+    //-       a.android-link.mdl-typography--font-light(href='') Font ligth as link
+    //-   .android-customized-section-image
+    //- .android-more-section
+    //-   .android-section-title.mdl-typography--display-1-color-contrast Display 1 color contrast
+    //-   .android-card-container.mdl-grid
+    //-     .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
+    //-       .mdl-card__media
+    //-         img(src='/images/more-from-1.png')
+    //-       .mdl-card__title
+    //-         h4.mdl-card__title-text Card title text
+    //-       .mdl-card__supporting-text
+    //-         span.mdl-typography--font-light.mdl-typography--subhead Font ligth Subhead
+    //-       .mdl-card__actions
+    //-         a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
+    //-           | Text uppercase
+    //-           i.material-icons chevron_right
     footer.android-footer.mdl-mega-footer
-      .mdl-mega-footer--top-section
-        .mdl-mega-footer--left-section
-          button.mdl-mega-footer--social-btn
-        .mdl-mega-footer--right-section
-          a.mdl-typography--font-light(href='#top')
-            | Font light as link back to top
-            i.material-icons expand_less
+      //- .mdl-mega-footer--top-section
+      //-   .mdl-mega-footer--left-section
+      //-     button.mdl-mega-footer--social-btn
+      //-   .mdl-mega-footer--right-section
+      //-     a.mdl-typography--font-light(href='#top')
+      //-       | Back to top
+      //-       i.material-icons expand_less
       .mdl-mega-footer--middle-section
-        p.mdl-typography--font-light nodeTestApp16: © 2016 D&B
+        p.mdl-typography--font-light #{localesMenu['The Movie Graph']} © 2016 d&b daten&bass
         //- p.mdl-typography--font-light Some features and devices may not be available in all areas
       .mdl-mega-footer--bottom-section
         a#version-dropdown.android-link.android-link-menu.mdl-typography--font-light
-          | Bottom left menu 
+          | #{localesMenu['Users']} 
           i.material-icons arrow_drop_up
         ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='version-dropdown')
-          li.mdl-menu__item Bottom left menu 2
-          li.mdl-menu__item Bottom left menu 2
+          li.mdl-menu__item(href='') #{localesMenu['Home']}
         a#developers-dropdown.android-link.android-link-menu.mdl-typography--font-light
-          | Bottom right menu 
+          | #{localesMenu['Developers']} 
           i.material-icons arrow_drop_up
         ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='developers-dropdown')
-          li.mdl-menu__item Bottom right menu 1
-          li.mdl-menu__item Bottom right menu 2
-        a.android-link.mdl-typography--font-light(href='') Font light as link 1
-        a.android-link.mdl-typography--font-light(href='') Font light as link 2
+          li.mdl-menu__item(href='') #{localesMenu['Github Code']}
+        a.android-link.mdl-typography--font-light(href='') #{localesMenu['Imprint']}
+        a.android-link.mdl-typography--font-light(href='') #{localesMenu['Contact']}

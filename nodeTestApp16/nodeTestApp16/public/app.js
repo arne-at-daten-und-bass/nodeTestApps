@@ -31,7 +31,7 @@ var app = (function() {
         target.options.length = 0;
         target.appendChild(movieList.cloneNode(true));
         asLabel.style.display = 'inline';
-        property.placeholder='Role';
+        property.placeholder = 'Role';
         property.size=20;
         property.style.display = 'inline';
         break;
@@ -78,7 +78,7 @@ var app = (function() {
         break;
       case 'REVIEWED':
         property.style.display = 'block';
-        property.innerHTML = 'with Summary: ' + value.row[3] + '.';
+        property.innerHTML = 'Summary' + value.row[3] + '.';
         break;
       case 'WROTE':
         property.style.display = 'none';

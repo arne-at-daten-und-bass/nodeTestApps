@@ -29,8 +29,9 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
       web: function (error, responseBodyFromNeo) {
         var responseObjectToSwagger = {
           locale: locales.locale,
-          localesStrings: locales.localesStrings,
+          localesMenu: locales.localesMenu,
           localesCommands: locales.localesCommands,
+          localesStrings: locales.localesStrings,
           id: typeof nodeId === 'undefined' ? -1 : parseInt(nodeId),
         };
 
@@ -70,7 +71,7 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
       },
     };
   },
-  graph: function (res, nodeType, template, locales, crudType, nodeId) {
+  graph: function (res, nodeType, template, locales, crudType, nodeId, relationshipTypes) {
     
     return {
       api: function (error, responseBodyFromNeo) {
@@ -89,8 +90,30 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
         return res.json(responseObjectToSwagger);
       },
       web: function (error, responseBodyFromNeo) {
-        // body...
-      }
+        var responseObjectToSwagger = {
+          locale: locales.locale,
+          localesMenu: locales.localesMenu,
+          localesCommands: locales.localesCommands,
+          localesStrings: locales.localesStrings,
+          id: typeof nodeId === 'undefined' ? -1 : parseInt(nodeId),
+        };
+
+        switch (crudType) {
+          case 'getCreate':
+            responseObjectToSwagger.persons = responseBodyFromNeo[0].body.data;
+            responseObjectToSwagger.relationships = relationshipTypes;
+            responseObjectToSwagger.movies = responseBodyFromNeo[1].body.data;
+            break;
+          case 'create':
+            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['New Relationship created'];
+            responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0];
+            break;
+          default:
+            console.log('Default case.');
+        }
+
+        return res.render(template, responseObjectToSwagger);
+      },
     };
   },
   utils: {

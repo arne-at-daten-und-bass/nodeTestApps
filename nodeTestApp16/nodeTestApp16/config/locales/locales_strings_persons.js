@@ -1,12 +1,6 @@
 'use strict';
 
 var localesStringsPersons = {
-  'Welcome': {
-    'en': {'EN': 'Welcome'},
-    'es': {'ES': 'Bienvenida'},
-    'de': {'DE': 'Willlkommen'},
-    'fr': {'FR': 'Bienvenue'},
-  },
   '<Instance>': {
     'en': {'EN': 'Person'},
     'es': {'ES': 'Persona'},
@@ -33,9 +27,9 @@ var localesStringsPersons = {
   },
   'Create a new Person': {
     'en': {'EN': 'Create a new Person'},
-    'es': {'ES': 'Grabar una persona'},
+    'es': {'ES': 'Grabar una Persona'},
     'de': {'DE': 'Person speichern'},
-    'fr': {'FR': 'Enregistrer un person'},
+    'fr': {'FR': 'Enregistrer un Person'},
   },
   'New <Instance> created': {
     'en': {'EN': 'New Person created'},
