@@ -2,13 +2,38 @@ extends ../layout
 
 block content
   .android-content.mdl-layout__content
-    .logo-font.android-sub-slogan #{localesStrings['All Persons']}:
-    //- @TODO: React to born param if given 
-    //- if paramsFromSwagger | paramsToNeo.born:
-    //-   p #{paramsFromSwagger.born}
-    //- else
-    ul
-      each person in persons
-        li #{person.name}
-          ul
-            li #{person.born}
+    .android-be-together-section(style="height:100px;")
+      .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
+      .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Person by year of birth']}:&nbsp;
+        select#born(name='born', onchange="paramChanger(self.location.pathname, this.options[this.selectedIndex].value)")
+          option(selected) #{localesStrings['All years']}
+          each year in born
+            option=year
+    .android-more-section
+      if inQueryParam
+        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons of']} #{inQueryParam} : 
+      else
+        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
+      .android-card-container.mdl-grid
+        each person in persons
+          .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
+            .mdl-card__media
+              i(style="opacity: 0.46;").material-icons person
+            .mdl-card__title
+              h4.mdl-card__title-text #{person.name}
+            .mdl-card__title
+              i(style="opacity: 0.46;").material-icons date_range &nbsp;
+              h4.mdl-card__title-text #{person.born} 
+            .mdl-card__actions
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') #{localesCommands['Show']}
+  script.
+    document.getElementById('born').value = "!{inQueryParam}" ;
+
+    function paramChanger(location, year) {
+    console.log(isNaN(year))
+      if(isNaN(year)) {
+        self.location=self.location.pathname;
+      } else {
+        self.location=location + '?born=' + year;     
+      }
+    }

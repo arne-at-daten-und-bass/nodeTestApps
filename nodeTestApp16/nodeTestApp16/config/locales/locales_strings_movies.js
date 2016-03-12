@@ -31,24 +31,30 @@ var localesStringsMovies = {
     'es': {'ES': 'Año de Publicación'},
     'fr': {'FR': 'Année de Parution'},
   },
-  'all movies': {
-    'de': {'DE': 'alle Filme'},
-    'en': {'EN': 'all movies'},
-    'es': {'ES': 'todas las películas'},
-    'fr': {'FR': 'tous les films'},
-  },  
+  'Filter Movies by Release Year': {
+    'de': {'DE': 'Filme nach Erscheinungsjahr filtern'},
+    'en': {'EN': 'Filter Movies by release year'},
+    'es': {'ES': 'Filtrar las películas para año de publicación'},
+    'fr': {'FR': 'Filtrer les films par année de parution'},
+  },
   'All years': {
-    'de': {'DE': 'Alle Filme'},
+    'de': {'DE': 'Alle Jahre'},
     'en': {'EN': 'All years'},
     'es': {'ES': 'Todos años'},
     'fr': {'FR': 'Tous années'},
   },
-  'Filter Movies by Release Year': {
-    'de': {'DE': 'Filme nach Erscheinungsjahr filtern'},
-    'en': {'EN': 'Filter Movies by release year'},
-    'es': {'ES': 'Todas las películas'},
-    'fr': {'FR': 'Tous les films'},
-  },
+  'Results for all movies of': {
+    'de': {'DE': 'Ergebnisse für alle Filme von'},
+    'en': {'EN': 'Results for all movies of'},
+    'es': {'ES': 'Resultados por todas las películas de'},
+    'fr': {'FR': 'Résultats pour tous les films de'},
+  }, 
+  'Results for all movies': {
+    'de': {'DE': 'Ergebnisse für alle Filme'},
+    'en': {'EN': 'Results for all movies'},
+    'es': {'ES': 'Resultados por todas las películas'},
+    'fr': {'FR': 'Résultats pour tous les films'},
+  },  
   'Create a new Movie': {
     'de': {'DE': 'Film speichern'},
     'en': {'EN': 'Create a new movie'},

@@ -4,30 +4,16 @@ block content
   .android-content.mdl-layout__content
     .android-be-together-section(style="height:100px;")
       .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
-      //- .logo-font.android-sub-slogan.mdl-typography--text-center 
-      .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']} &nbsp;
-        //- p.mdl-typography--font-light.mdl-typography--text-center 
-        //- select#released(name='released', onchange="self.location=self.location.pathname+'?released='+this.options[this.selectedIndex].value")
-        //-   option(selected) All years
-        //-   each year in released
-        //-     option=year
+      .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']}:&nbsp;
         select#released(name='released', onchange="paramChanger(self.location.pathname, this.options[this.selectedIndex].value)")
           option(selected) #{localesStrings['All years']}
           each year in released
             option=year
-
-      //- ul(style="list-style: none; padding:0; margin:0").mdl-typography--font-light.mdl-typography--text-center
-      //-   each movie in movies
-      //-     li #{movie.title}
-      //-       ul(style="list-style: none; padding:0; margin:0").mdl-typography--font-light.mdl-typography--text-center
-      //-         li #{movie.tagline}
-      //-         li #{movie.released}
-      //-         li ---
     .android-more-section
       if inQueryParam
-        .android-section-title.mdl-typography--display-1-color-contrast Results for #{localesStrings['All Movies']} of #{inQueryParam} : 
+        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies of']} #{inQueryParam} : 
       else
-        .android-section-title.mdl-typography--display-1-color-contrast Results for  #{localesStrings['All Movies']}: 
+        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
       .android-card-container.mdl-grid
         each movie in movies
           .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
@@ -41,7 +27,7 @@ block content
             .mdl-card__supporting-text
               span.mdl-typography--font-light.mdl-typography--subhead #{movie.tagline}
             .mdl-card__actions
-              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') Show
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') #{localesCommands['Show']} 
 
   script.
     document.getElementById('released').value = "!{inQueryParam}" ;
@@ -51,8 +37,7 @@ block content
       if(isNaN(year)) {
         self.location=self.location.pathname;
       } else {
-        self.location=location + '?released=' + year;
-        
+        self.location=location + '?released=' + year;   
       }
     }
 

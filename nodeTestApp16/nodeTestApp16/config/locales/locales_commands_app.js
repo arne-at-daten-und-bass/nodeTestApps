@@ -2,27 +2,27 @@
 
 var localesCommandsApp = {
   'Create': {
+    'de': {'DE': 'Speichern'},
     'en': {'EN': 'Create'},
     'es': {'ES': 'Grabar'},    
-    'de': {'DE': 'Speichern'},
     'fr': {'FR': 'Enregistrer'},
   },
-  'Read': {
-    'en': {'EN': 'Read'},
-    'es': {'ES': 'Seleccionar'},
-    'de': {'DE': 'Lesen'},
-    'fr': {'FR': 'Lire'},   
+  'Show': {
+    'de': {'DE': 'Anzeigen'},
+    'en': {'EN': 'Show'},
+    'es': {'ES': 'mostrar'},
+    'fr': {'FR': 'Montrer'},   
   },
   'Update': {
+    'de': {'DE': 'Aktualisieren'},
     'en': {'EN': 'Update' },
     'es': {'ES': 'Actualizar'},
-    'de': {'DE': 'Aktualisieren'},
     'fr': {'FR': 'Actualiser'},   
   },
   'Delete': {
+    'de': {'DE': 'Löschen'},
     'en': {'EN': 'Delete'},
     'es': {'ES': 'Borrar'},
-    'de': {'DE': 'Löschen'},
     'fr': {'FR': 'Effacer'},
   },
 };
