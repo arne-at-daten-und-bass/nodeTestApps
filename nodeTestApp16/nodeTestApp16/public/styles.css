@@ -195,7 +195,8 @@ a img{
 
 .android-slogan {
   font-size: 60px;
-  padding-top: 160px;
+  padding-top: 24px;
+  /*padding-top: 160px;*/
 }
 
 .android-sub-slogan {
@@ -565,5 +566,5 @@ a img{
   border-radius: 2px;
 }
 .social-btn__twitter {
-  background-image: url('https://www.gstatic.com/images/icons/material/system/2x/post_twitter_black_24dp.png');
+  background-image: url('/images/post_twitter_black_24dp.png');
 }
