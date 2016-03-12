@@ -12,7 +12,8 @@ var queries = {
       getDelete: 'MATCH m WHERE id(m)={id} RETURN m',
       delete: 'MATCH m WHERE id(m)={id} WITH m, m.title AS title, m.released AS released, m.tagline AS tagline DETACH DELETE m RETURN title, released, tagline',
       search: {
-        readDistinctReleased: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
+        readDistinctInQueryParams: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
+        readLatestFourNodes: 'MATCH (m:Movie) RETURN m ORDER BY m.released DESC LIMIT 4',
       },
     };
     return queries;
@@ -29,7 +30,7 @@ var queries = {
       getDelete: 'MATCH p WHERE id(p)={id} RETURN p',
       delete: 'MATCH p WHERE id(p)={id} WITH p, p.name AS name, p.born AS born DETACH DELETE p RETURN name, born',
       search: {
-        readDistinctReleased: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
+        readDistinctInQueryParams: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
       },
     };
 
