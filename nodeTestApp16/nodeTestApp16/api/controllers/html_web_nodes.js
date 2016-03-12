@@ -36,7 +36,7 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;
       var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
-      var callback = that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
+      var callback = (req.swagger.params[that.inQueryParams].value) ? that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk', '', req.swagger.params[that.inQueryParams].value).web : that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }, 

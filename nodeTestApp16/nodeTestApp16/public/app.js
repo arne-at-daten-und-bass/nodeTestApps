@@ -31,7 +31,7 @@ var app = (function() {
         target.options.length = 0;
         target.appendChild(movieList.cloneNode(true));
         asLabel.style.display = 'inline';
-        property.placeholder = 'Role';
+        property.placeholder = 'Role (in English)';
         property.size=20;
         property.style.display = 'inline';
         break;
@@ -43,7 +43,7 @@ var app = (function() {
         target.appendChild(movieList.cloneNode(true));
         asLabel.style.display = 'none';
         if(valueText === 'REVIEWED') {
-          property.placeholder='Summary';
+          property.placeholder='Summary (in English)';
           property.size=50;
           property.style.display = 'inline';
         } else {
@@ -112,7 +112,7 @@ var app = (function() {
 
   return {
     toogleView: toogleView,
-    buildOptions: buildOptions
+    buildOptions: buildOptions,
   }; 
 })();
 

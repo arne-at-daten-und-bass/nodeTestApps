@@ -1,7 +1,7 @@
 'use strict';
 
 var callbacks = {  // @TODO: switch order of arguments according to web/api etc  see below also for graph
-  nodes: function (res, nodeType, template, locales, crudType, nodeId) {
+  nodes: function (res, nodeType, template, locales, crudType, nodeId, inQueryParam) {
     
     return {
       api: function (error, responseBodyFromNeo) {
@@ -12,7 +12,7 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
             var nodes = [];
             nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
             responseObjectToSwagger[nodeType] = nodes;
-            console.log(JSON.stringify(responseObjectToSwagger));
+            // console.log(JSON.stringify(responseObjectToSwagger));
             break;
           case 'delete':
             responseObjectToSwagger = {
@@ -44,8 +44,9 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           case 'readBulk':
             var nodes = [];
             nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
-
             responseObjectToSwagger[nodeType] = nodes;
+            responseObjectToSwagger.inQueryParam = inQueryParam;
+            responseObjectToSwagger.released = [1975, 1986, 1990, 1992, 1993, 1995, 1996, 1997, 1998, 1999, 2000, 2003, 2004, 2006, 2007, 2008, 2009, 2012]; 
             break;
           case 'read':
             responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance>'];

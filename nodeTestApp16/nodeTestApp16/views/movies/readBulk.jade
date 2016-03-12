@@ -2,14 +2,57 @@ extends ../layout
 
 block content
   .android-content.mdl-layout__content
-    .logo-font.android-sub-slogan #{localesStrings['All Movies']}:
-    //- @TODO: React to released param if given 
-    //- if paramsFromSwagger | paramsToNeo.released:
-    //-   p #{paramsFromSwagger.released}
-    //- else
-    ul
-      each movie in movies
-        li #{movie.title}
-          ul
-            li #{movie.tagline}
-            li #{movie.released}
+    .android-be-together-section(style="height:100px;")
+      .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
+      //- .logo-font.android-sub-slogan.mdl-typography--text-center 
+      .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']} &nbsp;
+        //- p.mdl-typography--font-light.mdl-typography--text-center 
+        //- select#released(name='released', onchange="self.location=self.location.pathname+'?released='+this.options[this.selectedIndex].value")
+        //-   option(selected) All years
+        //-   each year in released
+        //-     option=year
+        select#released(name='released', onchange="paramChanger(self.location.pathname, this.options[this.selectedIndex].value)")
+          option(selected) #{localesStrings['All years']}
+          each year in released
+            option=year
+
+      //- ul(style="list-style: none; padding:0; margin:0").mdl-typography--font-light.mdl-typography--text-center
+      //-   each movie in movies
+      //-     li #{movie.title}
+      //-       ul(style="list-style: none; padding:0; margin:0").mdl-typography--font-light.mdl-typography--text-center
+      //-         li #{movie.tagline}
+      //-         li #{movie.released}
+      //-         li ---
+    .android-more-section
+      if inQueryParam
+        .android-section-title.mdl-typography--display-1-color-contrast Results for #{localesStrings['All Movies']} of #{inQueryParam} : 
+      else
+        .android-section-title.mdl-typography--display-1-color-contrast Results for  #{localesStrings['All Movies']}: 
+      .android-card-container.mdl-grid
+        each movie in movies
+          .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
+            .mdl-card__media
+              i(style="opacity: 0.46;").material-icons movie
+            .mdl-card__title
+              h4.mdl-card__title-text #{movie.title}
+            .mdl-card__title
+              i(style="opacity: 0.46;").material-icons date_range &nbsp;
+              h4.mdl-card__title-text #{movie.released} 
+            .mdl-card__supporting-text
+              span.mdl-typography--font-light.mdl-typography--subhead #{movie.tagline}
+            .mdl-card__actions
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') Show
+
+  script.
+    document.getElementById('released').value = "!{inQueryParam}" ;
+
+    function paramChanger(location, year) {
+    console.log(isNaN(year))
+      if(isNaN(year)) {
+        self.location=self.location.pathname;
+      } else {
+        self.location=location + '?released=' + year;
+        
+      }
+    }
+

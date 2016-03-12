@@ -10,8 +10,8 @@ block content
           select#source(name='source')        
           select#type(name='type', style='text-transform: lowercase;')
           select#target(name='target')
-          label#asLabel(for='property') &nbsp; #{localesStrings['as']} &nbsp;
-          input#property(type='text', name='property', placeholder="#{localesStrings['Role']}")
+          label#asLabel(for='property') &nbsp; as &nbsp;
+          input#property(type='text', name='property', placeholder="Role (in English)")
           button(type='submit') #{localesCommands['Create']}
         script.
           app.buildOptions(!{JSON.stringify(persons)}, !{JSON.stringify(relationships)}, !{JSON.stringify(movies)});
