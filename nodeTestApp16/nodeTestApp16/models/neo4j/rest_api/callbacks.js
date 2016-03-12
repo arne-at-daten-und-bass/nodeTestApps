@@ -35,7 +35,6 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           id: typeof nodeId === 'undefined' ? -1 : parseInt(nodeId),
         };
 
-        // console.log(JSON.stringify(crudType));
         switch (crudType){
           case 'create':
             responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['New <Instance> created'];
@@ -64,6 +63,12 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
             responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance> Deleted'];
             responseObjectToSwagger.nodes_deleted = responseBodyFromNeo.results[0].stats.nodes_deleted;
             responseObjectToSwagger[nodeType] = deletedNodeProperties;
+            break;
+          case 'index_locale':
+            var nodes = [];
+            nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
+            responseObjectToSwagger[nodeType] = nodes;
+            responseObjectToSwagger.inQueryParam = inQueryParam;
             break;
           default:
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];

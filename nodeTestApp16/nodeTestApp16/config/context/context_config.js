@@ -21,6 +21,10 @@ var context = {
     supportedLocales: ['en', 'es', 'de', 'fr'], 
     defaultLocale: 'en',
     strings: localesStringsGraph,
+    movieQueries: queries.movies(),
+    params: params,
+    callbacks: callbacks,
+    requests: requests.db(dbConfig),
   },
   nodes:{
     movies: {

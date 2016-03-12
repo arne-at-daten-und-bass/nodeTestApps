@@ -6,6 +6,9 @@ var htmlWebIndex = function (localesUtils) {
   var locale = localesUtils.getDefaultLocale(); 
   var locales = localesUtils.setLocales('noLocale', locale, that.strings);
 
+  var includeStats = false;
+  var resultType = ["row"];
+
   return {
     index: function(req, res) {
       var guessedLocale = req.acceptsLanguages(that.supportedLocales);
@@ -21,11 +24,11 @@ var htmlWebIndex = function (localesUtils) {
       locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
       locale = req.swagger.params.locale.value;
 
-      res.render('index', 
-        { locale: locale,
-          localesMenu: locales.localesMenu,
-          localesCommands: locales.localesCommands,
-      });  
+      var query = that.movieQueries.search.readLatestFourNodes;
+      var params = {};
+      var callback = that.callbacks.nodes(res, 'movies', 'index', locales, 'index_locale').web;
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
     about: function(req, res) {

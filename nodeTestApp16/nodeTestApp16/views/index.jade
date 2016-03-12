@@ -4,8 +4,8 @@ block content
   .android-content.mdl-layout__content
     a(name='top')
     .android-be-together-section.mdl-typography--text-center
-      //- .logo-font.android-slogan #{slogan}
-      div(style="margin-bottom:20px;").logo-font.android-sub-slogan #{localesMenu['The Movie Graph']}
+      .logo-font.android-slogan fliXnet
+      div(style="margin-bottom:20px;").logo-font.android-sub-slogan - #{localesMenu['The Movie Graph']} -
       style.
         .node {
           stroke: #fff;
@@ -103,19 +103,33 @@ block content
     //-       a.android-link.mdl-typography--font-light(href='') Font ligth as link
     //-   .android-customized-section-image
     .android-more-section
-      .android-section-title.mdl-typography--display-1-color-contrast Display 1 color contrast
+      .android-section-title.mdl-typography--display-1-color-contrast Latest Movies:
       .android-card-container.mdl-grid
-        .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-          .mdl-card__media
-            img(src='/images/more-from-1.png')
-          .mdl-card__title
-            h4.mdl-card__title-text Card title text
-          .mdl-card__supporting-text
-            span.mdl-typography--font-light.mdl-typography--subhead Font ligth Subhead
-          .mdl-card__actions
-            a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-              | Text uppercase
-              i.material-icons chevron_right
+        each movie in movies
+          .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
+            .mdl-card__media
+              i(style="opacity: 0.46;").material-icons movie
+            .mdl-card__title
+              h4.mdl-card__title-text #{movie.title}
+            .mdl-card__title
+              i(style="opacity: 0.46;").material-icons date_range &nbsp;
+              h4.mdl-card__title-text #{movie.released} 
+            .mdl-card__supporting-text
+              span.mdl-typography--font-light.mdl-typography--subhead #{movie.tagline}
+            .mdl-card__actions
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') #{localesCommands['Show']} 
+      //- .android-card-container.mdl-grid
+      //-   .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
+      //-     .mdl-card__media
+      //-       img(src='/images/more-from-1.png')
+      //-     .mdl-card__title
+      //-       h4.mdl-card__title-text Card title text
+      //-     .mdl-card__supporting-text
+      //-       span.mdl-typography--font-light.mdl-typography--subhead Font ligth Subhead
+      //-     .mdl-card__actions
+      //-       a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
+      //-         | Text uppercase
+      //-         i.material-icons chevron_right
     footer.android-footer.mdl-mega-footer
       .mdl-mega-footer--top-section
         .mdl-mega-footer--left-section
