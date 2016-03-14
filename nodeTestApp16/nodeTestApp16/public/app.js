@@ -110,10 +110,41 @@ var app = (function() {
     target.appendChild(movieList.cloneNode(true));
   }
 
+  function buildDynamicDropdowns(element, url, inQueryParam) {
+    var xhr = new XMLHttpRequest();
+    var distincValues; 
+
+    xhr.open('GET', encodeURI(url));
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState==4 && xhr.status==200) {
+        distincValues = JSON.parse(xhr.responseText).distinctValues;            
+        element.appendChild(optionBuilder(distincValues));
+
+        console.log(inQueryParam);
+        if(inQueryParam.length > 0) {
+          element.value = inQueryParam;
+        }
+      }
+    };
+
+    xhr.send();
+  }
+
+  function changelocation(location, year, paramName) {
+    console.log(isNaN(year))
+    if(isNaN(year)) {
+      self.location = self.location.pathname;
+    } else {
+      self.location = location + '?' + paramName + '=' + year;   
+    }
+  }
+
   return {
     toogleView: toogleView,
     buildOptions: buildOptions,
-    optionBuilder: optionBuilder,
+    buildDynamicDropdowns: buildDynamicDropdowns,
+    changelocation: changelocation,
   }; 
 })();
 

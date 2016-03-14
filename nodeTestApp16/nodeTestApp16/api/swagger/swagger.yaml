@@ -285,27 +285,24 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-# JSON only API: Read distinct values from node properties to use as inQueryParams
+# JSON only API: Read distinct values from movie properties to use e.g. in a dropdown for inQueryParams
   /api/movies/read/distinct:
     x-swagger-router-controller: context_json_api_movies
     get:
       description: Returns JSON with an Array of all distinct values from node property passed in as inQeryParam
       operationId: readDistinct
       parameters:
-        - name: propertyName
-          required: true
-          in: query
-          description: The name of the property of which all distinct values are to be returned.
-          type: string
+        - $ref: "#/parameters/propertyName"
       responses:
         "200":
-          description: Successfully GOT visualize
+          description: Successfully GOT distinct values for a movie property
           schema:
             type: string
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+#  add enum here
 
 # HTML Web: Create and Read (several movies)
   /{locale}/movies/create:
@@ -562,6 +559,23 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+# JSON only API: Read distinct values from person properties to use e.g. in a dropdown for inQueryParams
+  /api/persons/read/distinct:
+    x-swagger-router-controller: context_json_api_persons
+    get:
+      description: Returns JSON with an Array of all distinct values from node property passed in as inQeryParam
+      operationId: readDistinct
+      parameters:
+        - $ref: "#/parameters/propertyName"
+      responses:
+        "200":
+          description: Successfully GOT distinct values for a person property
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 # HTML Web: Create and Read (several persons) #
   /{locale}/persons/create:
@@ -747,6 +761,13 @@ parameters:
     description: The id (as provided by the database) for an instance of a nodeType.
     in: path
     type: string
+  propertyName:
+    name: propertyName
+    required: true
+    in: query
+    description: The name of the property of which all distinct values are to be returned.
+    type: string
+    enum: [ released, born] 
 
 # Movies #
   title:

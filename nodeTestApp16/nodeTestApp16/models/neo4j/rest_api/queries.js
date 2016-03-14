@@ -31,8 +31,8 @@ var queries = {
       update: 'MATCH p WHERE id(p)={id} SET p={properties} RETURN p',
       getDelete: 'MATCH p WHERE id(p)={id} RETURN p',
       delete: 'MATCH p WHERE id(p)={id} WITH p, p.name AS name, p.born AS born DETACH DELETE p RETURN name, born',
-      search: {
-        readDistinctInQueryParams: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
+      readDistinct: {
+        born: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
       },
     };
 

@@ -5,10 +5,8 @@ block content
     .android-be-together-section(style="height:100px;")
       .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
       .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Person by year of birth']}:&nbsp;
-        select#born(name='born', onchange="paramChanger(self.location.pathname, this.options[this.selectedIndex].value)")
+        select#born(name='born', onchange="app.changelocation(self.location.pathname, this.options[this.selectedIndex].value, 'born')")
           option(selected) #{localesStrings['All years']}
-          each year in born
-            option=year
     .android-more-section
       if inQueryParam
         .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons of']} #{inQueryParam} : 
@@ -27,13 +25,15 @@ block content
             .mdl-card__actions
               a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') #{localesCommands['Show']}
   script.
-    document.getElementById('born').value = "!{inQueryParam}" ;
+    app.buildDynamicDropdowns(document.getElementById('born'), '/api/persons/read/distinct?propertyName=born', '#{inQueryParam}');
 
-    function paramChanger(location, year) {
-    console.log(isNaN(year))
-      if(isNaN(year)) {
-        self.location=self.location.pathname;
-      } else {
-        self.location=location + '?born=' + year;     
-      }
-    }
+    //- document.getElementById('born').value = "!{inQueryParam}" ;
+
+    //- function paramChanger(location, year) {
+    //- console.log(isNaN(year))
+    //-   if(isNaN(year)) {
+    //-     self.location=self.location.pathname;
+    //-   } else {
+    //-     self.location=location + '?born=' + year;     
+    //-   }
+    //- }
