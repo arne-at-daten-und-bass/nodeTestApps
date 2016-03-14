@@ -285,6 +285,27 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+# JSON only API: Read distinct values from node properties to use as inQueryParams
+  /api/movies/read/distinct:
+    x-swagger-router-controller: context_json_api_movies
+    get:
+      description: Returns JSON with an Array of all distinct values from node property passed in as inQeryParam
+      operationId: readDistinct
+      parameters:
+        - name: propertyName
+          required: true
+          in: query
+          description: The name of the property of which all distinct values are to be returned.
+          type: string
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 # HTML Web: Create and Read (several movies)
   /{locale}/movies/create:

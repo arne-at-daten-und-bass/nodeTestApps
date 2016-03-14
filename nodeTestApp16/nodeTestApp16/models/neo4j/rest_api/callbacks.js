@@ -19,6 +19,12 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
               nodes_deleted: responseBodyFromNeo.results[0].stats.nodes_deleted,
             };
             break;
+           case 'readDistinct':
+              var nodes = [];
+              nodes = responseBodyFromNeo.results[0].data[0].row[0]; // callbacks.utils.readBulk(error, responseBodyFromNeo);
+              responseObjectToSwagger.distinctValues = nodes;
+              // responseObjectToSwagger.inQueryParam = inQueryParam;
+              break;
           default:
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
         }
@@ -68,7 +74,6 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
             var nodes = [];
             nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
             responseObjectToSwagger[nodeType] = nodes;
-            responseObjectToSwagger.inQueryParam = inQueryParam;
             break;
           default:
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
@@ -87,8 +92,6 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
         switch (crudType) {
           case 'readGraph':
             responseObjectToSwagger.graph = callbacks.utils.nodeLinks(error, responseBodyFromNeo);
-            break;
-          case 'create':
             break;
           default:
             console.log('Default case.');

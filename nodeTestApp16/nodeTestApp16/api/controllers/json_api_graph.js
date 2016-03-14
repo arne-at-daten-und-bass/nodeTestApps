@@ -16,7 +16,7 @@ var jsonApiGraph = function () {
       resultType = ["graph"];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
-    }
+    },
   };
 };
 

@@ -113,6 +113,7 @@ var app = (function() {
   return {
     toogleView: toogleView,
     buildOptions: buildOptions,
+    optionBuilder: optionBuilder,
   }; 
 })();
 

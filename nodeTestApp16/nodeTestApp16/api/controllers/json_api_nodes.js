@@ -50,7 +50,19 @@ var jsonApiNodes = function () {
       includeStats = true;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
-    }
+    },
+
+    readDistinct: function(req, res) {
+      var propertyName = req.swagger.params.propertyName.value;
+
+      var query = that.queries.readDistinct[propertyName];
+      console.log(query);
+      var params = {};
+      var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'readDistinct', '', '', propertyName).api;
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
   };
 };
 

@@ -11,8 +11,10 @@ var queries = {
       update: 'MATCH m WHERE id(m)={id} SET m={properties} RETURN m',
       getDelete: 'MATCH m WHERE id(m)={id} RETURN m',
       delete: 'MATCH m WHERE id(m)={id} WITH m, m.title AS title, m.released AS released, m.tagline AS tagline DETACH DELETE m RETURN title, released, tagline',
+      readDistinct: {
+        released: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
+      },
       search: {
-        readDistinctInQueryParams: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
         readLatestFourNodes: 'MATCH (m:Movie) RETURN m ORDER BY m.released DESC LIMIT 4',
       },
     };
@@ -48,6 +50,9 @@ var queries = {
       create_PRODUCED: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:PRODUCED]->(m) RETURN p.name, type(r), m.title',
       create_REVIEWED: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:REVIEWED {summary: {property} }]->(m) RETURN p.name, type(r), m.title, r.summary',
       create_WROTE: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:WROTE]->(m) RETURN p.name, type(r), m.title',
+      search: {
+        readDistinctInQueryParams: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
+      },
     };
 
     return queries;

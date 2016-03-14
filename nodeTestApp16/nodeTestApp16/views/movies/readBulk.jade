@@ -5,6 +5,8 @@ block content
     .android-be-together-section(style="height:100px;")
       .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
       .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']}:&nbsp;
+        select#released2(name='released', onchange="paramChanger(self.location.pathname, this.options[this.selectedIndex].value)")
+          option(selected) #{localesStrings['All years']}
         select#released(name='released', onchange="paramChanger(self.location.pathname, this.options[this.selectedIndex].value)")
           option(selected) #{localesStrings['All years']}
           each year in released
@@ -41,3 +43,16 @@ block content
       }
     }
 
+    var xhr = new XMLHttpRequest();
+    var movieParamsLocal;
+    xhr.open('GET', encodeURI('/api/movies/read/distinct?propertyName=released'));
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState==4 && xhr.status==200) {
+            movieParamsLocal = JSON.parse(xhr.responseText).distinctValues;            
+            document.getElementById('released2').appendChild(app.optionBuilder(movieParamsLocal));
+            if("!{inQueryParam}".length > 0) {
+              document.getElementById('released2').value = "!{inQueryParam}" ;
+            }
+        }
+    };
+    xhr.send();
