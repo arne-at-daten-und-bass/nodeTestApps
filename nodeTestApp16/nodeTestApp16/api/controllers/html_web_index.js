@@ -28,6 +28,8 @@ var htmlWebIndex = function (localesUtils) {
       var params = {};
       var callback = that.callbacks.nodes(res, 'movies', 'index', locales, 'index_locale').web;
 
+      resultType = ["graph"];
+
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 

@@ -302,7 +302,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-#  add enum here
 
 # HTML Web: Create and Read (several movies)
   /{locale}/movies/create:
@@ -753,7 +752,7 @@ parameters:
     in: path
     description: Used for detecting and setting the UI language.
     type: string
-    enum: [ en, es, de, fr] 
+    enum: [ en, es, de, fr ] 
     # @TODO: Move locale (enum) to app or context config
   id:
     name: id
@@ -767,7 +766,7 @@ parameters:
     in: query
     description: The name of the property of which all distinct values are to be returned.
     type: string
-    enum: [ released, born] 
+    enum: [ released, tagline, born ] 
 
 # Movies #
   title:
@@ -815,17 +814,14 @@ definitions:
       movies:
         type: array
         items:
-          $ref: "#/definitions/MovieEntry"
-
-  MovieEntry:
-    type: object
-    $ref: "#/definitions/Movie"    
-
+          $ref: "#/definitions/Movie"
+  
   Movie:
+    type: object
     required:
-      - tagline
+      # - tagline
       - title
-      - released
+      # - released
     properties:
       tagline:
         type: string
@@ -854,16 +850,13 @@ definitions:
       persons:
         type: array
         items:
-          $ref: "#/definitions/PersonEntry"
-
-  PersonEntry:
-    type: object
-    $ref: "#/definitions/Person"    
+          $ref: "#/definitions/Person"
 
   Person:
+    type: object
     required:
       - name
-      - born
+      # - born
     properties:
       name:
         type: string

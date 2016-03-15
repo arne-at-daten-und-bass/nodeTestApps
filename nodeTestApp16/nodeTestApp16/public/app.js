@@ -13,11 +13,15 @@ var app = (function() {
   var property;
 
 
-  function optionBuilder(elementArray) {
+  function optionBuilder(elementArray, unknownString) {
     var documentFragment = document.createDocumentFragment();
     elementArray.forEach(function(element, index) {
       var option = document.createElement('option');
-      option.innerHTML = element;
+      if (element === -1) {
+        option.innerHTML = unknownString;
+      } else {
+        option.innerHTML = element;
+      } 
       option.value = element;
       documentFragment.appendChild(option);
     })
@@ -110,7 +114,7 @@ var app = (function() {
     target.appendChild(movieList.cloneNode(true));
   }
 
-  function buildDynamicDropdowns(element, url, inQueryParam) {
+  function buildDynamicDropdowns(element, url, inQueryParam, unknownString) {
     var xhr = new XMLHttpRequest();
     var distincValues; 
 
@@ -118,10 +122,11 @@ var app = (function() {
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState==4 && xhr.status==200) {
-        distincValues = JSON.parse(xhr.responseText).distinctValues;            
-        element.appendChild(optionBuilder(distincValues));
+        distincValues = JSON.parse(xhr.responseText).distinctValues;
+        distincValues.unshift(-1);            
+        element.appendChild(optionBuilder(distincValues, unknownString));
 
-        console.log(inQueryParam);
+        // console.log(inQueryParam);
         if(inQueryParam.length > 0) {
           element.value = inQueryParam;
         }

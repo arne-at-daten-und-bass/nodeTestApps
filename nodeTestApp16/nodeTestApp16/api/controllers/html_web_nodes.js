@@ -27,6 +27,8 @@ var htmlWebNodes = function (localesUtils) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'create').web; // @TODO: Move crudType (enum) to app or context config or take function name/object literal property 'create'as parameter  (did not work yet because of missing this due to DI)
       
+      resultType = ["row"];
+
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }, 
 
@@ -34,9 +36,29 @@ var htmlWebNodes = function (localesUtils) {
       locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
       locale = req.swagger.params.locale.value;
 
-      var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;
-      var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
-      var callback = (req.swagger.params[that.inQueryParams].value) ? that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk', '', req.swagger.params[that.inQueryParams].value).web : that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
+      var query;
+      var params;
+      var callback;
+
+      if(req.swagger.params[that.inQueryParams].value) {
+        if (req.swagger.params[that.inQueryParams].value === -1) {
+          query = that.queries.readBulkWhereNotExistsParam;
+        } else {
+          query = that.queries.readBulkParam;
+        }
+
+        params = that.params.otherParams.set(req.swagger.params);
+        callback = that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk', '', req.swagger.params[that.inQueryParams].value).web;
+      } else {
+        query = that.queries.readBulkNoParam;
+        params = {};
+        callback =  that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
+      }
+      // var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;
+      // var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
+      // var callback = (req.swagger.params[that.inQueryParams].value) ? that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk', '', req.swagger.params[that.inQueryParams].value).web : that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
+
+      resultType = ["graph"];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }, 
@@ -44,6 +66,8 @@ var htmlWebNodes = function (localesUtils) {
     read: function(req, res) {
       locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
       locale = req.swagger.params.locale.value;
+
+      resultType = ["row"];
 
       var query = that.queries.read;
       var params = that.params.otherParams.set(req.swagger.params);
@@ -60,6 +84,8 @@ var htmlWebNodes = function (localesUtils) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/update' , locales, 'getUpdate', that.params.otherParams.get().id).web;
       
+      resultType = ["row"];
+
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
@@ -71,6 +97,8 @@ var htmlWebNodes = function (localesUtils) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'update').web;
       
+      resultType = ["row"];
+
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
@@ -82,6 +110,9 @@ var htmlWebNodes = function (localesUtils) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/delete', locales, 'getDelete', that.params.otherParams.get().id).web;
       
+      
+      resultType = ["row"];
+
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
@@ -93,6 +124,8 @@ var htmlWebNodes = function (localesUtils) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'delete').web;
       
+      //maybe better Graph?
+      resultType = ["row"];
       includeStats = true;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);

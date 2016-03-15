@@ -9,7 +9,10 @@ block content
           option(selected) #{localesStrings['All years']}
     .android-more-section
       if inQueryParam
-        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies of']} #{inQueryParam} : 
+        if inQueryParam === -1
+          .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies with unknown release year']}  : 
+        else
+          .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies of']} #{inQueryParam} : 
       else
         .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
       .android-card-container.mdl-grid
@@ -18,15 +21,15 @@ block content
             .mdl-card__media
               i(style="opacity: 0.46;").material-icons movie
             .mdl-card__title
-              h4.mdl-card__title-text #{movie.title}
+              h4.mdl-card__title-text #{movie.properties.title}
             .mdl-card__title
               i(style="opacity: 0.46;").material-icons date_range &nbsp;
-              h4.mdl-card__title-text #{movie.released} 
+              h4.mdl-card__title-text #{movie.properties.released} 
             .mdl-card__supporting-text
-              span.mdl-typography--font-light.mdl-typography--subhead #{movie.tagline}
+              span.mdl-typography--font-light.mdl-typography--subhead #{movie.properties.tagline}
             .mdl-card__actions
-              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') #{localesCommands['Show']} 
-
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/read/#{movie.id}') #{localesCommands['Show']} 
+  
   script.
-    app.buildDynamicDropdowns(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}');
+    app.buildDynamicDropdowns(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
 

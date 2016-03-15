@@ -6,10 +6,12 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
     return {
       api: function (error, responseBodyFromNeo) {
         var responseObjectToSwagger = {};
+        var nodes = [];
 
+        console.log(JSON.stringify(responseBodyFromNeo) );
         switch (crudType){
           case 'readBulk':
-            var nodes = [];
+            nodes = [];
             nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
             responseObjectToSwagger[nodeType] = nodes;
             // console.log(JSON.stringify(responseObjectToSwagger));
@@ -19,12 +21,13 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
               nodes_deleted: responseBodyFromNeo.results[0].stats.nodes_deleted,
             };
             break;
-           case 'readDistinct':
-              var nodes = [];
-              nodes = responseBodyFromNeo.results[0].data[0].row[0]; // callbacks.utils.readBulk(error, responseBodyFromNeo);
-              responseObjectToSwagger.distinctValues = nodes;
-              // responseObjectToSwagger.inQueryParam = inQueryParam;
-              break;
+          case 'readDistinct':
+            responseObjectToSwagger.distinctValues = responseBodyFromNeo.results[0].data[0].row[0];
+            break;
+            readWhereNo
+          case 'readWhereNo':
+            responseObjectToSwagger.noProperty = responseBodyFromNeo.results[0].data[0].row[0];;
+            break;
           default:
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
         }
@@ -40,6 +43,7 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           localesStrings: locales.localesStrings,
           id: typeof nodeId === 'undefined' ? -1 : parseInt(nodeId),
         };
+        var nodes = [];
 
         switch (crudType){
           case 'create':
@@ -47,8 +51,8 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
             break;
           case 'readBulk':
-            var nodes = [];
-            nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
+            nodes = [];
+            nodes = callbacks.utils.readBulkGraph(error, responseBodyFromNeo);
             responseObjectToSwagger[nodeType] = nodes;
             responseObjectToSwagger.inQueryParam = inQueryParam;
             break;
@@ -69,8 +73,13 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
             responseObjectToSwagger[nodeType] = deletedNodeProperties;
             break;
           case 'index_locale':
-            var nodes = [];
-            nodes = callbacks.utils.readBulk(error, responseBodyFromNeo);
+            nodes = [];
+            nodes = callbacks.utils.readBulkGraph(error, responseBodyFromNeo);
+            responseObjectToSwagger[nodeType] = nodes;
+            break;
+          case 'index_locale_persons':
+            nodes = [];
+            nodes = callbacks.utils.readBulkGraph(error, responseBodyFromNeo);
             responseObjectToSwagger[nodeType] = nodes;
             break;
           default:
@@ -132,6 +141,18 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
       dataFromNeo4j = responseBodyFromNeo.results[0].data;
       dataFromNeo4j.map(function(element, index) {
         dataToSwagger[index] = element.row[0];
+      });
+
+      return dataToSwagger;
+    },
+
+    readBulkGraph: function(error, responseBodyFromNeo) {
+      var dataFromNeo4j = [];
+      var dataToSwagger = [];
+
+      dataFromNeo4j = responseBodyFromNeo.results[0].data;
+      dataFromNeo4j.map(function(element, index) {
+        dataToSwagger[index] = element.graph.nodes[0];
       });
 
       return dataToSwagger;

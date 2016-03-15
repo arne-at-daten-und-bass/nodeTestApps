@@ -22,7 +22,7 @@ var jsonApiNodes = function () {
       var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;;
       var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
       var callback = that.callbacks.nodes(res, that.nodeTypePlural, 'abc', 'def', 'readBulk').api;
-
+      
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }, 
 
@@ -56,13 +56,11 @@ var jsonApiNodes = function () {
       var propertyName = req.swagger.params.propertyName.value;
 
       var query = that.queries.readDistinct[propertyName];
-      console.log(query);
       var params = {};
       var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'readDistinct', '', '', propertyName).api;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
-
   };
 };
 

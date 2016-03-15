@@ -43,12 +43,24 @@ var localesStringsMovies = {
     'es': {'ES': 'Todos años'},
     'fr': {'FR': 'Tous années'},
   },
+  'Unknown': {
+    'de': {'DE': 'Unbekannt'},
+    'en': {'EN': 'Unknown'},
+    'es': {'ES': 'Desconocido'},
+    'fr': {'FR': 'Inconnu'},
+  },
   'Results for all movies of': {
     'de': {'DE': 'Ergebnisse für alle Filme von'},
     'en': {'EN': 'Results for all movies of'},
     'es': {'ES': 'Resultados por todas las películas de'},
     'fr': {'FR': 'Résultats pour tous les films de'},
-  }, 
+  },
+  'Results for all movies with unknown release year': {
+    'de': {'DE': 'Ergebnisse für alle Filme mit unbkanntem Erscheinungsjahr'},
+    'en': {'EN': 'Results for all movies with unknown release Year'},
+    'es': {'ES': 'Resultados por todas las películas como año de publicación desconocido'},
+    'fr': {'FR': 'Résultats pour tous les films avec année de parution inconnue'},
+  },  
   'Results for all movies': {
     'de': {'DE': 'Ergebnisse für alle Filme'},
     'en': {'EN': 'Results for all movies'},

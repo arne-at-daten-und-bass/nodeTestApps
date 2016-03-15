@@ -8,8 +8,11 @@ block content
         select#born(name='born', onchange="app.changelocation(self.location.pathname, this.options[this.selectedIndex].value, 'born')")
           option(selected) #{localesStrings['All years']}
     .android-more-section
-      if inQueryParam
-        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons of']} #{inQueryParam} : 
+      if inQueryParam 
+        if inQueryParam == -1
+          .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons with unknown birth date']}: 
+        else
+         .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons of']} #{inQueryParam} : 
       else
         .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
       .android-card-container.mdl-grid
@@ -18,14 +21,14 @@ block content
             .mdl-card__media
               i(style="opacity: 0.46;").material-icons person
             .mdl-card__title
-              h4.mdl-card__title-text #{person.name}
+              h4.mdl-card__title-text #{person.properties.name}
             .mdl-card__title
               i(style="opacity: 0.46;").material-icons date_range &nbsp;
-              h4.mdl-card__title-text #{person.born} 
+              h4.mdl-card__title-text #{person.properties.born} 
             .mdl-card__actions
-              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='') #{localesCommands['Show']}
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/read/#{person.id}') #{localesCommands['Show']}
   script.
-    app.buildDynamicDropdowns(document.getElementById('born'), '/api/persons/read/distinct?propertyName=born', '#{inQueryParam}');
+    app.buildDynamicDropdowns(document.getElementById('born'), '/api/persons/read/distinct?propertyName=born', '#{inQueryParam}', '#{localesStrings["Unknown"]}');
 
     //- document.getElementById('born').value = "!{inQueryParam}" ;
 

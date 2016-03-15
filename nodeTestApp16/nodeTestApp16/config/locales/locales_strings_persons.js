@@ -37,11 +37,23 @@ var localesStringsPersons = {
     'es': {'ES': 'Todos años'},
     'fr': {'FR': 'Tous années'},
   },
+  'Unknown': {
+    'de': {'DE': 'Unbekannt'},
+    'en': {'EN': 'Unknown'},
+    'es': {'ES': 'Desconocido'},
+    'fr': {'FR': 'Inconnu'},
+  },
   'Results for all persons of': {
     'de': {'DE': 'Ergebnisse für alle Personen von'},
     'en': {'EN': 'Results for all persons of'},
     'es': {'ES': 'Resultados por todas las personas de'},
     'fr': {'FR': 'Résultats pour tous les persons de'},
+  }, 
+  'Results for all persons with unknown birth date': {
+    'de': {'DE': 'Ergebnisse für alle Personen mit unbekanntem Geburtstag'},
+    'en': {'EN': 'Results for all persons with unknown birth date'},
+    'es': {'ES': 'Resultados por todas las personas como año de nacimiento desconocido'},
+    'fr': {'FR': 'Résultats pour tous les persons avec année de naissance inconnue'},
   }, 
   'Results for all movies': {
     'de': {'DE': 'Ergebnisse für alle Personen'},

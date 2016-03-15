@@ -6,6 +6,7 @@ var queries = {
       create: 'CREATE (m:Movie {properties}) RETURN m',
       read: 'MATCH m WHERE id(m)={id} RETURN m',
       readBulkParam: 'MATCH (m:Movie { released: {released} }) RETURN m',
+      readBulkWhereNotExistsParam: 'MATCH (m:Movie) WHERE NOT exists(m.released) RETURN m',
       readBulkNoParam: 'MATCH (m:Movie) RETURN m',
       getUpate: 'MATCH m WHERE id(m)={id} RETURN m',
       update: 'MATCH m WHERE id(m)={id} SET m={properties} RETURN m',
@@ -26,6 +27,7 @@ var queries = {
       create: 'CREATE (p:Person {properties}) RETURN p',
       read: 'MATCH p WHERE id(p)={id} RETURN p',
       readBulkParam: 'MATCH (p:Person { born: {born} }) RETURN p',
+      readBulkWhereNotExistsParam: 'MATCH (p:Person) WHERE NOT exists(p.born) RETURN p',
       readBulkNoParam: 'MATCH (p:Person) RETURN p',
       getUpate: 'MATCH p WHERE id(p)={id} RETURN p',
       update: 'MATCH p WHERE id(p)={id} SET p={properties} RETURN p',
@@ -33,6 +35,9 @@ var queries = {
       delete: 'MATCH p WHERE id(p)={id} WITH p, p.name AS name, p.born AS born DETACH DELETE p RETURN name, born',
       readDistinct: {
         born: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
+      },
+      search: {
+         readFourMostActiveNodes: 'MATCH (m:Movie) RETURN m ORDER BY m.released DESC LIMIT 4',
       },
     };
 

@@ -36,6 +36,8 @@ var htmlWebGraph = function (localesUtils) {
       //   });
       // }
 
+      var resultType = ["row"];
+
       that.requests.cypherBatch(query0, params0, query1, params1, callback);
       // neo.cypherBatch(query0, params0, query1, params1, callback);
     },
