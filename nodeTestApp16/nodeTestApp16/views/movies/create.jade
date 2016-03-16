@@ -1,11 +1,8 @@
 extends ../layout
+include ../mixins/createForms.jade
 
 block content
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
       .logo-font.android-sub-slogan #{localesStrings['Create a new Movie']}:
-        form(name="createMovie", action="/#{locale}/movies/create",  method="post")
-          input(type="text", placeholder="#{localesStrings['Movie Title']}", name="title")
-          input(type="text", placeholder="#{localesStrings['Movie Tagline']}", name="tagline")
-          input(type="number", placeholder="#{localesStrings['Movie Release Year']}", name="released")
-          button(type="submit") #{localesCommands['Create']}
+        +movieCreateForm

@@ -1,10 +1,8 @@
 extends ../layout
+include ../mixins/createForms.jade
 
 block content
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
       .logo-font.android-sub-slogan #{localesStrings['Create a new Person']}:
-        form(name="createPerson", action="/#{locale}/persons/create",  method="post")
-          input(type="text", placeholder="#{localesStrings['Full Name']}", name="name")
-          input(type="number", placeholder="#{localesStrings['Birth Date']}", name="born")
-          button(type="submit") #{localesCommands['Create']}
+        +personCreateForm
