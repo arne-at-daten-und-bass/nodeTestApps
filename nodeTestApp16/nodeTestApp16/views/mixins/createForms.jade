@@ -3,13 +3,13 @@ mixin movieCreateForm
     input(type="text", placeholder="#{localesStrings['Movie Title']}", name="title")
     input(type="text", placeholder="#{localesStrings['Movie Tagline']}", name="tagline")
     input(type="number", placeholder="#{localesStrings['Movie Release Year']}", name="released")
-    button(type="submit") #{localesCommands['Create']}
+    button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Create']}
 
 mixin personCreateForm
   form(name="createPerson", action="/#{locale}/persons/create",  method="post")
     input(type="text", placeholder="#{localesStrings['Full Name']}", name="name")
     input(type="number", placeholder="#{localesStrings['Birth Date']}", name="born")
-    button(type="submit") #{localesCommands['Create']}
+    button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Create']}
 
 mixin relationshipCreateForm
    form(name="createRelationship", action="/#{locale}/graph/relationship/create",  method="post")
@@ -18,4 +18,4 @@ mixin relationshipCreateForm
       select#target(name="target")
       label#asLabel(for="property") &nbsp; as &nbsp;
       input#property(type="text", name="property", placeholder="Role (in English)")
-      button(type="submit") #{localesCommands["Create"]}
+      button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands["Create"]}

@@ -3,10 +3,10 @@ mixin movieUpdateForm
     input(type="text", value="#{movie.title}", name="title")
     input(type="text", value="#{movie.tagline}", name="tagline", size="50")
     input(type="number", value="#{movie.released}", name="released")
-    button(type="submit") #{localesCommands['Update']}
+    button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Update']}
 
 mixin personUpdateForm
   form(name="updatePerson", action="/#{locale}/persons/update/" + parseInt(id),  method="post")
     input(type="text", value="#{person.name}", name="name")
     input(type="number", value="#{person.born}", name="born")
-    button(type="submit") #{localesCommands['Update']}
+    button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Update']}
