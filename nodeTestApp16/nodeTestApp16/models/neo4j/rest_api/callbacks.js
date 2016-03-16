@@ -24,10 +24,6 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           case 'readDistinct':
             responseObjectToSwagger.distinctValues = responseBodyFromNeo.results[0].data[0].row[0];
             break;
-            readWhereNo
-          case 'readWhereNo':
-            responseObjectToSwagger.noProperty = responseBodyFromNeo.results[0].data[0].row[0];;
-            break;
           default:
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
         }
@@ -99,6 +95,10 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
         switch (crudType) {
           case 'readGraph':
             responseObjectToSwagger.graph = callbacks.utils.nodeLinks(error, responseBodyFromNeo);
+            break;
+          case 'readTopPersons':
+            responseObjectToSwagger.columns = responseBodyFromNeo.results[0].columns;
+            responseObjectToSwagger.topPersons = responseBodyFromNeo.results[0].data;
             break;
           default:
             console.log('Default case.');

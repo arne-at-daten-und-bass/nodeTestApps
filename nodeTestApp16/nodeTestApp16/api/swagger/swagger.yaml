@@ -14,17 +14,16 @@ produces:
   - application/json
 paths:
 
-### INDEX ###
+###########
+### APP ###
 
-## JSON API ###  
-
-  # JSON only API: Index
+## Index ###  
+# JSON only API: Return swagger documentation in RAW fomat #
   /api:
     x-swagger-pipe: swagger_raw
     #
 
-## HTML WEB ##
-  # HTML Web: Index
+# HTML Web: Entrypoint and service pages for website #
   /:
     x-swagger-router-controller: context_html_web_index
     get:
@@ -114,15 +113,17 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+#############
+### GRAPH ### 
 
-### Graph ### 
+## Paths & Traversals ##
 
-## JSON only API: Graph as JSON for visualization ##
-  /graph:
+# JSON only API: Whole Graph (via path traversal) returned as a transformed JSON for visualization via DS3 #
+  /api/graph:
     x-swagger-router-controller: context_json_api_graph
     get:
       description: Returns JSON of graph with IDed nodes and links (TODO type description)
-      operationId: readGraph
+      operationId: readAllGraph
       responses:
         "200":
           description: Successfully GOT visualize
@@ -133,7 +134,27 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-## HTML Web: Create one and Read (several) relationships(s)
+## Relationships & Searches ##
+
+# JSON only API: Search for top persons regarding thei amount of relationships #
+  /api/graph/read/top/persons:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of the top four persons with the most ACTED_IN relationships
+      operationId: readTopPersons
+      parameters:
+        - $ref: "#/parameters/relationshipName"
+      responses:
+        "200":
+          description: Successfully GOT top four person swith the most ACTED_IN
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# HTML Web: Create one and Read (several) relationships(s) #
   /{locale}/graph/relationship/create:
     x-swagger-router-controller: context_html_web_graph
     get:
@@ -191,7 +212,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-### Nodes ###
+#############
+### NODES ###
 
 ## Movies ## 
 
@@ -766,7 +788,14 @@ parameters:
     in: query
     description: The name of the property of which all distinct values are to be returned.
     type: string
-    enum: [ released, tagline, born ] 
+    enum: [ released, born ] 
+  relationshipName:
+    name: relationshipName
+    required: true
+    in: query
+    description: The name of the relationship for which the count values are to be returned.
+    type: string
+    enum: [ ACTED_IN ]
 
 # Movies #
   title:

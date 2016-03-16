@@ -36,9 +36,6 @@ var queries = {
       readDistinct: {
         born: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
       },
-      search: {
-         readFourMostActiveNodes: 'MATCH (m:Movie) RETURN m ORDER BY m.released DESC LIMIT 4',
-      },
     };
 
     return queries;
@@ -56,7 +53,9 @@ var queries = {
       create_REVIEWED: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:REVIEWED {summary: {property} }]->(m) RETURN p.name, type(r), m.title, r.summary',
       create_WROTE: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:WROTE]->(m) RETURN p.name, type(r), m.title',
       search: {
-        readDistinctInQueryParams: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
+        readTopPersons: {
+          ACTED_IN: 'MATCH (p:Person)-[r:ACTED_IN]->(m:Movie) RETURN p.name AS Person, id(p) AS PersonId, count(*) AS AmountRoles, collect(m.title) AS Movies, collect(id(m)) AS MovieIds ORDER BY AmountRoles DESC LIMIT 4',
+        },
       },
     };
 

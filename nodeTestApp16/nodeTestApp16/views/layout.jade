@@ -31,13 +31,13 @@ html(lang='en')
             i.material-icons language
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
             li.mdl-menu__item
-              a.mdl-navigation__link(href='/en') English
+              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/en")') English
             li.mdl-menu__item
-              a.mdl-navigation__link(href='/de') Deutsch
+              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/de")') Deutsch
             li.mdl-menu__item
-              a.mdl-navigation__link(href='/es') Español 
+              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/es")') Español 
             li.mdl-menu__item
-              a.mdl-navigation__link(href='/fr') Français 
+              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/fr")') Français 
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title

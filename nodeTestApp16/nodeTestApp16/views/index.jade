@@ -32,7 +32,7 @@ block content
             .attr("width", width)
             .attr("height", height);
 
-        d3.json("/graph", function(error, graph) {
+        d3.json("/api/graph", function(error, graph) {
           if (error) throw error;
 
           force.nodes(graph.graph.nodes).links(graph.graph.links).start();
@@ -104,7 +104,7 @@ block content
     //-   .android-customized-section-image
     .android-more-section
       .android-section-title.mdl-typography--display-1-color-contrast Latest Movies:
-      .android-card-container.mdl-grid
+      .android-card-container.mdl-grid#LatestMovies
         each movie in movies
           .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
             .mdl-card__media
@@ -117,7 +117,11 @@ block content
             .mdl-card__supporting-text
               span.mdl-typography--font-light.mdl-typography--subhead #{movie.properties.tagline}
             .mdl-card__actions
-              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/read/#{movie.id}') #{localesCommands['Show']} 
+              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/read/#{movie.id}') #{localesCommands['Show']}
+      .android-section-title.mdl-typography--display-1-color-contrast Top Actors:
+      .android-card-container.mdl-grid#TopPersons
+        script.
+          app.divBuilder('/api/graph/read/top/persons?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");
       //- .android-card-container.mdl-grid
       //-   .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
       //-     .mdl-card__media

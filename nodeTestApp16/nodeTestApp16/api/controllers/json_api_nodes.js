@@ -57,7 +57,7 @@ var jsonApiNodes = function () {
 
       var query = that.queries.readDistinct[propertyName];
       var params = {};
-      var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'readDistinct', '', '', propertyName).api;
+      var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'readDistinct').api;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
