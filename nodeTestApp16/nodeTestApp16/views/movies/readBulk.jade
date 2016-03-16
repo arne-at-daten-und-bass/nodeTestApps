@@ -1,4 +1,5 @@
 extends ../layout
+include ../mixins/readBulkMdlCards.jade
 
 block content
   .android-content.mdl-layout__content
@@ -15,21 +16,7 @@ block content
           .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies of']} #{inQueryParam} : 
       else
         .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
-      .android-card-container.mdl-grid
-        each movie in movies
-          .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-            .mdl-card__media
-              i(style="opacity: 0.46;").material-icons movie
-            .mdl-card__title
-              h4.mdl-card__title-text #{movie.properties.title}
-            .mdl-card__title
-              i(style="opacity: 0.46;").material-icons date_range &nbsp;
-              h4.mdl-card__title-text #{movie.properties.released} 
-            .mdl-card__supporting-text
-              span.mdl-typography--font-light.mdl-typography--subhead #{movie.properties.tagline}
-            .mdl-card__actions
-              a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/read/#{movie.id}') #{localesCommands['Show']} 
-  
+      +moviesReadBulkMdlCards
   script.
     app.buildDynamicDropdowns(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
 

@@ -1,0 +1,12 @@
+mixin movieDeleteForm
+  form(name="deleteMovie", action="/#{locale}/movies/delete/" + parseInt(id),  method="post")
+    input(type="text", value="#{movie.title}" , name="title", disabled )
+    input(type="text", value="#{movie.tagline}", name="tagline", size="50", disabled)
+    input(type="number", value="#{movie.released}", name="released", disabled)
+    button(type="submit") #{localesCommands['Delete']}
+
+mixin personDeleteForm
+  form(name="deletePerson", action="/#{locale}/persons/delete/" + parseInt(id),  method="post")
+    input(type="text", value="#{person.name}" , name="name", disabled )
+    input(type="number", value="#{person.born}", name="born", disabled)
+    button(type="submit") #{localesCommands['Delete']}

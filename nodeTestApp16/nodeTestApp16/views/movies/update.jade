@@ -1,15 +1,8 @@
 extends ../layout
+include ../mixins/updateForms.jade
 
 block content
-  - var action = "/" + locale + "/movies/update/" + parseInt(id)
-  - var title = movie.title
-  - var tagline = movie.tagline
-  - var released = movie.released
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
       .logo-font.android-sub-slogan #{localesStrings['Update a Movie']}:
-        form(name="updateMovie", action=action,  method="post")
-          input(type="text", value=title , name="title")
-          input(type="text", value=tagline, name="tagline", size="50")
-          input(type="number", value=released, name="released")
-          button(type="submit") Submit
+        +movieUpdateForm

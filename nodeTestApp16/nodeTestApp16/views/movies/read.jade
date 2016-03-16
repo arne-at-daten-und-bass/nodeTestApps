@@ -7,3 +7,5 @@ block content
       .logo-font.android-sub-slogan #{localesStrings['Movie Title']}: #{movie.title}
       .logo-font.android-sub-slogan #{localesStrings['Movie Tagline']}: #{movie.tagline}
       .logo-font.android-sub-slogan #{localesStrings['Movie Release Year']}: #{movie.released}
+      a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
+      a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/delete/#{id}') #{localesCommands['Delete']}

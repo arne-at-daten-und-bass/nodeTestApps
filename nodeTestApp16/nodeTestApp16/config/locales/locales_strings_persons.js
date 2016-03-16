@@ -85,11 +85,11 @@ var localesStringsPersons = {
     'es': {'ES': 'Persona actualizada'},
     'fr': {'FR': 'Person actualisé'},   
   },
-  'Delete a Person (and all its relationships)': {
+  'Delete Person (and all its relationships)': {
     'de': {'DE': 'Person löschen (inklusive aller Verweise auf diese)'},
-    'en': {'EN': 'Delete a Person (and all its relationships)'},
-    'es': {'ES': 'Borrar la Persona (y todas sus conexiónes)'},
-    'fr': {'FR': 'Effacer le Person (et toutes ses relations)'},
+    'en': {'EN': 'Delete Person (and all its relationships)'},
+    'es': {'ES': 'Borrar Persona (y todas sus conexiónes)'},
+    'fr': {'FR': 'Effacer Person (et toutes ses relations)'},
   },
   '<Instance> Deleted':  {
     'de': {'DE': 'Person gelöscht'},

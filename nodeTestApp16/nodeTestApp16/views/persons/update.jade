@@ -1,13 +1,8 @@
 extends ../layout
+include ../mixins/updateForms.jade
 
 block content
-  - var action = "/" + locale + "/persons/update/" + parseInt(id)
-  - var name = person.name
-  - var born = person.born
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
       .logo-font.android-sub-slogan #{localesStrings['Update a Person']}:
-        form(name="updatePerson", action=action,  method="post")
-          input(type="text", value=name , name="name")
-          input(type="number", value=born, name="born")
-          button(type="submit") Submit
+        +personUpdateForm

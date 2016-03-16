@@ -91,11 +91,11 @@ var localesStringsMovies = {
     'es': {'ES': 'Película actualizada'},
     'fr': {'FR': 'Film actualisé'},   
   },
-  'Delete a Movie (and all its relationships)': {
+  'Delete Movie (and all its relationships)': {
     'de': {'DE': 'Film löschen (inklusive aller Verweise auf diesen)'},
-    'en': {'EN': 'Delete a Movie (and all its relationships)'},
-    'es': {'ES': 'Borrar la película (y todas sus conexiónes)'},
-    'fr': {'FR': 'Effacer le film (et toutes ses relations)'},
+    'en': {'EN': 'Delete Movie (and all its relationships)'},
+    'es': {'ES': 'Borrar película (y todas sus conexiónes)'},
+    'fr': {'FR': 'Effacer film (et toutes ses relations)'},
   },
   '<Instance> Deleted':  {
     'de': {'DE': 'Film gelöscht'},

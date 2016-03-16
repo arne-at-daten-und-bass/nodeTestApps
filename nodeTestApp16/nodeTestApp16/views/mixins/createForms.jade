@@ -12,10 +12,10 @@ mixin personCreateForm
     button(type="submit") #{localesCommands['Create']}
 
 mixin relationshipCreateForm
-   form(name='createRelationship', action='/#{locale}/graph/relationship/create',  method='post')
-      select#source(name='source')        
-      select#type(name='type', style='text-transform: lowercase;')
-      select#target(name='target')
-      label#asLabel(for='property') &nbsp; as &nbsp;
-      input#property(type='text', name='property', placeholder="Role (in English)")
-      button(type='submit') #{localesCommands['Create']}
+   form(name="createRelationship", action="/#{locale}/graph/relationship/create",  method="post")
+      select#source(name="source")        
+      select#type(name="type", style="text-transform: lowercase;")
+      select#target(name="target")
+      label#asLabel(for="property") &nbsp; as &nbsp;
+      input#property(type="text", name="property", placeholder="Role (in English)")
+      button(type="submit") #{localesCommands["Create"]}

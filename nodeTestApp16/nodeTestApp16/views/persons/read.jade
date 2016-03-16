@@ -6,3 +6,5 @@ block content
       .logo-font.android-sub-slogan #{slogan}:
       .logo-font.android-sub-slogan #{localesStrings['Full Name']}: #{person.name}
       .logo-font.android-sub-slogan #{localesStrings['Birth Date']}: #{person.born}
+      a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/update/#{id}') #{localesCommands['Update']}
+      a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/delete/#{id}') #{localesCommands['Delete']}

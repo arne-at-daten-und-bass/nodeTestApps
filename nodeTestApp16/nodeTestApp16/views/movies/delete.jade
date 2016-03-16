@@ -1,15 +1,8 @@
 extends ../layout
+include ../mixins/deleteForms.jade
 
 block content
-  - var action = "/" + locale + "/movies/delete/" + parseInt(id)
-  - var title = movie.title
-  - var tagline = movie.tagline
-  - var released = movie.released
   .android-content.mdl-layout__content
     .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{localesStrings['Delete a Movie (and all its relationships)']}:
-        form(name="deleteMovie", action=action,  method="post")
-          input(type="text", value=title , name="title", disabled )
-          input(type="text", value=tagline, name="tagline", size="50", disabled)
-          input(type="number", value=released, name="released", disabled)
-          button(type="submit") Delete
+      .logo-font.android-sub-slogan #{localesStrings['Delete Movie (and all its relationships)']}:
+        +movieDeleteForm

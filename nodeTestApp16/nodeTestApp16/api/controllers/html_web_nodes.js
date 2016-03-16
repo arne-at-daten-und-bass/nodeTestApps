@@ -54,9 +54,6 @@ var htmlWebNodes = function (localesUtils) {
         params = {};
         callback =  that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
       }
-      // var query = (req.swagger.params[that.inQueryParams].value) ? that.queries.readBulkParam : that.queries.readBulkNoParam;
-      // var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
-      // var callback = (req.swagger.params[that.inQueryParams].value) ? that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk', '', req.swagger.params[that.inQueryParams].value).web : that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
 
       resultType = ["graph"];
 
@@ -71,7 +68,7 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = that.queries.read;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'read').web;
+      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'read', req.swagger.params.id.value).web;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
