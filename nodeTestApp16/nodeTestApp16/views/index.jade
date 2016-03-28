@@ -26,7 +26,7 @@ block content
         stroke: #999;
         stroke-opacity: .6;
         }
-    script(src="//d3js.org/d3.v3.min.js" charset="utf-8")
+    script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
       var width = 960,
           height = 600;
@@ -36,15 +36,15 @@ block content
           .linkDistance(30)
           .size([width, height]);
 
-      var svg = d3.select("#graph").append("svg")
-          .attr("viewBox", "0 0 1044 600")
-          .attr("preserveAspectRatio", "xMidYMid meet");
+      var svg = d3.select('#graph').append('svg')
+          .attr('viewBox', '0 0 1044 600')
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
       var color = d3.scale.ordinal()
-          .domain(["Movie","Person"])
-          .range(["#8bc34a", "#757575"]);
+          .domain(['Movie','Person'])
+          .range(['#8bc34a', '#757575']);
 
-      d3.json("/api/graph", function(error, graph) {
+      d3.json('/api/graph', function(error, graph) {
         if (error) throw error;
 
         var relationships =  graph.graph.links;
@@ -63,93 +63,93 @@ block content
 
         force.nodes(nodes).links(relationships).gravity(0.25).start();
 
-        var link = svg.selectAll("link")
+        var link = svg.selectAll('link')
             .data(relationships)
-            .enter().append("g")
-            .attr("class", "link");
+            .enter().append('g')
+            .attr('class', 'link');
 
-        var linkLine = link.append("line")    
+        var linkLine = link.append('line')    
 
-        var linkText = link.append("text")
-            .attr("text-anchor", "middle")
-            .attr("dy", function(d) { return 1 - d.linkCount + "em"; })
+        var linkText = link.append('text')
+            .attr('text-anchor', 'middle')
+            .attr('dy', function(d) { return 1 - d.linkCount + 'em'; })
             .text(function(d) { return d.value; });
 
-        var node = svg.selectAll("node")
+        var node = svg.selectAll('node')
             .data(nodes)
-            .enter().append("g")
-            .attr("class", "node")
+            .enter().append('g')
+            .attr('class', 'node')
             .call(force.drag);
 
-        var nodeIcon = node.append("text")
+        var nodeIcon = node.append('text')
             .text(function(d) {
-              if(d.label === 'Movie') { return "\ue02c"; } 
-              if(d.label === 'Person') { return "\ue7fd"; } })
-            .attr("class", "material-icons")
+              if(d.label === 'Movie') { return '\ue02c'; } 
+              if(d.label === 'Person') { return '\ue7fd'; } })
+            .attr('class', 'material-icons')
             .attr('text-anchor', 'middle')
             .attr('dominant-baseline', 'central')
-            .style("fill", function(d) { return color(d.label); })
+            .style('fill', function(d) { return color(d.label); })
        
-        var nodeTextRect = node.append("rect")
-            .attr("id", function(d) {return 'nodeTextRect_' + d.id})
-            .attr("class", "nodeTextRect")
-            .style("stroke", function(d) { return color(d.label); })
+        var nodeTextRect = node.append('rect')
+            .attr('id', function(d) {return 'nodeTextRect_' + d.id})
+            .attr('class', 'nodeTextRect')
+            .style('stroke', function(d) { return color(d.label); })
 
-        var nodeText = node.append("text")
+        var nodeText = node.append('text')
             .text(function(d) {
               if(d.name === undefined) { return d.title; } 
               if(d.title === undefined) { return d.name; } })
-            .attr("id", function(d) {return 'nodeText_' + d.id})
-            .attr("class", "nodeText")
-            .attr("dx", 12)
-            .attr("dy", ".35em")
-            .style("fill", function(d) { return color(d.label); });
+            .attr('id', function(d) {return 'nodeText_' + d.id})
+            .attr('class', 'nodeText')
+            .attr('dx', 12)
+            .attr('dy', '.35em')
+            .style('fill', function(d) { return color(d.label); });
 
-        nodeIcon.on("mouseenter", function(d) {
-          d3.select(this).style("font-size", 'xx-large');
-          d3.select(this.parentNode).selectAll(".nodeText")
+        nodeIcon.on('mouseenter', function(d) {
+          d3.select(this).style('font-size', 'xx-large');
+          d3.select(this.parentNode).selectAll('.nodeText')
             .style({display:'inline'});
           d3.select('#nodeTextRect_' + d.id)
             .style({display:'inline'})
-            .attr("width", function(d) { return document.getElementById('nodeText_' + d.id).getBBox().width + 10; })
-            .attr("height", 20)
+            .attr('width', function(d) { return document.getElementById('nodeText_' + d.id).getBBox().width + 10; })
+            .attr('height', 20)
         });
 
-        nodeIcon.on("dblclick", function (d) {
+        nodeIcon.on('dblclick', function (d) {
           if(d.name === undefined) { location.href = 'movies/read/' + d.id;} 
           if(d.title === undefined) { location.href = 'persons/read/' + d.id; }
-          d3.select(this).style("font-size", 24);
-          d3.select(this.parentNode).selectAll(".nodeText").style({display:'none'});
-          d3.select(this.parentNode).selectAll(".nodeTextRect").style({display:'none'});
+          d3.select(this).style('font-size', 24);
+          d3.select(this.parentNode).selectAll('.nodeText').style({display:'none'});
+          d3.select(this.parentNode).selectAll('.nodeTextRect').style({display:'none'});
           }
         );
 
-        nodeIcon.on("mouseleave", function() {
-          d3.select(this).style("font-size", 24);
-          d3.select(this.parentNode).selectAll(".nodeText").style({display:'none'}); 
-          d3.select(this.parentNode).selectAll(".nodeTextRect").style({display:'none'});
+        nodeIcon.on('mouseleave', function() {
+          d3.select(this).style('font-size', 24);
+          d3.select(this.parentNode).selectAll('.nodeText').style({display:'none'}); 
+          d3.select(this.parentNode).selectAll('.nodeTextRect').style({display:'none'});
         });   
 
-        force.on("tick", function() {
+        force.on('tick', function() {
 
-          linkLine.attr("x1", function(d) { return d.source.x; })
-                  .attr("y1", function(d) { return d.source.y; })
-                  .attr("x2", function(d) { return d.target.x; })
-                  .attr("y2", function(d) { return d.target.y; });
+          linkLine.attr('x1', function(d) { return d.source.x; })
+                  .attr('y1', function(d) { return d.source.y; })
+                  .attr('x2', function(d) { return d.target.x; })
+                  .attr('y2', function(d) { return d.target.y; });
 
-          linkText.attr("transform", function(d) {
+          linkText.attr('transform', function(d) {
                 var angle = Math.atan((d.source.y - d.target.y) / (d.source.x - d.target.x)) * 180 / Math.PI;
                 return 'translate(' + [((d.source.x + d.target.x) / 2), ((d.source.y + d.target.y) / 2)] + ')rotate(' + angle + ')';
               });
 
-          nodeIcon.attr("x", function (d) { return d.x; })
-              .attr("y", function (d) { return d.y; });
+          nodeIcon.attr('x', function (d) { return d.x; })
+              .attr('y', function (d) { return d.y; });
 
-          nodeTextRect.attr("x", function (d) { return d.x+22; })
-              .attr("y", function (d) { return d.y-10; });
+          nodeTextRect.attr('x', function (d) { return d.x+22; })
+              .attr('y', function (d) { return d.y-10; });
 
-          nodeText.attr("x", function (d) { return d.x+15; })
-              .attr("y", function (d) { return d.y; });
+          nodeText.attr('x', function (d) { return d.x+15; })
+              .attr('y', function (d) { return d.y; });
         });
 
       });
