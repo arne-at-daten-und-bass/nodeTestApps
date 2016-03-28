@@ -18,6 +18,7 @@ html(lang='en')
       .android-header.mdl-layout__header.mdl-layout__header--waterfall
         .mdl-layout__header-row
           span.android-title.mdl-layout-title
+            a(href='/#{locale}', style="font-size: 18px; color: #8bc34a; text-decoration: none;").logo-font fliXnet
           //- Add spacer, to align navigation to the right in desktop
           .android-header-spacer.mdl-layout-spacer
           //- Top Navigation
@@ -27,6 +28,7 @@ html(lang='en')
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='/#{locale}/about') #{localesMenu['About']}
               a.mdl-navigation__link.mdl-typography--text-uppercase(disabled='') #{localesMenu['Login']}
           span.android-mobile-title.mdl-layout-title
+            a(href='/#{locale}', style="font-size: 18px; color: #8bc34a; text-decoration: none;").logo-font fliXnet
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
             i.material-icons language
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
@@ -41,6 +43,7 @@ html(lang='en')
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title
+          a(style="font-size: 18px; color: white;").android-logo-image.logo-font fliXnet
         nav.mdl-navigation
           a.mdl-navigation__link(href='/#{locale}') #{localesMenu['The Movie Graph']}
           a.mdl-navigation__link(href='/#{locale}/graph/relationship/create') #{localesMenu['Create a Relationship']}
@@ -52,7 +55,35 @@ html(lang='en')
           span.mdl-navigation__link(href='') #{localesMenu['Persons']}
           a.mdl-navigation__link(href='/#{locale}/persons/create') #{localesMenu['Create a Person']}
           a.mdl-navigation__link(href='/#{locale}/persons') #{localesMenu['All Persons']}
-      block content
+      .android-content.mdl-layout__content
+        block content
+        footer.android-footer.mdl-mega-footer
+          .mdl-mega-footer--top-section
+            .mdl-mega-footer--left-section
+              a(href='https://twitter.com/daten_und_bass', target='blank')
+                button.mdl-mega-footer--social-btn.social-btn.social-btn__twitter
+          //-   .mdl-mega-footer--right-section
+          //-     a.mdl-typography--font-light(href='#top')
+          //-       | Back to top
+          //-       i.material-icons expand_less
+          .mdl-mega-footer--middle-section
+            p.mdl-typography--font-light #{localesMenu['The Movie Graph']} © 2016 daten&bass
+            //- p.mdl-typography--font-light Some features and devices may not be available in all areas
+          .mdl-mega-footer--bottom-section
+            a#version-dropdown.android-link.android-link-menu.mdl-typography--font-light
+              | #{localesMenu['Users']} 
+              i.material-icons arrow_drop_up
+            ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='version-dropdown')
+              li.mdl-menu__item
+                a.mdl-menu__item(href='/#{locale}') #{localesMenu['Home']}
+            a#developers-dropdown.android-link.android-link-menu.mdl-typography--font-light
+              | #{localesMenu['Developers']} 
+              i.material-icons arrow_drop_up
+            ul.mdl-menu.mdl-js-menu.mdl-menu--top-left.mdl-js-ripple-effect(for='developers-dropdown')
+              li.mdl-menu__item
+                a.mdl-menu__item(href='https://github.com/daten-und-bass', target='blank') #{localesMenu['Github Code']}
+            a.android-link.mdl-typography--font-light(href='/#{locale}/imprint') #{localesMenu['Imprint']}
+            a.android-link.mdl-typography--font-light(href='/#{locale}/contact') #{localesMenu['Contact']}
 
     script(src='/material.min.js')
 

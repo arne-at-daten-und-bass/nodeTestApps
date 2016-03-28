@@ -53,12 +53,18 @@ var queries = {
       create_REVIEWED: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:REVIEWED {summary: {property} }]->(m) RETURN p.name, type(r), m.title, r.summary',
       create_WROTE: 'MATCH (p:Person { name: {source} }), (m:Movie { title: {target} }) CREATE (p)-[r:WROTE]->(m) RETURN p.name, type(r), m.title',
       search: {
+        readLabelsAmountNodes: 'MATCH (n) RETURN labels(n), count(*)',
+        readTypeAmountRelationships: 'MATCH (n)-[r]->(m) RETURN type(r), count(r) ORDER BY count(r) DESC',
+        readAllRelationshipsPagination: 'MATCH (s)-[r]->(t) RETURN CASE WHEN exists(s.name) = true THEN s.name WHEN exists(s.title) = true THEN s.title END, type(r), r, CASE WHEN exists(t.name) = true THEN t.name WHEN exists(t.title) = true THEN t.title END ORDER BY type(r) SKIP {offset} LIMIT {amount}',
         readTopPersons: {
           ACTED_IN: 'MATCH (p:Person)-[r:ACTED_IN]->(m:Movie) RETURN p.name AS Person, id(p) AS PersonId, count(*) AS AmountRoles, collect(m.title) AS Movies, collect(id(m)) AS MovieIds ORDER BY AmountRoles DESC LIMIT 4',
         },
+        readCastMovie: 'MATCH (p:Person)-[r:ACTED_IN]->(m:Movie) WHERE id(m)={id} RETURN p.name, id(p), size(r.roles), r.roles' ,
+        readTopColleagues: {
+          ACTED_IN: 'MATCH (p:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(c:Person) WHERE id(p)={id} RETURN c.name, id(c), count(m), collect(m.title), collect(id(m)) ORDER BY count(m) DESC LIMIT 4',
+        },
       },
     };
-
     return queries;
   },
 };

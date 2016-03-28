@@ -136,6 +136,61 @@ paths:
 
 ## Relationships & Searches ##
 
+# JSON only API: Read all node labels and their amount over the whole graph#
+  /api/graph/read/readLabelsAmountNodes:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of all node labels and their amount
+      operationId: readLabelsAmountNodes
+      responses:
+        "200":
+          description: Successfully GOT all node labels and their amount
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# JSON only API: Read all relationship types and their amount over the whole graph#
+  /api/graph/read/typeAmountRelationships:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of relationship types and their amount
+      operationId: readTypeAmountRelationships
+      responses:
+        "200":
+          description: Successfully GOT relationship types and their amount
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# JSON only API: Read paginated all relationships over the whole graph#
+  /api/graph/read/RelationshipsPagination:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of all relationships with pagination
+      operationId: readAllRelationshipsPagination
+      parameters:
+        - name: pagination
+          required: true
+          in: query
+          description: amount of items for pagination
+          type: integer
+      responses:
+        "200":
+          description: Successfully GOT relationships
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
 # JSON only API: Search for top persons regarding thei amount of relationships #
   /api/graph/read/top/persons:
     x-swagger-router-controller: context_json_api_graph
@@ -143,6 +198,43 @@ paths:
       description: Returns JSON of the top four persons with the most ACTED_IN relationships
       operationId: readTopPersons
       parameters:
+        - $ref: "#/parameters/relationshipName"
+      responses:
+        "200":
+          description: Successfully GOT top four person swith the most ACTED_IN
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# JSON only API: Search the cast (all ACTED_IN releationships)  of a movie #
+  /api/graph/readCastMovie/{id}:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON with the cast (all ACTED_IN releationships)  of a movie
+      operationId: readCastMovie
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        "200":
+          description: Successfully GOT the cast for a movie
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# JSON only API: Search for top colleagues who acted most often together with a given person#
+  /api/graph/read/top/colleagues/{id}:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of the top four persons with the most ACTED_IN relationships
+      operationId: readTopColleagues
+      parameters:
+        - $ref: "#/parameters/id"
         - $ref: "#/parameters/relationshipName"
       responses:
         "200":
@@ -781,7 +873,7 @@ parameters:
     required: true
     description: The id (as provided by the database) for an instance of a nodeType.
     in: path
-    type: string
+    type: integer
   propertyName:
     name: propertyName
     required: true

@@ -2,13 +2,12 @@ extends ../layout
 include ../mixins/createForms.jade
 
 block content
-  .android-content.mdl-layout__content
-    .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{localesStrings['Create a new Relationship']}:
-      .mdl-typography--font-light
-        br
-        +relationshipCreateForm
-        script.
-          app.buildOptions(!{JSON.stringify(persons)}, !{JSON.stringify(relationships)}, !{JSON.stringify(movies)});
+  .top-section.mdl-typography--text-center
+    .logo-font.android-sub-slogan #{localesStrings['Create a new Relationship']}:
+    .mdl-typography--font-light
+      br
+      +relationshipCreateForm
+  script.
+    app.buildOptions(!{JSON.stringify(persons)}, !{JSON.stringify(relationships)}, !{JSON.stringify(movies)});
 
 

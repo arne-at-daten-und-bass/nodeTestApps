@@ -2,7 +2,8 @@ extends ../layout
 include ../mixins/createForms.jade
 
 block content
-  .android-content.mdl-layout__content
-    .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{localesStrings['Create a new Person']}:
-        +personCreateForm
+  .top-section.mdl-typography--text-center
+    .logo-font.android-sub-slogan #{localesStrings['Create a new Person']}:
+    .mdl-typography--font-light
+      br
+      +personCreateForm

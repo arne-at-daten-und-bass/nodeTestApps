@@ -27,19 +27,113 @@ var app = (function() {
     return documentFragment;
   }
 
-  function divBuilder(url, locale, showString) {
+  function tableBuilder(element, url) {
+    var elementArray = [];
+    var oldTBody = document.getElementById(element);
+    var newTBody = document.createElement('tbody')
+    newTBody.id = 'myTable';
+    var documentFragment = document.createDocumentFragment();
 
-    var elementArray;
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', encodeURI(url));
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        elementArray = JSON.parse(xhr.responseText).data;
+        elementArray.forEach(function (element, index) {
+
+          var outerTr = document.createElement('tr');
+            var innterTd1 = document.createElement('td');
+            innterTd1.textContent = elementArray[index].row[0];
+            innterTd1.className = 'mdl-data-table__cell--non-numeric';
+          outerTr.appendChild(innterTd1);
+            var innterTd2 = document.createElement('td');
+            innterTd2.textContent = elementArray[index].row[1];
+          outerTr.appendChild(innterTd2);
+          documentFragment.appendChild(outerTr);
+        });
+
+      newTBody.appendChild(documentFragment);
+      oldTBody.parentNode.replaceChild(newTBody, oldTBody);
+      }
+    };
+    xhr.send();
+  }
+
+  function tableBuilder2(element, url, pagination) {
+    var elementArray = [];
+    var oldTBody = document.getElementById(element);
+    var newTBody = document.createElement('tbody')
+    newTBody.id = 'myTable2';
+    var documentFragment = document.createDocumentFragment();
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', encodeURI(url + pagination));
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        elementArray = JSON.parse(xhr.responseText).data;
+        elementArray.forEach(function (element, index) {
+
+          var outerTr = document.createElement('tr');
+            var innterTd1 = document.createElement('td');
+            innterTd1.textContent = elementArray[index].row[0];
+            innterTd1.className = 'mdl-data-table__cell--non-numeric';
+          outerTr.appendChild(innterTd1);
+            var innterTd2 = document.createElement('td');
+            innterTd2.textContent = elementArray[index].row[1];
+            innterTd2.className = 'mdl-data-table__cell--non-numeric';
+          outerTr.appendChild(innterTd2);
+            var innterTd3 = document.createElement('td');
+            innterTd3.textContent = JSON.stringify(elementArray[index].row[2]);
+            innterTd3.className = 'mdl-data-table__cell--non-numeric';
+          outerTr.appendChild(innterTd3);
+            var innterTd4 = document.createElement('td');
+            innterTd4.textContent = elementArray[index].row[3];
+            innterTd4.className = 'mdl-data-table__cell--non-numeric';
+          outerTr.appendChild(innterTd4);
+
+          documentFragment.appendChild(outerTr);
+        });
+
+      newTBody.appendChild(documentFragment);
+      oldTBody.parentNode.replaceChild(newTBody, oldTBody);
+      if(pagination < 6) {
+        document.getElementById('before').style.opacity = 0.46;
+        document.getElementById('before').onclick = '';
+      } else {
+        document.getElementById('before').style.opacity = 1.00;
+        document.getElementById('before').onclick = beforeFunc;
+      }
+
+      if (elementArray.length < 6) {
+        document.getElementById('next').style.opacity = 0.46;
+        document.getElementById('next').onclick='';
+      } else {
+        document.getElementById('next').style.opacity = 1.00;
+        document.getElementById('next').onclick = nextFunc;
+      }
+        
+      }
+    };
+    xhr.send();
+  }
+
+  function divBuilder(element, url, locale, showString) {
+
+    var elementArray = [];
     var documentFragment = document.createDocumentFragment();
     var xhr = new XMLHttpRequest();
 
     xhr.open('GET', encodeURI(url));
 
     xhr.onreadystatechange = function() {
-      if (xhr.readyState===4 && xhr.status===200) {
-        elementArray = JSON.parse(xhr.responseText).topPersons;
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        elementArray = JSON.parse(xhr.responseText).data;
 
-        elementArray.forEach(function (element, index) {
+        elementArray.forEach(function (currentElement, index) {
           var outerDiv = document.createElement('div');
           outerDiv.className = 'mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp';
 
@@ -65,7 +159,13 @@ var app = (function() {
               var innnerIMovieMedia = document.createElement('i');
                   innnerIMovieMedia.className = 'material-icons';
                   innnerIMovieMedia.style.opacity = '0.46';
-                  innnerIMovieMedia.innerHTML = 'movie &nbsp;';
+                  if (element === 'MovieCast') {
+                    console.log(element);
+                    innnerIMovieMedia.innerHTML = 'perm_contact_calendar &nbsp;'; 
+                  } else {
+                    innnerIMovieMedia.innerHTML = 'movie &nbsp;';
+                  }
+                  // innnerIMovieMedia.innerHTML = 'movie &nbsp;';
               var innnerH4AmountRoles = document.createElement('h4');
                   innnerH4AmountRoles.className ='mdl-card__title-text';
                   innnerH4AmountRoles.innerHTML = elementArray[index].row[2];
@@ -74,17 +174,22 @@ var app = (function() {
           outerDiv.appendChild(innnerDivRoles);
 
             var innerDivMovieNames = document.createElement('div');
-            innerDivMovieNames.className = 'mdl-card__supporting-text'
+            innerDivMovieNames.className = 'mdl-card__supporting-text';
               var innerSpanMovieNames = document.createElement('sapn');
-              innerSpanMovieNames.className = 'mdl-typography--font-light mdl-typography--subhead'
+              innerSpanMovieNames.className = 'mdl-typography--font-thin';
               elementArray[index].row[3].forEach(function (innerElement, innerIndex){
                 var innerAMovieName = document.createElement('a');
-                innerAMovieName.className = 'android-link';
-                innerAMovieName.href = '/' + locale + '/movies/read/' + elementArray[index].row[4][innerIndex];
+                if (element === 'MovieCast') { 
+                  innerAMovieName.className = 'mdl-typography--font-light mdl-typography--subhead'
+                } else {
+                  innerAMovieName.className = 'android-link';
+                  innerAMovieName.href = '/' + locale + '/movies/read/' + elementArray[index].row[4][innerIndex];
+                }
+
                 innerAMovieName.innerHTML = innerElement + ' | ';
                 innerSpanMovieNames.appendChild(innerAMovieName);
               });
-            innerDivMovieNames.appendChild(innerSpanMovieNames)
+            innerDivMovieNames.appendChild(innerSpanMovieNames);
           outerDiv.appendChild(innerDivMovieNames);
 
             var innerDivActions = document.createElement('div');
@@ -98,7 +203,7 @@ var app = (function() {
 
           documentFragment.appendChild(outerDiv);
         });
-        document.getElementById('TopPersons').appendChild(documentFragment);
+        document.getElementById(element).appendChild(documentFragment);
       }
     };
     xhr.send();
@@ -231,5 +336,7 @@ var app = (function() {
     buildDynamicDropdowns: buildDynamicDropdowns,
     changelocation: changelocation,
     changelocale: changelocale,
+    tableBuilder: tableBuilder,
+    tableBuilder2:tableBuilder2
   }; 
 })();

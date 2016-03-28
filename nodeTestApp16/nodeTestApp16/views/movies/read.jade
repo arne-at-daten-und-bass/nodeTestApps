@@ -1,11 +1,15 @@
 extends ../layout
 
 block content
-  .android-content.mdl-layout__content
-    .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{slogan}:
-      .logo-font.android-sub-slogan #{localesStrings['Movie Title']}: #{movie.title}
-      .logo-font.android-sub-slogan #{localesStrings['Movie Tagline']}: #{movie.tagline}
-      .logo-font.android-sub-slogan #{localesStrings['Movie Release Year']}: #{movie.released}
-      a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
-      a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/delete/#{id}') #{localesCommands['Delete']}
+  .top-section.mdl-typography--text-center
+    .logo-font.android-sub-slogan #{slogan}:
+    .logo-font.android-sub-slogan #{localesStrings['Movie Title']}: #{movie.title}
+    .logo-font.android-sub-slogan #{localesStrings['Movie Tagline']}: #{movie.tagline}
+    .logo-font.android-sub-slogan #{localesStrings['Movie Release Year']}: #{movie.released}
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/delete/#{id}') #{localesCommands['Delete']}
+   .android-more-section
+    .android-section-title.mdl-typography--display-1-color-contrast All actors of #{movie.title}:
+    .android-card-container.mdl-grid#MovieCast 
+  script.
+    app.divBuilder('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");

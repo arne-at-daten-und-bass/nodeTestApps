@@ -2,7 +2,8 @@ extends ../layout
 include ../mixins/deleteForms.jade
 
 block content
-  .android-content.mdl-layout__content
-    .android-be-together-section.mdl-typography--text-center
-      .logo-font.android-sub-slogan #{localesStrings['Delete Person (and all its relationships)']}:
-        +personDeleteForm
+  .top-section.mdl-typography--text-center
+    .logo-font.android-sub-slogan #{localesStrings['Delete Person (and all its relationships)']}:
+    .mdl-typography--font-light
+      br
+      +personDeleteForm

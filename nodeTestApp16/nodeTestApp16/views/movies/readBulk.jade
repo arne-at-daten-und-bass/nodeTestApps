@@ -2,21 +2,20 @@ extends ../layout
 include ../mixins/readBulkMdlCards.jade
 
 block content
-  .android-content.mdl-layout__content
-    .android-be-together-section(style="height:100px;")
-      .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
-      .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']}:&nbsp;
-        select#released(name='released', onchange="app.changelocation(self.location.pathname, this.options[this.selectedIndex].value, 'released')")
-          option(selected) #{localesStrings['All years']}
-    .android-more-section
-      if inQueryParam
-        if inQueryParam === -1
-          .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies with unknown release year']}  : 
-        else
-          .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies of']} #{inQueryParam} : 
+  .top-section
+    .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
+    .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']}:&nbsp;
+      select#released(name='released', onchange="app.changelocation(self.location.pathname, this.options[this.selectedIndex].value, 'released')")
+        option(selected) #{localesStrings['All years']}
+  .android-more-section
+    if inQueryParam
+      if inQueryParam === -1
+        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies with unknown release year']}  : 
       else
-        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
-      +moviesReadBulkMdlCards
+        .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies of']} #{inQueryParam} : 
+    else
+      .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
+    +moviesReadBulkMdlCards
   script.
     app.buildDynamicDropdowns(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
 

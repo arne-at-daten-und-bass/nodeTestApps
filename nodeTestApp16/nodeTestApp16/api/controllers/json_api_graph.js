@@ -17,6 +17,37 @@ var jsonApiGraph = function () {
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
+
+    readLabelsAmountNodes: function(req, res) {
+      var query = that.queries.search.readLabelsAmountNodes;
+      var params = {};
+      var callback = that.callbacks.graph(res, that.nodeType, '', '', 'readLabelsAmountNodes').api;
+
+      resultType = ["row"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
+    readTypeAmountRelationships: function(req, res) {
+      var query = that.queries.search.readTypeAmountRelationships;
+      var params = {};
+      var callback = that.callbacks.graph(res, that.nodeType, '', '', 'readTypeAmountRelationships').api;
+
+      resultType = ["row"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
+    readAllRelationshipsPagination: function(req, res) {
+      var query = that.queries.search.readAllRelationshipsPagination;
+      var params = {offset: req.swagger.params.pagination.value, amount: 6};
+      var callback = that.callbacks.graph(res, that.nodeType, '', '', 'readAllRelationshipsPagination').api;
+
+      resultType = ["row"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
     readTopPersons: function(req, res) {
       var relationshipName = req.swagger.params.relationshipName.value;
 
@@ -25,6 +56,32 @@ var jsonApiGraph = function () {
       var callback = that.callbacks.graph(res, that.nodeType, '', '', 'readTopPersons').api;
 
       resultType = ["row"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
+    readCastMovie: function(req, res) {
+      var query = that.queries.search.readCastMovie;
+      var params = that.params.otherParams.set(req.swagger.params);
+      var callback = that.callbacks.graph(res, that.nodeType, '', '', 'readCastMovie').api;
+
+      resultType = ["row"];
+
+      console.log(req.swagger.params);
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
+    readTopColleagues: function(req, res) {
+      var relationshipName = req.swagger.params.relationshipName.value;
+
+      var query = that.queries.search.readTopColleagues[relationshipName];
+      var params = that.params.otherParams.set(req.swagger.params);
+      var callback = that.callbacks.graph(res, that.nodeType, '', '', 'readTopColleagues').api;
+
+      resultType = ["row"];
+
+      console.log(req.swagger.params);
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },

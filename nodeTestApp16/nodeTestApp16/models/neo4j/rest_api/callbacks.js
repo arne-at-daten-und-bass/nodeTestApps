@@ -92,13 +92,19 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
       api: function (error, responseBodyFromNeo) {
         var responseObjectToSwagger = {};
 
+        console.log(responseBodyFromNeo);
         switch (crudType) {
           case 'readGraph':
             responseObjectToSwagger.graph = callbacks.utils.nodeLinks(error, responseBodyFromNeo);
             break;
+          case 'readLabelsAmountNodes':
+          case 'readTypeAmountRelationships':
           case 'readTopPersons':
+          case 'readTopColleagues':
+          case 'readAllRelationshipsPagination':
+          case 'readCastMovie':
             responseObjectToSwagger.columns = responseBodyFromNeo.results[0].columns;
-            responseObjectToSwagger.topPersons = responseBodyFromNeo.results[0].data;
+            responseObjectToSwagger.data = responseBodyFromNeo.results[0].data;
             break;
           default:
             console.log('Default case.');
