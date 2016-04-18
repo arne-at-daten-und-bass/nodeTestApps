@@ -5,8 +5,10 @@ block content
     .logo-font.android-sub-slogan #{slogan}:
     #source.logo-font.android-sub-slogan #{relationship.row[0]}
     #type(style='text-transform: lowercase;').logo-font.android-sub-slogan #{relationship.row[1]}
-    #target.logo-font.android-sub-slogan '#{relationship.row[2]}'
-    #property.logo-font.android-sub-slogan 
-
-  script.
-    app.toogleView(!{JSON.stringify(relationship)});
+    #target.logo-font.android-sub-slogan '#{relationship.row[3]}'
+    #property.logo-font.android-sub-slogan
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/graph/relationships/update/#{id}') #{localesCommands['Update']}
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.deleteRelationship("/#{locale}/graph/relationships/delete/#{id}", "#{relationship.row[0]}", "#{relationship.row[1]}", "#{relationship.row[3]}", "#{locale}/")') #{localesCommands['Delete']}
+    script.
+      app.toogleView(!{JSON.stringify(relationship)});
+  .table-text-section test

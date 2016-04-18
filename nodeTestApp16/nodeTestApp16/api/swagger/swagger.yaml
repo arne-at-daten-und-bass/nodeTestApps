@@ -134,6 +134,42 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+# JSON only API: Graph (via path traversal) of one Movie returned as a transformed JSON for visualization via DS3 #
+  /api/graph/readGraphOfMovie/{id}:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of the graph (via path traversal) of one Movie with IDed nodes and links (TODO type description)
+      operationId: readGraphOfMovie
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# JSON only API: Graph (via path traversal) of one Person returned as a transformed JSON for visualization via DS3 #
+  /api/graph/readGraphOfPerson/{id}:
+    x-swagger-router-controller: context_json_api_graph
+    get:
+      description: Returns JSON of the graph (via path traversal) of one Person with IDed nodes and links (TODO type description)
+      operationId: readGraphOfPerson
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        "200":
+          description: Successfully GOT visualize
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 ## Relationships & Searches ##
 
 # JSON only API: Read all node labels and their amount over the whole graph#
@@ -246,11 +282,32 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-# HTML Web: Create one and Read (several) relationships(s) #
-  /{locale}/graph/relationship/create:
+# JSON only API: Search for the string entered in the searchBox #
+  /{locale}/graph/search/searchBox:
     x-swagger-router-controller: context_html_web_graph
     get:
-      description: Returns html view for a relationship (from person to movie) creation form
+      description: Returns search results for the string entered in the searchBox 
+      produces: 
+        - text/html
+      operationId: searchBox
+      parameters:
+        - $ref: "#/parameters/locale"
+        - $ref: "#/parameters/searchParam"
+      responses:
+        "200":
+          description: Successfully GOT top four person swith the most ACTED_IN
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# HTML Web: Create one relationships #
+  /{locale}/graph/relationships/create:
+    x-swagger-router-controller: context_html_web_graph
+    get:
+      description: Returns html view for a relationship creation form
       produces: 
         - text/html
       operationId: getCreate
@@ -294,6 +351,93 @@ paths:
           in: formData
           description: a new relationships property (only for 'ACTED_IN' and 'REVIEWED')
           type: string
+      responses:
+        "302":
+          description: Successfully stored a new relationship
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+# HTML Web: Read, update one relationship #
+  /{locale}/graph/relationships/read/{id}:
+    x-swagger-router-controller: context_html_web_graph
+    get:
+      description: Returns html view for relationshion
+      produces: 
+        - text/html
+      operationId: readRelationship
+      parameters:
+        - $ref: "#/parameters/locale"
+        - $ref: "#/parameters/id"
+      responses:
+        "200":
+          description: Successfully GOT view for relationship
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /{locale}/graph/relationships/update/{id}:
+    x-swagger-router-controller: context_html_web_graph
+    get:
+      description: Returns html view for updating a relationship
+      produces: 
+        - text/html
+      operationId: getUpdateRelationship
+      parameters:
+        - $ref: "#/parameters/locale"
+        - $ref: "#/parameters/id"
+      responses:
+        "200":
+          description: Successfully GOT view for relationship update form
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Updates a relationship
+      consumes:
+        - application/x-www-form-urlencoded
+      produces: 
+        - text/html
+      operationId: updateRelationship
+      parameters:
+        - $ref: "#/parameters/locale"
+        - $ref: "#/parameters/id"
+        - name: type
+          required: true
+          in: formData
+          description: a new relationships type
+          type: string
+        - name: property
+          required: false
+          in: formData
+          description: a new relationships property (only for ACTED_IN and REVIEWED)
+          type: string
+      responses:
+        "200":
+          description: Successfully stored a new relationship
+          schema:
+            type: string
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /{locale}/graph/relationships/delete/{id}:
+    x-swagger-router-controller: context_html_web_graph
+    post:
+      description: Deletes a relationship
+      consumes:
+        - application/octet-stream
+      operationId: deleteRelationship
+      parameters:
+        - $ref: "#/parameters/locale"
+        - $ref: "#/parameters/id"
       responses:
         "200":
           description: Successfully stored a new relationship
@@ -450,8 +594,8 @@ paths:
         - $ref: "#/parameters/released"
         # - name: title
       responses:
-        "200":
-          description: Successfully stored movie
+        "302":
+          description: Successfully stored movie and redirect to read url
           schema:
             type: string
         default:
@@ -543,29 +687,31 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /{locale}/movies/delete/{id}:
     x-swagger-router-controller: context_html_web_movies
-    get:
-      description: Returns html view for a disabled movie deletion form
-      produces: 
-        - text/html
-      operationId: getDelete
-      parameters:
-        - $ref: "#/parameters/locale"
-        - $ref: "#/parameters/id"
-      responses:
-        "200":
-          description: Successfully GOT a form for a movie deletion
-          schema:
-            type: string
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+    # get:
+    #   description: Returns html view for a disabled movie deletion form
+    #   produces: 
+    #     - text/html
+    #   operationId: getDelete
+    #   parameters:
+    #     - $ref: "#/parameters/locale"
+    #     - $ref: "#/parameters/id"
+    #   responses:
+    #     "200":
+    #       description: Successfully GOT a form for a movie deletion
+    #       schema:
+    #         type: string
+    #     default:
+    #       description: Error
+    #       schema:
+    #         $ref: "#/definitions/ErrorResponse"
     post:
       description: Deletes a single movie entry by a given id 
+      # consumes:
+      #   - application/x-www-form-urlencoded
       consumes:
-        - application/x-www-form-urlencoded
-      produces: 
-        - text/html
+        - application/octet-stream
+      # produces: 
+      #   - text/html
       operationId: delete
       parameters:
         - $ref: "#/parameters/locale"
@@ -721,8 +867,8 @@ paths:
         - $ref: "#/parameters/name"
         - $ref: "#/parameters/born"
       responses:
-        "200":
-          description: Successfully stored a new person
+        "302":
+          description: Successfully stored a new person and redirect to read url
           schema:
             type: string
         default:
@@ -813,29 +959,31 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /{locale}/persons/delete/{id}:
     x-swagger-router-controller: context_html_web_persons
-    get:
-      description: Returns html view for a disabled person deletion from
-      produces: 
-        - text/html
-      operationId: getDelete
-      parameters:
-        - $ref: "#/parameters/locale"
-        - $ref: "#/parameters/id"
-      responses:
-        "200":
-          description: Successfully GOT a person for deletion
-          schema:
-            type: string
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+    # get:
+    #   description: Returns html view for a disabled person deletion from
+    #   produces: 
+    #     - text/html
+    #   operationId: getDelete
+    #   parameters:
+    #     - $ref: "#/parameters/locale"
+    #     - $ref: "#/parameters/id"
+    #   responses:
+    #     "200":
+    #       description: Successfully GOT a person for deletion
+    #       schema:
+    #         type: string
+    #     default:
+    #       description: Error
+    #       schema:
+    #         $ref: "#/definitions/ErrorResponse"
     post:
       description: Deletes a single person entry by a given id 
+      # consumes:
+      #   - application/x-www-form-urlencoded
       consumes:
-        - application/x-www-form-urlencoded
-      produces: 
-        - text/html
+        - application/octet-stream
+      # produces: 
+      #   - text/html
       operationId: delete
       parameters:
         - $ref: "#/parameters/locale"
@@ -871,7 +1019,7 @@ parameters:
   id:
     name: id
     required: true
-    description: The id (as provided by the database) for an instance of a nodeType.
+    description: The id (as provided by the database) for an instance of a nodeType or a relationshipType.
     in: path
     type: integer
   propertyName:
@@ -888,6 +1036,12 @@ parameters:
     description: The name of the relationship for which the count values are to be returned.
     type: string
     enum: [ ACTED_IN ]
+  searchParam:
+    name: searchParam
+    required: true
+    in: query
+    description: The search string as entered in the searchBox
+    type: string
 
 # Movies #
   title:

@@ -38,9 +38,24 @@ var params = {
           if(key === 'id') { 
             paramsToNeo[key] = parseInt(paramsFromSwagger[key].value); 
           } else if (key === 'source' || key === 'type' || key === 'target' || key === 'property') {
-            paramsToNeo[key] = paramsFromSwagger[key].value;
+            if (isNaN(paramsFromSwagger[key].value)) {
+              paramsToNeo[key] = paramsFromSwagger[key].value;
+            } else {
+              paramsToNeo[key] = parseInt(paramsFromSwagger[key].value);
+            }
           } else if (paramsFromSwagger[key].schema.in === 'query' ) {
-            paramsToNeo[key] = paramsFromSwagger[key].value;
+            if (key === 'searchParam') {
+              if (isNaN(paramsFromSwagger[key].value)) {
+                paramsToNeo[key] = '';
+                paramsFromSwagger[key].value.split(' ').forEach(function (element) {
+                  paramsToNeo[key] += '(?i).*' + element + '.*';
+                })
+              } else {
+                paramsToNeo[key] = paramsFromSwagger[key].value;
+              } 
+            } else {
+                paramsToNeo[key] = paramsFromSwagger[key].value;
+            }
           } else {
             paramsToNeo.properties[key] = paramsFromSwagger[key].value;
           }

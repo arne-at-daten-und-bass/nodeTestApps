@@ -18,6 +18,30 @@ var jsonApiGraph = function () {
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
+    readGraphOfMovie: function(req, res) {
+      console.log(req.swagger.params);
+
+      var query = that.queries.readGraphOfMovie;
+      var params = {id: req.swagger.params.id.value};
+      var callback = that.callbacks.graph(res, '', '', '', 'readGraphOfMovie').api;
+
+      resultType = ["graph"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
+    readGraphOfPerson: function(req, res) {
+      console.log(req.swagger.params);
+
+      var query = that.queries.readGraphOfPerson;
+      var params = {id: req.swagger.params.id.value};
+      var callback = that.callbacks.graph(res, '', '', '', 'readGraphOfPerson').api;
+
+      resultType = ["graph"];
+
+      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    },
+
     readLabelsAmountNodes: function(req, res) {
       var query = that.queries.search.readLabelsAmountNodes;
       var params = {};

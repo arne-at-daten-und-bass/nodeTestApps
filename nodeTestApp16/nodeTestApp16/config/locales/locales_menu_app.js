@@ -52,7 +52,7 @@ var localesMenuApp = {
   'Create a Relationship': {
     'en': {'EN': 'Create a Relationship'},
     'es': {'ES': 'Grabar una conexión'},
-    'de': {'DE': 'Beziehung speichern'},
+    'de': {'DE': 'Verbindung speichern'},
     'fr': {'FR': 'Enregistrer une relation'}, 
   },
   'Movies': {

@@ -11,7 +11,11 @@ block content
     #graph
     style.
       .node{
-
+        cursor: move;
+        fill: #ccc;
+      }
+      .node.fixed {
+        font-weight: bold;
       }
       .nodeTextRect {
         display: none;
@@ -19,140 +23,17 @@ block content
         fill: white;
       }
       .nodeText{
+        cursor: pointer;
         display: none; 
       }
       .link {
         font-size: xx-small;
         stroke: #999;
         stroke-opacity: .6;
-        }
+      }
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
-      var width = 960,
-          height = 600;
-
-      var force = d3.layout.force()
-          .charge(-270)
-          .linkDistance(30)
-          .size([width, height]);
-
-      var svg = d3.select('#graph').append('svg')
-          .attr('viewBox', '0 0 1044 600')
-          .attr('preserveAspectRatio', 'xMidYMid meet');
-
-      var color = d3.scale.ordinal()
-          .domain(['Movie','Person'])
-          .range(['#8bc34a', '#757575']);
-
-      d3.json('/api/graph', function(error, graph) {
-        if (error) throw error;
-
-        var relationships =  graph.graph.links;
-        var nodes = graph.graph.nodes;
-
-        relationships.forEach(function (l, index) {
-          if (!l.linkCount) { l.linkCount = 1; }
-          var linkCount2 = 1;
-          relationships.forEach(function (l2, index2) {
-            if(relationships[index].source === relationships[index2].source  
-            && relationships[index].target === relationships[index2].target){                  
-              l2.linkCount = linkCount2++;
-            } 
-          })
-        });
-
-        force.nodes(nodes).links(relationships).gravity(0.25).start();
-
-        var link = svg.selectAll('link')
-            .data(relationships)
-            .enter().append('g')
-            .attr('class', 'link');
-
-        var linkLine = link.append('line')    
-
-        var linkText = link.append('text')
-            .attr('text-anchor', 'middle')
-            .attr('dy', function(d) { return 1 - d.linkCount + 'em'; })
-            .text(function(d) { return d.value; });
-
-        var node = svg.selectAll('node')
-            .data(nodes)
-            .enter().append('g')
-            .attr('class', 'node')
-            .call(force.drag);
-
-        var nodeIcon = node.append('text')
-            .text(function(d) {
-              if(d.label === 'Movie') { return '\ue02c'; } 
-              if(d.label === 'Person') { return '\ue7fd'; } })
-            .attr('class', 'material-icons')
-            .attr('text-anchor', 'middle')
-            .attr('dominant-baseline', 'central')
-            .style('fill', function(d) { return color(d.label); })
-       
-        var nodeTextRect = node.append('rect')
-            .attr('id', function(d) {return 'nodeTextRect_' + d.id})
-            .attr('class', 'nodeTextRect')
-            .style('stroke', function(d) { return color(d.label); })
-
-        var nodeText = node.append('text')
-            .text(function(d) {
-              if(d.name === undefined) { return d.title; } 
-              if(d.title === undefined) { return d.name; } })
-            .attr('id', function(d) {return 'nodeText_' + d.id})
-            .attr('class', 'nodeText')
-            .attr('dx', 12)
-            .attr('dy', '.35em')
-            .style('fill', function(d) { return color(d.label); });
-
-        nodeIcon.on('mouseenter', function(d) {
-          d3.select(this).style('font-size', 'xx-large');
-          d3.select(this.parentNode).selectAll('.nodeText')
-            .style({display:'inline'});
-          d3.select('#nodeTextRect_' + d.id)
-            .style({display:'inline'})
-            .attr('width', function(d) { return document.getElementById('nodeText_' + d.id).getBBox().width + 10; })
-            .attr('height', 20)
-        });
-
-        nodeIcon.on('dblclick', function (d) {
-          if(d.name === undefined) { location.href = 'movies/read/' + d.id;} 
-          if(d.title === undefined) { location.href = 'persons/read/' + d.id; }
-          d3.select(this).style('font-size', 24);
-          d3.select(this.parentNode).selectAll('.nodeText').style({display:'none'});
-          d3.select(this.parentNode).selectAll('.nodeTextRect').style({display:'none'});
-          }
-        );
-
-        nodeIcon.on('mouseleave', function() {
-          d3.select(this).style('font-size', 24);
-          d3.select(this.parentNode).selectAll('.nodeText').style({display:'none'}); 
-          d3.select(this.parentNode).selectAll('.nodeTextRect').style({display:'none'});
-        });   
-
-        force.on('tick', function() {
-
-          linkLine.attr('x1', function(d) { return d.source.x; })
-                  .attr('y1', function(d) { return d.source.y; })
-                  .attr('x2', function(d) { return d.target.x; })
-                  .attr('y2', function(d) { return d.target.y; });
-
-          linkText.attr('transform', function(d) {
-                var angle = Math.atan((d.source.y - d.target.y) / (d.source.x - d.target.x)) * 180 / Math.PI;
-                return 'translate(' + [((d.source.x + d.target.x) / 2), ((d.source.y + d.target.y) / 2)] + ')rotate(' + angle + ')';
-              });
-
-          nodeIcon.attr('x', function (d) { return d.x; })
-              .attr('y', function (d) { return d.y; });
-
-          nodeTextRect.attr('x', function (d) { return d.x+22; })
-              .attr('y', function (d) { return d.y-10; });
-
-          nodeText.attr('x', function (d) { return d.x+15; })
-              .attr('y', function (d) { return d.y; });
-        });
-
-      });
+      app.graphBuilder('/api/graph', '#{locale}', 960, 600, -250);
   .table-text-section
     .mdl-typography--display-1.mdl-typography--font-thin Sample Implementation - The Famous 
       a.android-link.mdl-typography--font-thin(href='') Neo4j 
@@ -186,7 +67,7 @@ block content
     .android-card-container.mdl-grid
       .mdl-cell.mdl-cell--4-col.mdl-shadow--3dp
         .mdl-card__media
-          i(id="myI", style="opacity: 0.46;").material-icons linear_scale
+          i(id="myI", style="opacity: 0.76; color:#37474f;").material-icons linear_scale
         .mdl-card__title
           h4(id="myH").mdl-card__title-text Relationships
         .mdl-card__supporting-text(style="overflow: auto;")   
@@ -200,42 +81,12 @@ block content
             i.material-icons(id="before0") navigate_before
             i.material-icons(id="next0") navigate_next
         script.
-          var pagination0 = 1;
-
           app.tableBuilder('myTable', '/api/graph/read/typeAmountRelationships'); 
-
-          var xsy = function () {
-            //- console.log(pagination);
-            var url;
-            switch (pagination0) {
-              case 0:
-                url = '/api/graph/read/typeAmountRelationships';
-                document.getElementById('myI').textContent = 'linear_scale';
-                document.getElementById('myH').textContent = 'Relationships';
-                document.getElementById('myTh').textContent = 'Type';
-                pagination0 = pagination0 +1;
-                break;
-              case 1:
-                url = '/api/graph/read/readLabelsAmountNodes';
-                document.getElementById('myH').textContent = 'Nodes';
-                document.getElementById('myI').textContent = 'grain';
-                document.getElementById('myTh').textContent = 'Label';
-                pagination0 = pagination0 -1;
-                //- console.log(pagination);
-                break;
-              default:
-                console.log('Default case.');
-            } 
-            app.tableBuilder('myTable', url);
-            
-            console.log(pagination);
-          };
-          document.getElementById('before0').onclick = xsy;
-          document.getElementById('next0').onclick = xsy;
-
+          document.getElementById('before0').onclick = app.tablePagination;
+          document.getElementById('next0').onclick = app.tablePagination;
       .mdl-cell.mdl-cell--8-col.mdl-shadow--3dp
         .mdl-card__media
-          i(style="opacity: 0.46;").material-icons blur_on
+          i(style="opacity: 0.76; color:#37474f;").material-icons blur_on
         .mdl-card__title
           h4.mdl-card__title-text Graph
         .mdl-card__supporting-text(style="overflow: auto;")        
@@ -251,20 +102,9 @@ block content
             i.material-icons(id="before") navigate_before
             i.material-icons(id="next") navigate_next
           script.
-            var pagination = 0;
-            app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
-            document.getElementById('before').onclick = beforeFunc;           
-            var beforeFunc = function () {
-              pagination = pagination - 6;
-              app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
-            }
-            document.getElementById('next').onclick = nextFunc;
-            var nextFunc = function () {
-              pagination = pagination + 6;
-              app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
-            }
-
-            //- console.log(pagination);
+            app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=');
+            document.getElementById('before').onclick = app.tablePagination2Before;           
+            document.getElementById('next').onclick = app.tablePagination2Next;
   .mdl-card-section
     .android-section-title.mdl-typography--display-1-color-contrast Latest Movies:
     +moviesReadBulkMdlCards
@@ -272,15 +112,3 @@ block content
     .android-card-container.mdl-grid#TopPersons
       script.
         app.divBuilder('TopPersons', '/api/graph/read/top/persons?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");
-    //- .android-card-container.mdl-grid
-    //-   .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
-    //-     .mdl-card__media
-    //-       img(src='/images/more-from-1.png')
-    //-     .mdl-card__title
-    //-       h4.mdl-card__title-text Card title text
-    //-     .mdl-card__supporting-text
-    //-       span.mdl-typography--font-light.mdl-typography--subhead Font ligth Subhead
-    //-     .mdl-card__actions
-    //-       a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='')
-    //-         | Text uppercase
-    //-         i.material-icons chevron_right

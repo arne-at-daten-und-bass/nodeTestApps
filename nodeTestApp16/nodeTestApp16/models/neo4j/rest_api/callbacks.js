@@ -45,6 +45,10 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           case 'create':
             responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['New <Instance> created'];
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
+            // responseObjectToSwagger.id = ;
+            var url = '/' + locales.locale + '/' +nodeType + 's/read/' + responseBodyFromNeo.results[0].data[0].row[1];
+
+            return res.redirect(url);
             break;
           case 'readBulk':
             nodes = [];
@@ -61,12 +65,13 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
             responseObjectToSwagger[nodeType] = responseBodyFromNeo.results[0].data[0].row[0];
             break;
           case 'delete':
-            var deletedNodeProperties = {};
-            deletedNodeProperties = callbacks.utils.getDeletedNodeProperties(error, responseBodyFromNeo);
+            // var deletedNodeProperties = {};
+            // deletedNodeProperties = callbacks.utils.getDeletedNodeProperties(error, responseBodyFromNeo);
             
-            responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance> Deleted'];
+            // responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['<Instance> Deleted'];
             responseObjectToSwagger.nodes_deleted = responseBodyFromNeo.results[0].stats.nodes_deleted;
-            responseObjectToSwagger[nodeType] = deletedNodeProperties;
+            // responseObjectToSwagger[nodeType] = deletedNodeProperties;
+            return res.json(responseObjectToSwagger);
             break;
           case 'index_locale':
             nodes = [];
@@ -95,6 +100,8 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
         console.log(responseBodyFromNeo);
         switch (crudType) {
           case 'readGraph':
+          case 'readGraphOfMovie':
+          case 'readGraphOfPerson':
             responseObjectToSwagger.graph = callbacks.utils.nodeLinks(error, responseBodyFromNeo);
             break;
           case 'readLabelsAmountNodes':
@@ -120,7 +127,7 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           localesStrings: locales.localesStrings,
           id: typeof nodeId === 'undefined' ? -1 : parseInt(nodeId),
         };
-
+        console.log(JSON.stringify(responseBodyFromNeo));
         switch (crudType) {
           case 'getCreate':
             responseObjectToSwagger.persons = responseBodyFromNeo[0].body.data;
@@ -130,11 +137,43 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
           case 'create':
             responseObjectToSwagger.slogan = responseObjectToSwagger.localesStrings['New Relationship created'];
             responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0];
+
+            var url = '/' + locales.locale + '/graph/' + nodeType + 's/read/' + responseBodyFromNeo.results[0].data[0].row[2];
+
+            return res.redirect(url);
+            break;
+          case 'searchBox':
+            responseObjectToSwagger.graph = responseBodyFromNeo.results[0].data;
+            break;
+          case 'readRelationship':
+            responseObjectToSwagger.slogan = 'Relationship';
+            responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0];
+            break;
+          case 'getUpdateRelationship':
+            responseObjectToSwagger.slogan = 'Update Relationship';
+            responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0];
+            break;
+          case 'updateRelationship':
+            responseObjectToSwagger.slogan = 'Relationship updated';
+            responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0];
+            break;
+          // case 'getDeleteRelationship':
+          //   responseObjectToSwagger.slogan = 'Delete Relationship';
+          //   responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0].graph;
+          //   break;
+          // case 'deleteRelationship':
+          //   responseObjectToSwagger.slogan = 'Relationship Deleted';
+          //   responseObjectToSwagger.relationship = responseBodyFromNeo.results[0].data[0];
+          //   break;
+          case 'deleteRelationship':
+            responseObjectToSwagger.relationship_deleted = responseBodyFromNeo.results[0].stats.relationship_deleted;
+            return res.json(responseObjectToSwagger);
             break;
           default:
             console.log('Default case.');
         }
 
+        // console.log(JSON.stringify(responseObjectToSwagger));
         return res.render(template, responseObjectToSwagger);
       },
     };
@@ -214,18 +253,18 @@ var callbacks = {  // @TODO: switch order of arguments according to web/api etc 
 
       return { nodes:nodes, links:links };
     },
-    getDeletedNodeProperties: function (error, responseBodyFromNeo) {
-      var dataFromNeo4jColumns = [];
-      var dataFromNeo4jRows = [];
-      var dataToSwagger = {};
+    // getDeletedNodeProperties: function (error, responseBodyFromNeo) {
+    //   var dataFromNeo4jColumns = [];
+    //   var dataFromNeo4jRows = [];
+    //   var dataToSwagger = {};
 
-      dataFromNeo4jColumns = responseBodyFromNeo.results[0].columns;
-      dataFromNeo4jRows = responseBodyFromNeo.results[0].data[0].row;
-      dataFromNeo4jRows.forEach(function(value, index) {        
-        dataToSwagger[dataFromNeo4jColumns[index]] = dataFromNeo4jRows[index];
-      });
-      return dataToSwagger;
-    },
+    //   dataFromNeo4jColumns = responseBodyFromNeo.results[0].columns;
+    //   dataFromNeo4jRows = responseBodyFromNeo.results[0].data[0].row;
+    //   dataFromNeo4jRows.forEach(function(value, index) {        
+    //     dataToSwagger[dataFromNeo4jColumns[index]] = dataFromNeo4jRows[index];
+    //   });
+    //   return dataToSwagger;
+    // },
   },
 };
 

@@ -21,6 +21,11 @@ html(lang='en')
             a(href='/#{locale}', style="font-size: 18px; color: #8bc34a; text-decoration: none;").logo-font fliXnet
           //- Add spacer, to align navigation to the right in desktop
           .android-header-spacer.mdl-layout-spacer
+          .android-search-box.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right.mdl-textfield--full-width
+            label.mdl-button.mdl-js-button.mdl-button--icon(for='search-field')
+              i.material-icons search
+            .mdl-textfield__expandable-holder
+              input.mdl-textfield__input(type='text' id='search-field' onkeypress='app.seach(event, "#{locale}");')
           //- Top Navigation
           .android-navigation-container
             nav.android-navigation.mdl-navigation
@@ -30,7 +35,7 @@ html(lang='en')
           span.android-mobile-title.mdl-layout-title
             a(href='/#{locale}', style="font-size: 18px; color: #8bc34a; text-decoration: none;").logo-font fliXnet
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
-            i.material-icons language
+            i(style="color:#FB8C00;").material-icons language
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
             li.mdl-menu__item
               a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/en")') English
@@ -46,7 +51,7 @@ html(lang='en')
           a(style="font-size: 18px; color: white;").android-logo-image.logo-font fliXnet
         nav.mdl-navigation
           a.mdl-navigation__link(href='/#{locale}') #{localesMenu['The Movie Graph']}
-          a.mdl-navigation__link(href='/#{locale}/graph/relationship/create') #{localesMenu['Create a Relationship']}
+          a.mdl-navigation__link(href='/#{locale}/graph/relationships/create') #{localesMenu['Create a Relationship']}
           .android-drawer-separator
           span.mdl-navigation__link(href='') #{localesMenu['Movies']}
           a.mdl-navigation__link(href='/#{locale}/movies/create') #{localesMenu['Create a Movie']}
@@ -62,13 +67,16 @@ html(lang='en')
             .mdl-mega-footer--left-section
               a(href='https://twitter.com/daten_und_bass', target='blank')
                 button.mdl-mega-footer--social-btn.social-btn.social-btn__twitter
-          //-   .mdl-mega-footer--right-section
-          //-     a.mdl-typography--font-light(href='#top')
-          //-       | Back to top
-          //-       i.material-icons expand_less
+            .mdl-mega-footer--right-section
+              //- a.mdl-typography--font-light(href='#top')
+              //-   | Back to top
+              //-   i.material-icons expand_less
           .mdl-mega-footer--middle-section
             p.mdl-typography--font-light #{localesMenu['The Movie Graph']} © 2016 daten&bass
-            //- p.mdl-typography--font-light Some features and devices may not be available in all areas
+            p.mdl-typography--font-light Node.js Sample Implementation of 
+              a.android-link.mdl-typography--font-thin(href='') Neo4j
+              |'s Movie Database
+
           .mdl-mega-footer--bottom-section
             a#version-dropdown.android-link.android-link-menu.mdl-typography--font-light
               | #{localesMenu['Users']} 

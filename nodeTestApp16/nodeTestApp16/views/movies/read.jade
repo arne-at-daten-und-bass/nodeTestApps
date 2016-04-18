@@ -7,9 +7,37 @@ block content
     .logo-font.android-sub-slogan #{localesStrings['Movie Tagline']}: #{movie.tagline}
     .logo-font.android-sub-slogan #{localesStrings['Movie Release Year']}: #{movie.released}
     a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/delete/#{id}') #{localesCommands['Delete']}
-   .android-more-section
-    .android-section-title.mdl-typography--display-1-color-contrast All actors of #{movie.title}:
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.deleteNode("/#{locale}/movies/delete/#{id}", "#{movie.title}" , "#{locale}/movies")') #{localesCommands['Delete']}
+  .graph-section
+    #graph
+    style.
+      .node{
+        cursor: move;
+        fill: #ccc;
+      }
+      .node.fixed {
+        font-weight: bold;
+      }
+      .nodeTextRect {
+        display: none;
+        stroke-width: 1;
+        fill: white;
+      }
+      .nodeText{
+        cursor: pointer;
+        display: none; 
+      }
+      .link {
+        font-size: xx-small;
+        stroke: #999;
+        stroke-opacity: .6;
+      }
+    script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
+    script.
+      app.graphBuilder('/api/graph/readGraphOfMovie/#{id}', '#{locale}', 960, 300, -5000);
+  .table-text-section
+    .mdl-typography--display-1.mdl-typography--font-thinexit All actors of #{movie.title}:
+  .mdl-card-section
     .android-card-container.mdl-grid#MovieCast 
-  script.
-    app.divBuilder('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");
+    script.
+      app.divBuilder('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");

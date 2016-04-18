@@ -3,7 +3,7 @@ mixin moviesReadBulkMdlCards
     each movie in movies
       .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
         .mdl-card__media
-          i(style="opacity: 0.46;").material-icons movie
+          i(style="opacity: 0.76; color:#37474f;").material-icons movie
         .mdl-card__title
           h4.mdl-card__title-text #{movie.properties.title}
         .mdl-card__title
@@ -19,7 +19,7 @@ mixin personsReadBulkMdlCards
     each person in persons
       .mdl-cell.mdl-cell--3-col.mdl-cell--4-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--3dp
         .mdl-card__media
-          i(style="opacity: 0.46;").material-icons person
+          i(style="opacity: 0.76; color:#37474f;").material-icons person
         .mdl-card__title
           h4.mdl-card__title-text #{person.properties.name}
         .mdl-card__title

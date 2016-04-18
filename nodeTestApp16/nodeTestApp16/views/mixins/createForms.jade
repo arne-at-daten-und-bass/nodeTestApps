@@ -12,7 +12,7 @@ mixin personCreateForm
     button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Create']}
 
 mixin relationshipCreateForm
-   form(name="createRelationship", action="/#{locale}/graph/relationship/create",  method="post")
+   form(name="createRelationship", action="/#{locale}/graph/relationships/create",  method="post")
       select#source(name="source")        
       select#type(name="type", style="text-transform: lowercase;")
       select#target(name="target")

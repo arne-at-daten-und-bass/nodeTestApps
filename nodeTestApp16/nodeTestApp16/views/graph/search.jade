@@ -1,0 +1,88 @@
+extends ../layout
+
+block content
+  .top-section
+    //- .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
+    //- .logo-font.android-sub-slogan
+    style.
+      .test:hover {
+      cursor: pointer;
+      background-color: #8bc34a;
+      }
+    .android-card-container.mdl-grid
+      .mdl-cell(style="background-color: white;").mdl-cell--12-col.mdl-shadow--3dp
+        .mdl-card__media
+          i(style="opacity: 0.76; color:#37474f;").material-icons blur_on
+        .mdl-card__title
+          h4.mdl-card__title-text Search Results:
+        .mdl-card__supporting-text(style="overflow: auto;")
+          table(style="width: 100%;border-collapse:separate; border-spacing:2px 6px;")
+            tbody
+              each object in graph
+                tr(style="background-color: #f3f3f3; border: 10p; vertical-align: top;")
+                  each person in object.graph.nodes
+                    if person.properties.name
+                      td(class="test" onclick="app.changelocation2('#{locale}', 'persons', '#{person.id}');")
+                        table
+                          thead
+                            tr
+                              th(style="opacity: 0.76; color:#37474f;").material-icons person
+                                td 
+                                  table
+                                    tbody
+                                      if person.properties.name   
+                                        tr
+                                          th(style="text-align: left; vertical-align: top;") Name:       
+                                          td #{person.properties.name}
+                                      if person.properties.born  
+                                        tr
+                                          th(style="text-align: left; vertical-align: top;") Born:
+                                          td #{person.properties.born}
+                  each movie in object.graph.nodes
+                    if movie.properties.title
+                      td(class="test" onclick="app.changelocation2('#{locale}', 'movies', '#{movie.id}');")
+                        table
+                          thead
+                            tr
+                              th(style="opacity: 0.76; color:#37474f;").material-icons movie
+                                td 
+                                  table
+                                    tbody
+                                      if movie.properties.title
+                                        tr
+                                          th(style="text-align: left; vertical-align: top;") Title:
+                                          td #{movie.properties.title}
+                                      if movie.properties.tagline
+                                        tr
+                                          th(style="text-align: left; vertical-align: top;") Tagline:                  
+                                          td #{movie.properties.tagline}
+                                      if movie.properties.released
+                                        tr
+                                          th(style="text-align: left; vertical-align: top;") Released:                  
+                                          td #{movie.properties.released}
+                  each relationship in object.graph.relationships
+                    if relationship.type
+                      td(class="test" onclick="app.changelocation2('#{locale}', 'graph/relationships', #{relationship.id});")
+                        table
+                          thead
+                            tr
+                              th(style="opacity: 0.76; color:#37474f;").material-icons linear_scale
+                              td
+                                table
+                                  tbody
+                                    if relationship.type
+                                      tr
+                                        th(style="text-align: left; vertical-align: top;") Type:
+                                        td #{relationship.type}
+                                    if relationship.properties.roles
+                                      tr
+                                        th(style="text-align: left; vertical-align: top;") Roles:
+                                        td #{relationship.properties.roles}
+                                    if relationship.properties.summary
+                                      tr
+                                        th(style="text-align: left; vertical-align: top;") Summary:
+                                        td #{relationship.properties.summary}
+
+
+
+

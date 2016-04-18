@@ -10,13 +10,13 @@ var localesStringsGraph = {
   'Create a new Relationship': {
     'en': {'EN': 'Create a new Relationship'},
     'es': {'ES': 'Grabar una conexión (en inglés)'},
-    'de': {'DE': 'Neue Beziehung speichern (in Englisch)'},
+    'de': {'DE': 'Neue Verbindung speichern (in Englisch)'},
     'fr': {'FR': 'Enregistrer une relation (en anglais)'}, 
   },
   'New Relationship created': {
     'en': {'EN': 'New Relationship created'},
     'es': {'ES': 'Conexión grabada'},
-    'de': {'DE': 'Neue Beziehung gespeichert'},
+    'de': {'DE': 'Neue Verbindung gespeichert'},
     'fr': {'FR': 'Relation enregistrée'}, 
   },
   'Role': {

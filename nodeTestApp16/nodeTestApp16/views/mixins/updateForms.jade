@@ -10,3 +10,15 @@ mixin personUpdateForm
     input(type="text", value="#{person.name}", name="name")
     input(type="number", value="#{person.born}", name="born")
     button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Update']}
+
+mixin relationshipUpdateForm
+   form(name="createRelationship", action="/#{locale}/graph/relationships/update/"+ parseInt(id), method="post")
+      select#source(name="source")
+        option#optionSource(name="optionSource")     
+      select#type(name="type", style="text-transform: lowercase;")
+        option#optionType(name="optionType")
+      select#target(name="target")
+        option#optionTarget(name="optionTarget") 
+      label#asLabel(for="property") &nbsp; as &nbsp; 
+      input#property(type="text", name="property")
+      button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands["Create"]}

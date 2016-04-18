@@ -25,7 +25,7 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = that.queries.create;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'create').web; // @TODO: Move crudType (enum) to app or context config or take function name/object literal property 'create'as parameter  (did not work yet because of missing this due to DI)
+      var callback = that.callbacks.nodes(res, that.nodeType, '', locales, 'create').web; // @TODO: Move crudType (enum) to app or context config or take function name/object literal property 'create'as parameter  (did not work yet because of missing this due to DI)
       
       resultType = ["row"];
 
@@ -92,36 +92,35 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = that.queries.update;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'update').web;
+      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'update', req.swagger.params.id.value).web;
       
       resultType = ["row"];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
-    getDelete: function(req, res) {
-      locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
-      locale = req.swagger.params.locale.value;
+    // getDelete: function(req, res) {
+    //   locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
+    //   locale = req.swagger.params.locale.value;
 
-      var query = that.queries.getDelete;
-      var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/delete', locales, 'getDelete', that.params.otherParams.get().id).web;
+    //   var query = that.queries.getDelete;
+    //   var params = that.params.otherParams.set(req.swagger.params);
+    //   var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/delete', locales, 'getDelete', that.params.otherParams.get().id).web;
       
       
-      resultType = ["row"];
+    //   resultType = ["row"];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
-    },
+    //   that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+    // },
 
     delete: function(req, res) {
-      locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
-      locale = req.swagger.params.locale.value;
+      // locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
+      // locale = req.swagger.params.locale.value;
 
       var query = that.queries.delete;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'delete').web;
+      var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'delete').web;
       
-      //maybe better Graph?
       resultType = ["row"];
       includeStats = true;
 
