@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.4"
+  version: "0.0.8"
   title: nodeTestApp16
 host: dockerHostIp:10010
 basePath: /
@@ -226,8 +226,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-
-# JSON only API: Search for top persons regarding thei amount of relationships #
+# JSON only API: Search for top persons regarding their amount of relationships #
   /api/graph/read/top/persons:
     x-swagger-router-controller: context_json_api_graph
     get:
@@ -998,6 +997,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+# Swagger default route for raw documentation
   /swagger:
     x-swagger-pipe: swagger_raw
 

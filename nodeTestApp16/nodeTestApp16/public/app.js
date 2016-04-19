@@ -585,12 +585,11 @@ var app = (function() {
     } 
   }
 
-  function urlValidator(url)
-  {
-    var http = new XMLHttpRequest();
-    http.open('GET', url, false);
-    http.send();
-    return http.status==200;
+  function urlValidator(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.send();
+    return xhr.status==200;
   }
 
   function deleteNode(url, node, nodeType) {
