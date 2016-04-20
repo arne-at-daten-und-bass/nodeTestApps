@@ -1,0 +1,53 @@
+/* Welcome */
+.top-section {
+  /*position: relative;*/
+  width: auto;
+  padding: 25px 25px;
+  background-color: #f3f3f3;
+}
+
+/* Graph animations*/
+.graph-section {
+  /*position: relative;*/
+  /*overflow: auto;*/
+  overflow-x: auto;
+  /*background-color: #37474f;*/
+}
+
+/*Tables and Text*/
+.table-text-section {
+  /*position: relative;*/
+  padding: 50px 25px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  color: white;
+  background-color: #37474f;
+}
+
+/* MDL CARDS*/
+.mdl-card-section {
+  padding: 12px 0px;
+  max-width: 1044px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* AW: Self added because of missing social media classes/buttons support */
+
+.social-btn {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  /*margin: 0 16px;*/
+  margin: 0 0px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.46;
+  border-radius: 2px;
+}
+.social-btn__twitter {
+  background-image: url('/images/post_twitter_black_24dp.png');
+}
