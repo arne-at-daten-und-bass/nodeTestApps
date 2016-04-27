@@ -8,6 +8,6 @@ block content
       br
       +relationshipCreateForm
     script.
-      app.buildOptions(!{JSON.stringify(persons)}, !{JSON.stringify(relationships)}, !{JSON.stringify(movies)});
+      app.content.htmlElements.createOptionsRelationship(!{JSON.stringify(persons)}, !{JSON.stringify(relationships)}, !{JSON.stringify(movies)});
 
 

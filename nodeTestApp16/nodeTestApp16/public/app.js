@@ -15,7 +15,7 @@ var app = (function() {
   var asLabel;
   var property;
 
-  function seach(event, locale) {
+  function searchField(event, locale) {
     var searchBox = document.getElementById('search-field');
     if (event.keyCode == 13 && searchBox.value.length > 0) {
       location.path = ''
@@ -25,7 +25,25 @@ var app = (function() {
     }  
   }
 
-  function graphBuilder(url, locale, width, height, charge) {
+  function changeLocale(currentLocale, newLocale) {
+    var newLocation = location.pathname.replace('/' + currentLocale + '/', newLocale + '/');
+    location.assign(newLocation);
+  }
+
+  function changeLocationReadBulk(location, year, paramName) {
+    if(isNaN(year)) {
+      return self.location = self.location.pathname;
+    } else {
+      return self.location = location + '?' + paramName + '=' + year;   
+    }
+  }
+
+  function changeLocationSearch(locale, nodeType, nodeId) {
+    self.location.path = ''
+    return self.location = '/' + locale + '/' + nodeType + '/read/' + nodeId;
+  }
+
+  function visualizeGraphDiv(url, locale, width, height, charge) {
 
     var force = d3.layout.force()
         .size([width, height])
@@ -174,34 +192,11 @@ var app = (function() {
     }  
   }
 
-  function tablePagination() {
-    var url;
-    switch (pagination0) {
-      case 0:
-        url = '/api/graph/read/typeAmountRelationships';
-        document.getElementById('myI').textContent = 'linear_scale';
-        document.getElementById('myH').textContent = 'Relationships';
-        document.getElementById('myTh').textContent = 'Type';
-        pagination0 = pagination0 +1;
-        break;
-      case 1:
-        url = '/api/graph/read/readLabelsAmountNodes';
-        document.getElementById('myH').textContent = 'Nodes';
-        document.getElementById('myI').textContent = 'grain';
-        document.getElementById('myTh').textContent = 'Label';
-        pagination0 = pagination0 -1;
-        break;
-      default:
-        console.log('Default case.');
-    } 
-    tableBuilder('myTable', url);
-  }
-
-  function tableBuilder(element, url) {
+  function createNodesTableBody(element, url) {
     var elementArray = [];
     var oldTBody = document.getElementById(element);
     var newTBody = document.createElement('tbody');
-    newTBody.id = 'myTable';
+    newTBody.id = 'nodesTableBody';
     var documentFragment = document.createDocumentFragment();
 
     var xhr = new XMLHttpRequest();
@@ -231,21 +226,34 @@ var app = (function() {
     xhr.send();
   }
 
-  function tablePagination2Before() {
-    pagination = pagination - 6;
-    app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
+  function paginateNodesTableBodyBothWays() {
+    var url;
+    switch (pagination0) {
+      case 0:
+        url = '/api/graph/read/typeAmountRelationships';
+        document.getElementById('myI').textContent = 'linear_scale';
+        document.getElementById('myH').textContent = 'Relationships';
+        document.getElementById('myTh').textContent = 'Type';
+        pagination0 = pagination0 +1;
+        break;
+      case 1:
+        url = '/api/graph/read/readLabelsAmountNodes';
+        document.getElementById('myH').textContent = 'Nodes';
+        document.getElementById('myI').textContent = 'grain';
+        document.getElementById('myTh').textContent = 'Label';
+        pagination0 = pagination0 -1;
+        break;
+      default:
+        console.log('Default case.');
+    } 
+    createNodesTableBody('nodesTableBody', url);
   }
 
-  function tablePagination2Next() {
-    pagination = pagination + 6;
-    app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
-  }
-
-  function tableBuilder2(element, url) {
+  function createGraphTableBody(element, url) {
     var elementArray = [];
     var oldTBody = document.getElementById(element);
     var newTBody = document.createElement('tbody');
-    newTBody.id = 'myTable2';
+    newTBody.id = 'graphTableBody';
     var documentFragment = document.createDocumentFragment();
 
     var xhr = new XMLHttpRequest();
@@ -281,19 +289,19 @@ var app = (function() {
       newTBody.appendChild(documentFragment);
       oldTBody.parentNode.replaceChild(newTBody, oldTBody);
       if(pagination < 6) {
-        document.getElementById('before').style.opacity = 0.46;
-        document.getElementById('before').onclick = '';
+        document.getElementById('graphTableBodyBackward').style.opacity = 0.46;
+        document.getElementById('graphTableBodyBackward').onclick = '';
       } else {
-        document.getElementById('before').style.opacity = 1.00;
-        document.getElementById('before').onclick = tablePagination2Before;
+        document.getElementById('graphTableBodyBackward').style.opacity = 1.00;
+        document.getElementById('graphTableBodyBackward').onclick = paginateGraphTableBodyBackward;
       }
 
       if (elementArray.length < 6) {
-        document.getElementById('next').style.opacity = 0.46;
-        document.getElementById('next').onclick='';
+        document.getElementById('graphTableBodyForward').style.opacity = 0.46;
+        document.getElementById('graphTableBodyForward').onclick='';
       } else {
-        document.getElementById('next').style.opacity = 1.00;
-        document.getElementById('next').onclick = tablePagination2Next;
+        document.getElementById('graphTableBodyForward').style.opacity = 1.00;
+        document.getElementById('graphTableBodyForward').onclick = paginateGraphTableBodyForward;
       }
         
       }
@@ -301,37 +309,17 @@ var app = (function() {
     xhr.send();
   }
 
-  function optionBuilder(elementArray, unknownString) {
-    var documentFragment = document.createDocumentFragment();
-    elementArray.forEach(function(element, index) {
-      var option = document.createElement('option');
-      if (element === -1) {
-        option.textContent = unknownString;
-      } else {
-        option.textContent = element;
-      } 
-      option.value = element;
-      documentFragment.appendChild(option);
-    });
-    return documentFragment;
+  function paginateGraphTableBodyBackward() {
+    pagination = pagination - 6;
+    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
   }
 
-  function optionBuilder2(elementArray, unknownString) {
-    var documentFragment = document.createDocumentFragment();
-    elementArray.forEach(function(element, index) {
-      var option = document.createElement('option');
-      if (element === -1) {
-        option.textContent = unknownString;
-      } else {
-        option.textContent = element[0];
-      } 
-      option.value = element[1];
-      documentFragment.appendChild(option);
-    });
-    return documentFragment;
+  function paginateGraphTableBodyForward() {
+    pagination = pagination + 6;
+    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
   }
 
-  function divBuilder(element, url, locale, showString) {
+  function createNodesMdlCardsDiv(element, url, locale, showString) {
 
     var elementArray = [];
     var documentFragment = document.createDocumentFragment();
@@ -420,7 +408,103 @@ var app = (function() {
     xhr.send();
   }
 
-  function changeTargetList() {
+  function toggleViewReadRelationship(value) {
+    property = document.getElementById('property');
+
+    switch(value.row[1]) {
+      case 'ACTED_IN':
+        property.style.display = 'block';
+        property.textContent = 'as ' + value.row[3] + '.';
+        break;
+      case 'DIRECTED':
+        property.style.display = 'none';
+        break;
+      case 'PRODUCED':
+        property.style.display = 'none';
+        break;
+      case 'REVIEWED':
+        property.style.display = 'block';
+        property.textContent = 'Summary: ' + value.row[3] + '.';
+        break;
+      case 'WROTE':
+        property.style.display = 'none';
+        break;
+      case 'FOLLOWS':
+        property.style.display = 'none';
+        break;
+      default:
+        console.log('default');
+    }
+  }
+
+  function toggleViewUpdateRelationship(value) {
+    asLabel = document.getElementById('asLabel')
+    property = document.getElementById('property');
+
+    switch(value.row[1]) {
+      case 'ACTED_IN':
+        property.style.display = 'inline';
+        asLabel.style.display = 'inline';
+        break;
+      case 'DIRECTED':
+        property.style.display = 'none';
+        asLabel.style.display = 'none';
+        break;
+      case 'PRODUCED':
+        property.style.display = 'none';
+        asLabel.style.display = 'none';
+        break;
+      case 'REVIEWED':
+        property.style.display = 'inline';
+        asLabel.textContent = ' Summary: '
+        property.textContent = value.row[4];
+        break;
+      case 'WROTE':
+        property.style.display = 'none';
+        asLabel.style.display = 'none';
+        break;
+      case 'FOLLOWS':
+        property.style.display = 'none';
+        asLabel.style.display = 'none';
+        break;
+      default:
+        console.log('default');
+    }
+  }
+
+  function optionCreator(elementArray, unknownString, hasID) {
+    var documentFragment = document.createDocumentFragment();
+    elementArray.forEach(function(element, index) {
+      var option = document.createElement('option');
+      if (element === -1) {
+        option.textContent = unknownString;
+      } else {
+        // option.textContent = element;
+        option.textContent = hasID ? element[0] : element;
+      } 
+      // option.value = element;
+      option.value = hasID ? element[1] : element;
+      documentFragment.appendChild(option);
+    });
+    return documentFragment;
+  }
+
+  // function optionBuilder2(elementArray, unknownString) {
+  //   var documentFragment = document.createDocumentFragment();
+  //   elementArray.forEach(function(element, index) {
+  //     var option = document.createElement('option');
+  //     if (element === -1) {
+  //       option.textContent = unknownString;
+  //     } else {
+  //       option.textContent = element[0];
+  //     } 
+  //     option.value = element[1];
+  //     documentFragment.appendChild(option);
+  //   });
+  //   return documentFragment;
+  // }
+
+  function targetFieldChanger() {
     var valueText = type.options[type.selectedIndex].value;
     switch(valueText) {
       case 'ACTED_IN':
@@ -457,74 +541,10 @@ var app = (function() {
     }
   }
 
-  function toogleView(value) {
-    property = document.getElementById('property');
-
-    switch(value.row[1]) {
-      case 'ACTED_IN':
-        property.style.display = 'block';
-        property.textContent = 'as ' + value.row[4] + '.';
-        break;
-      case 'DIRECTED':
-        property.style.display = 'none';
-        break;
-      case 'PRODUCED':
-        property.style.display = 'none';
-        break;
-      case 'REVIEWED':
-        property.style.display = 'block';
-        property.textContent = 'Summary: ' + value.row[4] + '.';
-        break;
-      case 'WROTE':
-        property.style.display = 'none';
-        break;
-      case 'FOLLOWS':
-        property.style.display = 'none';
-        break;
-      default:
-        console.log('default');
-    }
-  }
-
-  function toogleView2(value) {
-    asLabel = document.getElementById('asLabel')
-    property = document.getElementById('property');
-
-    switch(value.row[1]) {
-      case 'ACTED_IN':
-        property.style.display = 'inline';
-        asLabel.style.display = 'inline';
-        break;
-      case 'DIRECTED':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
-      case 'PRODUCED':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
-      case 'REVIEWED':
-        property.style.display = 'inline';
-        asLabel.textContent = ' Summary: '
-        property.textContent = value.row[4];
-        break;
-      case 'WROTE':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
-      case 'FOLLOWS':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
-      default:
-        console.log('default');
-    }
-  }
-
-  function buildOptions(personslocal, relationshipslocal, movieslocal) {
-    personsList = optionBuilder2(personslocal);
-    relationshipsList = optionBuilder(relationshipslocal);
-    movieList = optionBuilder2(movieslocal);
+  function createOptionsRelationship(persons, relationships, movies) {
+    personsList = optionCreator(persons, '', true);
+    relationshipsList = optionCreator(relationships, '', false);
+    movieList = optionCreator(movies, '', true);
 
     source = document.getElementById('source');
     type = document.getElementById('type');
@@ -532,14 +552,14 @@ var app = (function() {
     asLabel = document.getElementById('asLabel');
     property = document.getElementById('property');
 
-    type.onchange = changeTargetList;
+    type.onchange = targetFieldChanger;
     
     source.appendChild(personsList.cloneNode(true));
     type.appendChild(relationshipsList.cloneNode(true));
     target.appendChild(movieList.cloneNode(true));
   }
 
-  function buildDynamicDropdowns(element, url, inQueryParam, unknownString) {
+  function createOptionsReadBulk(element, url, inQueryParam, unknownString) {
     var xhr = new XMLHttpRequest();
     var distincValues; 
 
@@ -549,7 +569,7 @@ var app = (function() {
       if (xhr.readyState==4 && xhr.status==200) {
         distincValues = JSON.parse(xhr.responseText).distinctValues;
         distincValues.unshift(-1);            
-        element.appendChild(optionBuilder(distincValues, unknownString));
+        element.appendChild(optionCreator(distincValues, unknownString, false));
 
         if(inQueryParam.length > 0) {
           element.value = inQueryParam;
@@ -558,6 +578,13 @@ var app = (function() {
     };
 
     xhr.send();
+  }
+
+  function urlValidator(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.send();
+    return xhr.status==200;
   }
 
   function deleteRelationship(url, source, type, target, nodeType) {
@@ -583,13 +610,6 @@ var app = (function() {
       };
       xhr.send();
     } 
-  }
-
-  function urlValidator(url) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, false);
-    xhr.send();
-    return xhr.status==200;
   }
 
   function deleteNode(url, node, nodeType) {
@@ -628,43 +648,70 @@ var app = (function() {
       };
       xhr.send();
     } 
-  }   
-
-  function changelocation(location, year, paramName) {
-    if(isNaN(year)) {
-      self.location = self.location.pathname;
-    } else {
-      self.location = location + '?' + paramName + '=' + year;   
-    }
-  }
-
-  function changelocation2(locale, nodeType, nodeId) {
-    location.path = ''
-    return location = '/' + locale + '/' + nodeType + '/read/' + nodeId;
-  }
-
-  function changelocale(currentLocale, newLocale) {
-    var newLocation= location.pathname.replace('/' + currentLocale + '/', newLocale + '/');
-    location.assign(newLocation);
   }
 
   return {
-    seach:seach,
-    tablePagination2Before: tablePagination2Before,
-    tablePagination2Next:tablePagination2Next,
-    graphBuilder: graphBuilder,
-    divBuilder: divBuilder,
-    toogleView: toogleView,
-    toogleView2: toogleView2,
-    buildOptions: buildOptions,
-    buildDynamicDropdowns: buildDynamicDropdowns,
-    deleteRelationship: deleteRelationship,
-    deleteNode: deleteNode,
-    changelocation: changelocation,
-    changelocation2: changelocation2,
-    changelocale: changelocale,
-    tablePagination: tablePagination,
-    tableBuilder: tableBuilder,
-    tableBuilder2:tableBuilder2,
+    // naming convention: verb object and optionally element id or description (if used on several elements)
+
+    search: {
+      searchField: searchField
+    },
+    locale: {
+      changeLocale: changeLocale,
+    },
+    location: {
+      changeLocationReadBulk: changeLocationReadBulk,
+      changeLocationSearch: changeLocationSearch,
+    },
+    visualization: {
+      visualizeGraphDiv: visualizeGraphDiv,
+    },
+    content: { 
+      htmlElements: {
+        createNodesTableBody: createNodesTableBody,
+        paginateNodesTableBodyBothWays: paginateNodesTableBodyBothWays,
+        createGraphTableBody: createGraphTableBody,
+        paginateGraphTableBodyBackward: paginateGraphTableBodyBackward,
+        paginateGraphTableBodyForward: paginateGraphTableBodyForward,
+        createNodesMdlCardsDiv: createNodesMdlCardsDiv,
+        toggleViewReadRelationship: toggleViewReadRelationship,
+        toggleViewUpdateRelationship: toggleViewUpdateRelationship,
+        createOptionsRelationship: createOptionsRelationship,
+        createOptionsReadBulk: createOptionsReadBulk,
+      },
+      userInteraction: {
+        deleteRelationship: deleteRelationship,
+        deleteNode: deleteNode,
+      },
+    },
+    //createTopActorsMdlCardsDiv
+    // divBuilder: divBuilder,
+    // toogleViewReadRelationship
+    // toogleView: toogleView,
+    // toogleView<Element ID>
+    // toogleView2: toogleView2,
+    // createOptions<Element ID>
+    // buildOptions: buildOptions,
+    // createSelect<Element ID>
+    // buildDynamicDropdowns: buildDynamicDropdowns,
+    // paginateTable<Element ID>BothWays
+    // tablePagination: tablePagination,
+    // createTable<Element ID>
+    // tableBuilder: tableBuilder,
+    // createTable<Element ID>
+    // tableBuilder2:tableBuilder2,
+    // naming conflict see above (but not public so far)
+    // optionBuilder and optionBuilder2
+
+    // content.dataVisualization
+    // visulizeGraph<Element ID>
+    // graphBuilder: graphBuilder,
+
+    // content.userInteraction
+    // changelocation: changelocation,
+    // changelocation2: changelocation2,
+    
+    // locale
+    // changelocale: changelocale,
   }; 
 })();

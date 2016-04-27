@@ -10,10 +10,10 @@ block content
     script.
       document.getElementById('optionSource').textContent = '#{relationship.row[0]}';
       document.getElementById('optionType').textContent = '#{relationship.row[1]}';
-      document.getElementById('optionTarget').textContent = '#{relationship.row[2]}';
+      document.getElementById('optionTarget').textContent = "#{relationship.row[2]}";
       document.getElementById('property').value = '#{relationship.row[3]}';
 
-      app.toogleView2(!{JSON.stringify(relationship)});
+      app.content.htmlElements.toggleViewUpdateRelationship(!{JSON.stringify(relationship)});
 
 
 

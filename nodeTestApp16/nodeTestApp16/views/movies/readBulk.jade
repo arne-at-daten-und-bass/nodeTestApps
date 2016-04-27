@@ -5,7 +5,7 @@ block content
   .top-section
     .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
     .mdl-typography--font-light.mdl-typography--subhead.mdl-typography--text-center #{localesStrings['Filter Movies by Release Year']}:&nbsp;
-      select#released(name='released', onchange="app.changelocation(self.location.pathname, this.options[this.selectedIndex].value, 'released')")
+      select#released(name='released', onchange="app.location.changeLocationReadBulk(self.location.pathname, this.options[this.selectedIndex].value, 'released')")
         option(selected) #{localesStrings['All years']}
   .android-more-section
     if inQueryParam
@@ -17,5 +17,5 @@ block content
       .android-section-title.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}: 
     +moviesReadBulkMdlCards
   script.
-    app.buildDynamicDropdowns(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
+    app.content.htmlElements.createOptionsReadBulk(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
 

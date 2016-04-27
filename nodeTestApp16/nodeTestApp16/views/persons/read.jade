@@ -6,7 +6,7 @@ block content
     .logo-font.android-sub-slogan #{localesStrings['Full Name']}: #{person.name}
     .logo-font.android-sub-slogan #{localesStrings['Birth Date']}: #{person.born}
     a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/update/#{id}') #{localesCommands['Update']}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.deleteNode("/#{locale}/persons/delete/#{id}", "#{person.name}", "#{locale}/persons" )') #{localesCommands['Delete']}
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/persons/delete/#{id}", "#{person.name}", "#{locale}/persons" )') #{localesCommands['Delete']}
   .graph-section
     #graph
     style.
@@ -33,10 +33,10 @@ block content
       }
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
-      app.graphBuilder('/api/graph/readGraphOfPerson/#{id}', '#{locale}', 960, 300, -5000); 
+      app.visualization.visualizeGraphDiv('/api/graph/readGraphOfPerson/#{id}', '#{locale}', 960, 300, -5000); 
   .table-text-section
     .mdl-typography--display-1.mdl-typography--font-thinexit Also interesting? Top actor colleagues of #{person.name}:
   .mdl-card-section
     .android-card-container.mdl-grid#TopColleagues
     script.
-      app.divBuilder('TopColleagues', '/api/graph/read/top/colleagues/#{id}?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");
+      app.content.htmlElements.createNodesMdlCardsDiv('TopColleagues', '/api/graph/read/top/colleagues/#{id}?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");

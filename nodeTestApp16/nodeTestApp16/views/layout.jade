@@ -27,7 +27,7 @@ html(lang='en')
             label.mdl-button.mdl-js-button.mdl-button--icon(for='search-field')
               i.material-icons search
             .mdl-textfield__expandable-holder
-              input.mdl-textfield__input(type='text' id='search-field' onkeypress='app.seach(event, "#{locale}");')
+              input.mdl-textfield__input(type='text' id='search-field' onkeypress='app.search.searchField(event, "#{locale}");')
           //- Top Navigation
           .android-navigation-container
             nav.android-navigation.mdl-navigation
@@ -40,13 +40,13 @@ html(lang='en')
             i(style="color:#FB8C00;").material-icons language
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
             li.mdl-menu__item
-              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/en")') English
+              a.mdl-navigation__link(onclick='app.locale.changeLocale("#{locale}", "/en")') English
             li.mdl-menu__item
-              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/de")') Deutsch
+              a.mdl-navigation__link(onclick='app.locale.changeLocale("#{locale}", "/de")') Deutsch
             li.mdl-menu__item
-              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/es")') Español 
+              a.mdl-navigation__link(onclick='app.locale.changeLocale("#{locale}", "/es")') Español 
             li.mdl-menu__item
-              a.mdl-navigation__link(onclick='app.changelocale("#{locale}", "/fr")') Français 
+              a.mdl-navigation__link(onclick='app.locale.changeLocale("#{locale}", "/fr")') Français 
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title

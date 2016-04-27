@@ -7,7 +7,7 @@ block content
     .logo-font.android-sub-slogan #{localesStrings['Movie Tagline']}: #{movie.tagline}
     .logo-font.android-sub-slogan #{localesStrings['Movie Release Year']}: #{movie.released}
     a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.deleteNode("/#{locale}/movies/delete/#{id}", "#{movie.title}" , "#{locale}/movies")') #{localesCommands['Delete']}
+    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/movies/delete/#{id}", "#{movie.title}" , "#{locale}/movies")') #{localesCommands['Delete']}
   .graph-section
     #graph
     style.
@@ -34,10 +34,10 @@ block content
       }
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
-      app.graphBuilder('/api/graph/readGraphOfMovie/#{id}', '#{locale}', 960, 300, -5000);
+      app.visualization.visualizeGraphDiv('/api/graph/readGraphOfMovie/#{id}', '#{locale}', 960, 300, -5000);
   .table-text-section
     .mdl-typography--display-1.mdl-typography--font-thinexit All actors of #{movie.title}:
   .mdl-card-section
     .android-card-container.mdl-grid#MovieCast 
     script.
-      app.divBuilder('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");
+      app.content.htmlElements.createNodesMdlCardsDiv('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");

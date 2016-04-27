@@ -33,7 +33,7 @@ block content
       }
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
-      app.graphBuilder('/api/graph', '#{locale}', 960, 600, -250);
+      app.visualization.visualizeGraphDiv('/api/graph', '#{locale}', 960, 600, -250);
   .table-text-section
     .mdl-typography--display-1.mdl-typography--font-thin Sample Implementation - The Famous 
       a.android-link.mdl-typography--font-thin(href='') Neo4j 
@@ -76,14 +76,14 @@ block content
               tr
                 th(id="myTh").mdl-data-table__cell--non-numeric Type
                 th Total Amount
-            tbody(id="myTable")
+            tbody(id="nodesTableBody")
           a.android-link.mdl-button.mdl-js-button 
-            i.material-icons(id="before0") navigate_before
-            i.material-icons(id="next0") navigate_next
+            i.material-icons(id="nodesTableBodyBackward") navigate_before
+            i.material-icons(id="nodesTableBodyForward") navigate_next
         script.
-          app.tableBuilder('myTable', '/api/graph/read/typeAmountRelationships'); 
-          document.getElementById('before0').onclick = app.tablePagination;
-          document.getElementById('next0').onclick = app.tablePagination;
+          app.content.htmlElements.createNodesTableBody('nodesTableBody', '/api/graph/read/typeAmountRelationships'); 
+          document.getElementById('nodesTableBodyBackward').onclick = app.content.htmlElements.paginateNodesTableBodyBothWays;
+          document.getElementById('nodesTableBodyForward').onclick = app.content.htmlElements.paginateNodesTableBodyBothWays;
       .mdl-cell.mdl-cell--8-col.mdl-shadow--3dp
         .mdl-card__media
           i(style="opacity: 0.76; color:#37474f;").material-icons blur_on
@@ -97,18 +97,18 @@ block content
                 th.mdl-data-table__cell--non-numeric Type
                 th.mdl-data-table__cell--non-numeric Properties
                 th.mdl-data-table__cell--non-numeric Target
-            tbody(id="myTable2")
+            tbody(id="graphTableBody")
           a.android-link.mdl-button.mdl-js-button
-            i.material-icons(id="before") navigate_before
-            i.material-icons(id="next") navigate_next
+            i.material-icons(id="graphTableBodyBackward") navigate_before
+            i.material-icons(id="graphTableBodyForward") navigate_next
           script.
-            app.tableBuilder2('myTable2', '/api/graph/read/RelationshipsPagination?pagination=');
-            document.getElementById('before').onclick = app.tablePagination2Before;           
-            document.getElementById('next').onclick = app.tablePagination2Next;
+            app.content.htmlElements.createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=');
+            document.getElementById('graphTableBodyBackward').onclick = app.content.htmlElements.paginateGraphTableBodyBackward;           
+            document.getElementById('graphTableBodyForward').onclick = app.content.htmlElements.paginateGraphTableBodyForward;
   .mdl-card-section
     .android-section-title.mdl-typography--display-1-color-contrast Latest Movies:
     +moviesReadBulkMdlCards
     .android-section-title.mdl-typography--display-1-color-contrast Top Actors:
-    .android-card-container.mdl-grid#TopPersons
+    .android-card-container.mdl-grid#TopActorsMdlCardsDiv
       script.
-        app.divBuilder('TopPersons', '/api/graph/read/top/persons?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");
+        app.content.htmlElements.createNodesMdlCardsDiv('TopActorsMdlCardsDiv', '/api/graph/read/top/persons?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");

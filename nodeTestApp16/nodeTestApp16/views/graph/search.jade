@@ -22,7 +22,7 @@ block content
                 tr(style="background-color: #f3f3f3; border: 10p; vertical-align: top;")
                   each person in object.graph.nodes
                     if person.properties.name
-                      td(class="test" onclick="app.changelocation2('#{locale}', 'persons', '#{person.id}');")
+                      td(class="test" onclick="app.location.changeLocationSearch('#{locale}', 'persons', '#{person.id}');")
                         table
                           thead
                             tr
@@ -40,7 +40,7 @@ block content
                                           td #{person.properties.born}
                   each movie in object.graph.nodes
                     if movie.properties.title
-                      td(class="test" onclick="app.changelocation2('#{locale}', 'movies', '#{movie.id}');")
+                      td(class="test" onclick="app.location.changeLocationSearch('#{locale}', 'movies', '#{movie.id}');")
                         table
                           thead
                             tr
@@ -62,7 +62,7 @@ block content
                                           td #{movie.properties.released}
                   each relationship in object.graph.relationships
                     if relationship.type
-                      td(class="test" onclick="app.changelocation2('#{locale}', 'graph/relationships', #{relationship.id});")
+                      td(class="test" onclick="app.location.changeLocationSearch('#{locale}', 'graph/relationships', #{relationship.id});")
                         table
                           thead
                             tr
