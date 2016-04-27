@@ -2,8 +2,8 @@
 
 var app = (function() {
 
-  var pagination0 = 1;
-  var pagination = 0;
+  var paginationNodesTable = 1;
+  var paginationGraphTable = 0;
 
   var personsList;
   var relationshipsList;
@@ -167,12 +167,10 @@ var app = (function() {
       d3.select(this).classed("fixed", d.fixed = true);
       d3.select(this).selectAll('.material-icons').on('mouseleave', null);
       d3.select(this).selectAll('.nodeText').style({display:'inline'}); 
-      //d3.select(this).selectAll('.nodeTextRect').style({display:'inline'});
       d3.select('#nodeTextRect_' + d.id)
           .style({display:'inline'})
           .attr('width', function(d) { return document.getElementById('nodeText_' + d.id).getBBox().width + 10; })
           .attr('height', 20);
-      // console.log(this);
     }
 
     function mouseenter(d) {
@@ -228,20 +226,20 @@ var app = (function() {
 
   function paginateNodesTableBodyBothWays() {
     var url;
-    switch (pagination0) {
+    switch (paginationNodesTable) {
       case 0:
         url = '/api/graph/read/typeAmountRelationships';
         document.getElementById('myI').textContent = 'linear_scale';
         document.getElementById('myH').textContent = 'Relationships';
         document.getElementById('myTh').textContent = 'Type';
-        pagination0 = pagination0 +1;
+        paginationNodesTable = paginationNodesTable +1;
         break;
       case 1:
         url = '/api/graph/read/readLabelsAmountNodes';
         document.getElementById('myH').textContent = 'Nodes';
         document.getElementById('myI').textContent = 'grain';
         document.getElementById('myTh').textContent = 'Label';
-        pagination0 = pagination0 -1;
+        paginationNodesTable = paginationNodesTable -1;
         break;
       default:
         console.log('Default case.');
@@ -258,7 +256,7 @@ var app = (function() {
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', encodeURI(url + pagination));
+    xhr.open('GET', encodeURI(url + paginationGraphTable));
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -288,7 +286,7 @@ var app = (function() {
 
       newTBody.appendChild(documentFragment);
       oldTBody.parentNode.replaceChild(newTBody, oldTBody);
-      if(pagination < 6) {
+      if(paginationGraphTable < 6) {
         document.getElementById('graphTableBodyBackward').style.opacity = 0.46;
         document.getElementById('graphTableBodyBackward').onclick = '';
       } else {
@@ -310,13 +308,13 @@ var app = (function() {
   }
 
   function paginateGraphTableBodyBackward() {
-    pagination = pagination - 6;
-    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
+    paginationGraphTable = paginationGraphTable - 6;
+    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', paginationGraphTable);
   }
 
   function paginateGraphTableBodyForward() {
-    pagination = pagination + 6;
-    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', pagination);
+    paginationGraphTable = paginationGraphTable + 6;
+    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', paginationGraphTable);
   }
 
   function createNodesMdlCardsDiv(element, url, locale, showString) {
@@ -489,21 +487,6 @@ var app = (function() {
     return documentFragment;
   }
 
-  // function optionBuilder2(elementArray, unknownString) {
-  //   var documentFragment = document.createDocumentFragment();
-  //   elementArray.forEach(function(element, index) {
-  //     var option = document.createElement('option');
-  //     if (element === -1) {
-  //       option.textContent = unknownString;
-  //     } else {
-  //       option.textContent = element[0];
-  //     } 
-  //     option.value = element[1];
-  //     documentFragment.appendChild(option);
-  //   });
-  //   return documentFragment;
-  // }
-
   function targetFieldChanger() {
     var valueText = type.options[type.selectedIndex].value;
     switch(valueText) {
@@ -624,19 +607,6 @@ var app = (function() {
     } else {
       back = window.location.origin + '/' + nodeType;
     }
-    // var xhrReferrer = new XMLHttpRequest();
-    // xhrReferrer.open('Head', document.referrer);
-    // xhrReferrer.onreadystatechange = function() {
-    //   if(xhrReferrer.readyState === 4) {
-    //     if (xhrReferrer.status === 200) {
-    //        return back = document.referrer;
-    //     } else {
-    //       back = window.location.origin + '/' + nodeType;
-    //     } 
-    //   } else { 
-    //   }
-    // }
-    // xhrReferrer.send();
 
     if(r == true) {
       xhr.open('POST', encodeURI(url));
@@ -651,8 +621,6 @@ var app = (function() {
   }
 
   return {
-    // naming convention: verb object and optionally element id or description (if used on several elements)
-
     search: {
       searchField: searchField
     },
@@ -684,34 +652,5 @@ var app = (function() {
         deleteNode: deleteNode,
       },
     },
-    //createTopActorsMdlCardsDiv
-    // divBuilder: divBuilder,
-    // toogleViewReadRelationship
-    // toogleView: toogleView,
-    // toogleView<Element ID>
-    // toogleView2: toogleView2,
-    // createOptions<Element ID>
-    // buildOptions: buildOptions,
-    // createSelect<Element ID>
-    // buildDynamicDropdowns: buildDynamicDropdowns,
-    // paginateTable<Element ID>BothWays
-    // tablePagination: tablePagination,
-    // createTable<Element ID>
-    // tableBuilder: tableBuilder,
-    // createTable<Element ID>
-    // tableBuilder2:tableBuilder2,
-    // naming conflict see above (but not public so far)
-    // optionBuilder and optionBuilder2
-
-    // content.dataVisualization
-    // visulizeGraph<Element ID>
-    // graphBuilder: graphBuilder,
-
-    // content.userInteraction
-    // changelocation: changelocation,
-    // changelocation2: changelocation2,
-    
-    // locale
-    // changelocale: changelocale,
   }; 
 })();
