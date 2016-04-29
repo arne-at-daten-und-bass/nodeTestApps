@@ -1,88 +1,77 @@
 extends ../layout
 
 block content
-  .top-section
-    //- .android-section-title.mdl-typography--display-1-color-contrast.mdl-typography--text-center(style="padding-top:20px;") #{localesStrings['<InstancePlural>']}
-    //- .logo-font.android-sub-slogan
-    style.
-      .test:hover {
-      cursor: pointer;
-      background-color: #8bc34a;
-      }
+  .flixnet-top-section
     .android-card-container.mdl-grid
-      .mdl-cell(style="background-color: white;").mdl-cell--12-col.mdl-shadow--3dp
+      .flixnet-search-mdl-cell.mdl-cell.mdl-cell--12-col.mdl-shadow--3dp
         .mdl-card__media
-          i(style="opacity: 0.76; color:#37474f;").material-icons blur_on
+          i.flixnet-material-icons.material-icons blur_on
         .mdl-card__title
           h4.mdl-card__title-text Search Results:
-        .mdl-card__supporting-text(style="overflow: auto;")
-          table(style="width: 100%;border-collapse:separate; border-spacing:2px 6px;")
+        .flixnet-search-mdl-card__supporting-text.mdl-card__supporting-text
+          table.flixnet-search-main-table
             tbody
               each object in graph
-                tr(style="background-color: #f3f3f3; border: 10p; vertical-align: top;")
+                tr.flixnet-search-main-table-row 
                   each person in object.graph.nodes
                     if person.properties.name
-                      td(class="test" onclick="app.location.changeLocationSearch('#{locale}', 'persons', '#{person.id}');")
+                      td.flixnet-search-main-table-data(onclick="app.location.changeLocationSearch('#{locale}', 'persons', '#{person.id}');")
                         table
                           thead
                             tr
-                              th(style="opacity: 0.76; color:#37474f;").material-icons person
+                              th.flixnet-material-icons.material-icons person
                                 td 
                                   table
                                     tbody
                                       if person.properties.name   
                                         tr
-                                          th(style="text-align: left; vertical-align: top;") Name:       
+                                          th.flixnet-search-sub-table-head Name:       
                                           td #{person.properties.name}
                                       if person.properties.born  
                                         tr
-                                          th(style="text-align: left; vertical-align: top;") Born:
+                                          th.flixnet-search-sub-table-head Born:
                                           td #{person.properties.born}
                   each movie in object.graph.nodes
                     if movie.properties.title
-                      td(class="test" onclick="app.location.changeLocationSearch('#{locale}', 'movies', '#{movie.id}');")
+                      td.flixnet-search-main-table-data(onclick="app.location.changeLocationSearch('#{locale}', 'movies', '#{movie.id}');")
                         table
                           thead
                             tr
-                              th(style="opacity: 0.76; color:#37474f;").material-icons movie
+                              th.flixnet-material-icons.material-icons movie
                                 td 
                                   table
                                     tbody
                                       if movie.properties.title
                                         tr
-                                          th(style="text-align: left; vertical-align: top;") Title:
+                                          th.flixnet-search-sub-table-head Title:
                                           td #{movie.properties.title}
                                       if movie.properties.tagline
                                         tr
-                                          th(style="text-align: left; vertical-align: top;") Tagline:                  
+                                          th.flixnet-search-sub-table-head Tagline:                  
                                           td #{movie.properties.tagline}
                                       if movie.properties.released
                                         tr
-                                          th(style="text-align: left; vertical-align: top;") Released:                  
+                                          th.flixnet-search-sub-table-head Released:                  
                                           td #{movie.properties.released}
                   each relationship in object.graph.relationships
                     if relationship.type
-                      td(class="test" onclick="app.location.changeLocationSearch('#{locale}', 'graph/relationships', #{relationship.id});")
+                      td.flixnet-search-main-table-data(onclick="app.location.changeLocationSearch('#{locale}', 'graph/relationships', #{relationship.id});")
                         table
                           thead
                             tr
-                              th(style="opacity: 0.76; color:#37474f;").material-icons linear_scale
-                              td
-                                table
-                                  tbody
-                                    if relationship.type
-                                      tr
-                                        th(style="text-align: left; vertical-align: top;") Type:
-                                        td #{relationship.type}
-                                    if relationship.properties.roles
-                                      tr
-                                        th(style="text-align: left; vertical-align: top;") Roles:
-                                        td #{relationship.properties.roles}
-                                    if relationship.properties.summary
-                                      tr
-                                        th(style="text-align: left; vertical-align: top;") Summary:
-                                        td #{relationship.properties.summary}
-
-
-
-
+                              th.flixnet-material-icons.material-icons linear_scale
+                                td
+                                  table
+                                    tbody
+                                      if relationship.type
+                                        tr
+                                          th.flixnet-search-sub-table-head Type:
+                                          td #{relationship.type}
+                                      if relationship.properties.roles
+                                        tr
+                                          th.flixnet-search-sub-table-head Roles:
+                                          td #{relationship.properties.roles}
+                                      if relationship.properties.summary
+                                        tr
+                                          th.flixnet-search-sub-table-head Summary:
+                                          td #{relationship.properties.summary}

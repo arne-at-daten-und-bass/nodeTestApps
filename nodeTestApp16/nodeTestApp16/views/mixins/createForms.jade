@@ -1,21 +1,21 @@
 mixin movieCreateForm
-  form(name="createMovie", action="/#{locale}/movies/create",  method="post")
-    input(type="text", placeholder="#{localesStrings['Movie Title']}", name="title")
-    input(type="text", placeholder="#{localesStrings['Movie Tagline']}", name="tagline")
-    input(type="number", placeholder="#{localesStrings['Movie Release Year']}", name="released")
-    button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Create']}
+  form(name='createMovie', action='/#{locale}/movies/create',  method='post')
+    input(type='text', placeholder='#{localesStrings["Movie Title"]}', name='title')
+    input(type='text', placeholder='#{localesStrings["Movie Tagline"]}', name='tagline')
+    input(type='number', placeholder='#{localesStrings["Movie Release Year"]}', name='released')
+    button.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type='submit') #{localesCommands['Create']}
 
 mixin personCreateForm
-  form(name="createPerson", action="/#{locale}/persons/create",  method="post")
-    input(type="text", placeholder="#{localesStrings['Full Name']}", name="name")
-    input(type="number", placeholder="#{localesStrings['Birth Date']}", name="born")
-    button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands['Create']}
+  form(name='createPerson', action='/#{locale}/persons/create',  method='post')
+    input(type='text', placeholder='#{localesStrings["Full Name"]}', name='name')
+    input(type='number', placeholder='#{localesStrings["Birth Date"]}', name='born')
+    button.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type='submit') #{localesCommands['Create']}
 
 mixin relationshipCreateForm
-   form(name="createRelationship", action="/#{locale}/graph/relationships/create",  method="post")
-      select#source(name="source")        
-      select#type(name="type", style="text-transform: lowercase;")
-      select#target(name="target")
-      label#asLabel(for="property") &nbsp; as &nbsp;
-      input#property(type="text", name="property", placeholder="Role (in English)")
-      button.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type="submit") #{localesCommands["Create"]}
+   form(name='createRelationship', action='/#{locale}/graph/relationships/create',  method='post')
+      select#source(name='source')        
+      select#type(name='type', style='text-transform: lowercase;')
+      select#target(name='target')
+      label#asLabel(for='property') &nbsp; as &nbsp;
+      input#property(type='text', name='property', placeholder='Role (in English)')
+      button.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(type='submit') #{localesCommands['Create']}

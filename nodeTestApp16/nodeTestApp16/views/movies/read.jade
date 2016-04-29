@@ -1,43 +1,25 @@
 extends ../layout
 
 block content
-  .top-section.mdl-typography--text-center
-    .logo-font.android-sub-slogan #{slogan}:
-    .logo-font.android-sub-slogan #{localesStrings['Movie Title']}: #{movie.title}
-    .logo-font.android-sub-slogan #{localesStrings['Movie Tagline']}: #{movie.tagline}
-    .logo-font.android-sub-slogan #{localesStrings['Movie Release Year']}: #{movie.released}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/movies/delete/#{id}", "#{movie.title}" , "#{locale}/movies")') #{localesCommands['Delete']}
-  .graph-section
+  .flixnet-top-section.mdl-typography--text-center
+    .flixnet-logo-font.mdl-typography--display-1-color-contrast #{slogan}:
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Movie Title']}: 
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light #{movie.title}
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Movie Tagline']}: 
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light #{movie.tagline}
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Movie Release Year']}: 
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light #{movie.released}
+    br
+    a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
+    a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/movies/delete/#{id}", "#{movie.title}" , "#{locale}/movies")') #{localesCommands['Delete']}
+  .flixnet-graph-section
     #graph
-    style.
-      .node{
-        cursor: move;
-        fill: #ccc;
-      }
-      .node.fixed {
-        font-weight: bold;
-      }
-      .nodeTextRect {
-        display: none;
-        stroke-width: 1;
-        fill: white;
-      }
-      .nodeText{
-        cursor: pointer;
-        display: none; 
-      }
-      .link {
-        font-size: xx-small;
-        stroke: #999;
-        stroke-opacity: .6;
-      }
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
       app.visualization.visualizeGraphDiv('/api/graph/readGraphOfMovie/#{id}', '#{locale}', 960, 300, -5000);
-  .table-text-section
-    .mdl-typography--display-1.mdl-typography--font-thinexit All actors of #{movie.title}:
-  .mdl-card-section
+  .flixnet-text-section
+    .flixnet-logo-font-white.mdl-typography--display-1.mdl-typography--font-thin All actors of #{movie.title}:
+  .flixnet-mdl-card-section
     .android-card-container.mdl-grid#MovieCast 
     script.
       app.content.htmlElements.createNodesMdlCardsDiv('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");

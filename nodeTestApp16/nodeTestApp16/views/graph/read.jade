@@ -1,13 +1,14 @@
 extends ../layout
 
 block content
-  .top-section.mdl-typography--text-center
-    .logo-font.android-sub-slogan #{slogan}:
-    #source.logo-font.android-sub-slogan #{relationship.row[0]}
-    #type(style='text-transform: lowercase;').logo-font.android-sub-slogan #{relationship.row[1]}
-    #target.logo-font.android-sub-slogan '#{relationship.row[2]}'
-    #property.logo-font.android-sub-slogan
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/graph/relationships/update/#{id}') #{localesCommands['Update']}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteRelationship("/#{locale}/graph/relationships/delete/#{id}", "#{relationship.row[0]}", "#{relationship.row[1]}", "#{relationship.row[2]}", "#{locale}/")') #{localesCommands['Delete']}
+  .flixnet-top-section.mdl-typography--text-center
+    .flixnet-logo-font.mdl-typography--display-1-color-contrast #{slogan}:
+    .flixnet-logo-font.flixnet-sub-slogan#source #{relationship.row[0]}
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light#type(style='text-transform: lowercase;') #{relationship.row[1]}
+    .flixnet-logo-font.flixnet-sub-slogan#target '#{relationship.row[2]}'
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light#property
+    br
+    a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/graph/relationships/update/#{id}') #{localesCommands['Update']}
+    a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteRelationship("/#{locale}/graph/relationships/delete/#{id}", "#{relationship.row[0]}", "#{relationship.row[1]}", "#{relationship.row[2]}", "#{locale}/")') #{localesCommands['Delete']}
     script.
       app.content.htmlElements.toggleViewReadRelationship(!{JSON.stringify(relationship)});

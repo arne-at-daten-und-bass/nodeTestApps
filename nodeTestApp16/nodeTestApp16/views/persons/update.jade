@@ -2,6 +2,8 @@ extends ../layout
 include ../mixins/updateForms.jade
 
 block content
-  .top-section.mdl-typography--text-center
-    .logo-font.android-sub-slogan #{localesStrings['Update a Person']}:
+  .flixnet-top-section.mdl-typography--text-center
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Update a Person']}:
+    .flixnet-logo-font.mdl-typography--font-light
+      br
       +personUpdateForm

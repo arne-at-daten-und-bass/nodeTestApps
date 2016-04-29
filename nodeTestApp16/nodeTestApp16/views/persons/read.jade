@@ -1,42 +1,23 @@
 extends ../layout
 
 block content
-  .top-section.mdl-typography--text-center
-    .logo-font.android-sub-slogan #{slogan}:
-    .logo-font.android-sub-slogan #{localesStrings['Full Name']}: #{person.name}
-    .logo-font.android-sub-slogan #{localesStrings['Birth Date']}: #{person.born}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/update/#{id}') #{localesCommands['Update']}
-    a.android-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/persons/delete/#{id}", "#{person.name}", "#{locale}/persons" )') #{localesCommands['Delete']}
-  .graph-section
+  .flixnet-top-section.mdl-typography--text-center
+    .flixnet-logo-font.mdl-typography--display-1-color-contrast #{slogan}:
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Full Name']}: 
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light #{person.name}
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Birth Date']}:
+    .flixnet-logo-font.flixnet-sub-slogan.mdl-typography--font-light #{person.born}
+    br
+    a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/update/#{id}') #{localesCommands['Update']}
+    a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/persons/delete/#{id}", "#{person.name}", "#{locale}/persons" )') #{localesCommands['Delete']}
+  .flixnet-graph-section
     #graph
-    style.
-      .node{
-        cursor: move;
-        fill: #ccc;
-      }
-      .node.fixed {
-        font-weight: bold;
-      }
-      .nodeTextRect {
-        display: none;
-        stroke-width: 1;
-        fill: white;
-      }
-      .nodeText{
-        cursor: pointer;
-        display: none; 
-      }
-      .link {
-        font-size: xx-small;
-        stroke: #999;
-        stroke-opacity: .6;
-      }
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
       app.visualization.visualizeGraphDiv('/api/graph/readGraphOfPerson/#{id}', '#{locale}', 960, 300, -5000); 
-  .table-text-section
-    .mdl-typography--display-1.mdl-typography--font-thinexit Also interesting? Top actor colleagues of #{person.name}:
-  .mdl-card-section
+  .flixnet-text-section#OptionalTopColleagues
+    .flixnet-logo-font-white.mdl-typography--display-1.mdl-typography--font-thin Also interesting? Top actor colleagues of #{person.name}:
+  .flixnet-mdl-card-section
     .android-card-container.mdl-grid#TopColleagues
     script.
       app.content.htmlElements.createNodesMdlCardsDiv('TopColleagues', '/api/graph/read/top/colleagues/#{id}?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");

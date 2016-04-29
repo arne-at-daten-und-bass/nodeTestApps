@@ -180,7 +180,8 @@ a img{
 
 .android-slogan {
   font-size: 60px;
-  padding-top: 160px;
+  padding-top: 48px;
+  /*padding-top: 160px;*/
 }
 
 .android-sub-slogan {

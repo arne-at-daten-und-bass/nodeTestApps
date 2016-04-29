@@ -1,22 +1,20 @@
-/* Welcome */
-.top-section {
-  /*position: relative;*/
+
+/* AW: Self added for overall sections and structure */
+
+/* First Section on every page */
+.flixnet-top-section {
   width: auto;
-  padding: 25px 25px;
+  padding: 45px 25px 50px 25px;
   background-color: #f3f3f3;
 }
 
-/* Graph animations*/
-.graph-section {
-  /*position: relative;*/
-  /*overflow: auto;*/
-  overflow-x: auto;
-  /*background-color: #37474f;*/
+/* Graph animations via d3js */
+.flixnet-graph-section {
+  overflow: auto;
 }
 
-/*Tables and Text*/
-.table-text-section {
-  /*position: relative;*/
+/* Text only  or mainly  areas */
+.flixnet-text-section {
   padding: 50px 25px;
   margin-left: auto;
   margin-right: auto;
@@ -26,12 +24,120 @@
 }
 
 /* MDL CARDS*/
-.mdl-card-section {
-  padding: 12px 0px;
+.flixnet-mdl-card-section {
+  padding: 12px 0px 0px 0px;
   max-width: 1044px;
   margin-left: auto;
   margin-right: auto;
 }
+
+/* AW: Self added for fonts  */
+
+.flixnet-logo-font {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1;
+  color: #767777;
+  font-weight: 500;
+}
+
+.flixnet-logo-font-white {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1;
+  color: white;
+  font-weight: 500;
+}
+
+.flixnet-title-header {
+  font-size: 18px; 
+  color: #8bc34a; 
+  text-decoration: none;
+}
+
+.flixnet-title-drawer {
+  font-size: 36px; 
+  color: white;
+}
+
+.flixnet-slogan {
+  font-size: 75px;
+  padding-top: 12px;
+}
+
+.flixnet-sub-slogan {
+  font-size: 25px;
+  padding-top: 24px;
+}
+
+.flixnet-material-icons {
+  opacity: 0.76; 
+  color:#37474f;
+}
+
+.flixnet-material-icons-light {
+  opacity: 0.56; 
+  color:#37474f;
+}
+
+.flixnet-link {
+  text-decoration: none;
+  color: #8bc34a !important;
+}
+
+
+.flixnet-search-mdl-cell {
+  background-color: white;
+}
+
+.flixnet-search-mdl-card__supporting-text {
+  overflow: auto;
+}
+
+.flixnet-search-main-table {
+  width: 100%;
+  border-collapse:separate; 
+  border-spacing:2px 6px;
+}
+
+.flixnet-search-main-table-row {
+  background-color: #f3f3f3; 
+  border: 10p; 
+  vertical-align: top;
+}
+
+.flixnet-search-main-table-data:hover {
+  cursor: pointer;
+  background-color: #8bc34a;
+}
+
+.flixnet-search-sub-table-head {
+  text-align: left; 
+  vertical-align: top;
+}
+
+/* AW: Self added for data visualization via d3js */
+
+.node{
+  cursor: move;
+  fill: #ccc;
+}
+.node.fixed {
+  font-weight: bold;
+}
+.nodeTextRect {
+  display: none;
+  stroke-width: 1;
+  fill: white;
+}
+.nodeText{
+  cursor: pointer;
+  display: none; 
+}
+.link {
+  font-size: xx-small;
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
 
 /* AW: Self added because of missing social media classes/buttons support */
 

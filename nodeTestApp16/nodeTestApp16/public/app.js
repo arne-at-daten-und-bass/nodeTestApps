@@ -229,16 +229,16 @@ var app = (function() {
     switch (paginationNodesTable) {
       case 0:
         url = '/api/graph/read/typeAmountRelationships';
-        document.getElementById('myI').textContent = 'linear_scale';
-        document.getElementById('myH').textContent = 'Relationships';
-        document.getElementById('myTh').textContent = 'Type';
+        document.getElementById('nodesTableBodyI').textContent = 'linear_scale';
+        document.getElementById('nodesTableBodyH').textContent = 'Relationships';
+        document.getElementById('nodesTableBodyTh').textContent = 'Type';
         paginationNodesTable = paginationNodesTable +1;
         break;
       case 1:
         url = '/api/graph/read/readLabelsAmountNodes';
-        document.getElementById('myH').textContent = 'Nodes';
-        document.getElementById('myI').textContent = 'grain';
-        document.getElementById('myTh').textContent = 'Label';
+        document.getElementById('nodesTableBodyI').textContent = 'grain';
+        document.getElementById('nodesTableBodyH').textContent = 'Nodes';
+        document.getElementById('nodesTableBodyTh').textContent = 'Label';
         paginationNodesTable = paginationNodesTable -1;
         break;
       default:
@@ -328,7 +328,11 @@ var app = (function() {
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         elementArray = JSON.parse(xhr.responseText).data;
-
+        
+        if (element === 'TopColleagues' && elementArray.length === 0) {
+          document.getElementById('OptionalTopColleagues').style.display = 'none';
+        }
+        
         elementArray.forEach(function (currentElement, index) {
           var outerDiv = document.createElement('div');
           outerDiv.className = 'mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp';
@@ -382,8 +386,14 @@ var app = (function() {
                   innerAMovieName.className = 'android-link';
                   innerAMovieName.href = '/' + locale + '/movies/read/' + elementArray[index].row[4][innerIndex];
                 }
+                
+                if (innerIndex === 0) {
+                  innerAMovieName.textContent = innerElement ;
+                } else {
+                  innerAMovieName.textContent = ' | ';
+                  innerAMovieName.textContent += innerElement ;
+                }
 
-                innerAMovieName.textContent = innerElement + ' | ';
                 innerSpanMovieNames.appendChild(innerAMovieName);
               });
             innerDivMovieNames.appendChild(innerSpanMovieNames);
