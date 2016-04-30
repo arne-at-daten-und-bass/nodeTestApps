@@ -1,6 +1,21 @@
 'use strict';
 
+var today = new Date();
+var year = today.getFullYear();
+
 var localesMenuApp = {
+  'fliXnet': {
+    'en': {'EN': 'fliXnet'},
+    'es': {'ES': 'fliXnet'},
+    'de': {'DE': 'fliXnet'},
+    'fr': {'FR': 'fliXnet'},
+  },
+  'Current Year YYYY': {
+    'en': {'EN': year},
+    'es': {'ES': year},
+    'de': {'DE': year},
+    'fr': {'FR': year},
+  },
   'Menu': {
     'en': {'EN': 'Menu'},
     'es': {'ES': 'menú'},
@@ -90,6 +105,24 @@ var localesMenuApp = {
     'es': {'ES': 'Todas las personas'},
     'de': {'DE': 'Alle Personen'},
     'fr': {'FR': 'Tous les persons'},
+  },
+  'A <female>': {
+    'en': {'EN': 'A'},
+    'es': {'ES': 'Una'},
+    'de': {'DE': 'Eine'},
+    'fr': {'FR': 'Une'},
+  },
+  'sample implementation of': {
+    'en': {'EN': 'sample implementation of'},
+    'es': {'ES': 'implementación ejemplo de'},
+    'de': {'DE': 'Beispielimplementierung von'},
+    'fr': {'FR': 'implémentation exemplaire de'},
+  },
+  'Movie Database': {
+    'en': {'EN': 'Movie Database'},
+    'es': {'ES': 'banco de datos de películas'},
+    'de': {'DE': 'Filmdatenbank'},
+    'fr': {'FR': 'banque de données des films'},
   },
   'Users': {
     'en': {'EN': 'Users'},

@@ -55,6 +55,8 @@ var app = (function() {
     var drag = force.drag()
         .on("dragstart", dragstart);
 
+    document.getElementById("graph").removeAttribute("class");
+
     var svg = d3.select('#graph').append('svg')
         .attr('viewBox', '0 0 1044 ' + height)
         .attr('preserveAspectRatio', 'xMidYMid meet');
@@ -197,6 +199,9 @@ var app = (function() {
     newTBody.id = 'nodesTableBody';
     var documentFragment = document.createDocumentFragment();
 
+    var spinner = document.createElement('div');
+    spinner.className = 'mdl-spinner mdl-js-spinner is-active flixnet-spinner';
+
     var xhr = new XMLHttpRequest();
 
     xhr.open('GET', encodeURI(url));
@@ -216,9 +221,14 @@ var app = (function() {
           outerTr.appendChild(innterTd2);
           documentFragment.appendChild(outerTr);
         });
-
-      newTBody.appendChild(documentFragment);
-      if (oldTBody.parentNode) { oldTBody.parentNode.replaceChild(newTBody, oldTBody); }
+        newTBody.removeChild(spinner);
+        newTBody.appendChild(documentFragment);
+        if (oldTBody.parentNode) { oldTBody.parentNode.replaceChild(newTBody, oldTBody); }
+      } else {
+        if (!newTBody.hasChildNodes()) { 
+          newTBody.appendChild(spinner); 
+          if (oldTBody.parentNode) { oldTBody.parentNode.replaceChild(newTBody, oldTBody); }
+        }
       }
     };
     xhr.send();
@@ -254,6 +264,9 @@ var app = (function() {
     newTBody.id = 'graphTableBody';
     var documentFragment = document.createDocumentFragment();
 
+    var spinner = document.createElement('div');
+    spinner.className = 'mdl-spinner mdl-js-spinner is-active flixnet-spinner';
+
     var xhr = new XMLHttpRequest();
 
     xhr.open('GET', encodeURI(url + paginationGraphTable));
@@ -284,24 +297,31 @@ var app = (function() {
           documentFragment.appendChild(outerTr);
         });
 
-      newTBody.appendChild(documentFragment);
-      oldTBody.parentNode.replaceChild(newTBody, oldTBody);
-      if(paginationGraphTable < 6) {
-        document.getElementById('graphTableBodyBackward').style.opacity = 0.46;
-        document.getElementById('graphTableBodyBackward').onclick = '';
-      } else {
-        document.getElementById('graphTableBodyBackward').style.opacity = 1.00;
-        document.getElementById('graphTableBodyBackward').onclick = paginateGraphTableBodyBackward;
-      }
+        if(paginationGraphTable < 6) {
+          document.getElementById('graphTableBodyBackward').style.opacity = 0.46;
+          document.getElementById('graphTableBodyBackward').onclick = '';
+        } else {
+          document.getElementById('graphTableBodyBackward').style.opacity = 1.00;
+          document.getElementById('graphTableBodyBackward').onclick = paginateGraphTableBodyBackward;
+        }
 
-      if (elementArray.length < 6) {
-        document.getElementById('graphTableBodyForward').style.opacity = 0.46;
-        document.getElementById('graphTableBodyForward').onclick='';
-      } else {
-        document.getElementById('graphTableBodyForward').style.opacity = 1.00;
-        document.getElementById('graphTableBodyForward').onclick = paginateGraphTableBodyForward;
-      }
+        if (elementArray.length < 6) {
+          document.getElementById('graphTableBodyForward').style.opacity = 0.46;
+          document.getElementById('graphTableBodyForward').onclick='';
+        } else {
+          document.getElementById('graphTableBodyForward').style.opacity = 1.00;
+          document.getElementById('graphTableBodyForward').onclick = paginateGraphTableBodyForward;
+        }
         
+        newTBody.removeChild(spinner);
+        newTBody.appendChild(documentFragment);
+        if (oldTBody.parentNode) { oldTBody.parentNode.replaceChild(newTBody, oldTBody); }
+
+      } else {
+        if (!newTBody.hasChildNodes()) { 
+          newTBody.appendChild(spinner); 
+          if (oldTBody.parentNode) { oldTBody.parentNode.replaceChild(newTBody, oldTBody); }
+        }
       }
     };
     xhr.send();
@@ -410,6 +430,7 @@ var app = (function() {
 
           documentFragment.appendChild(outerDiv);
         });
+        document.getElementById(element).removeChild(document.getElementById('spinner'+element));
         document.getElementById(element).appendChild(documentFragment);
       }
     };
@@ -487,10 +508,8 @@ var app = (function() {
       if (element === -1) {
         option.textContent = unknownString;
       } else {
-        // option.textContent = element;
         option.textContent = hasID ? element[0] : element;
       } 
-      // option.value = element;
       option.value = hasID ? element[1] : element;
       documentFragment.appendChild(option);
     });

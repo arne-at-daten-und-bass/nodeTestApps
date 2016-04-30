@@ -6,7 +6,7 @@ html(lang='en')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='description', content='nodeTestApp16')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title fliXnet - #{localesMenu['The Movie Graph']}
+    title #{localesMenu['fliXnet']} - #{localesMenu['The Movie Graph']}
     // MDL Page styles
     link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en')
     link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
@@ -21,7 +21,7 @@ html(lang='en')
       .android-header.mdl-layout__header.mdl-layout__header--waterfall
         .mdl-layout__header-row
           span.android-title.mdl-layout-title
-            a(href='/#{locale}').flixnet-title-header.logo-font fliXnet
+            a(href='/#{locale}').flixnet-title-header.logo-font #{localesMenu['fliXnet']}
           //- Add spacer, to align navigation to the right in desktop
           .android-header-spacer.mdl-layout-spacer
           .android-search-box.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right.mdl-textfield--full-width
@@ -36,7 +36,7 @@ html(lang='en')
               a.mdl-navigation__link.mdl-typography--text-uppercase(href='/#{locale}/about') #{localesMenu['About']}
               a.mdl-navigation__link.mdl-typography--text-uppercase(disabled='' style="opacity: 0.46;") #{localesMenu['Login']}
           span.android-mobile-title.mdl-layout-title
-            a(href='/#{locale}').flixnet-title-header.logo-font fliXnet
+            a(href='/#{locale}').flixnet-title-header.logo-font #{localesMenu['fliXnet']}
           button#more-button.android-more-button.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
             i.material-icons language
           ul.mdl-menu.mdl-js-menu.mdl-menu--bottom-right.mdl-js-ripple-effect(for='more-button')
@@ -51,7 +51,7 @@ html(lang='en')
       // Fly-out Side Navigation
       .android-drawer.mdl-layout__drawer
         span.mdl-layout-title
-          a.flixnet-title-drawer.android-logo-image.logo-font fliXnet
+          a.flixnet-title-drawer.android-logo-image.logo-font #{localesMenu['fliXnet']}
         nav.mdl-navigation
           a.mdl-navigation__link(href='/#{locale}') #{localesMenu['The Movie Graph']}
           a.mdl-navigation__link(href='/#{locale}/graph/relationships/create') #{localesMenu['Create a Relationship']}
@@ -72,11 +72,13 @@ html(lang='en')
                 button.mdl-mega-footer--social-btn.social-btn.social-btn__twitter
             .mdl-mega-footer--right-section
           .mdl-mega-footer--middle-section
-            p.mdl-typography--font-light #{localesMenu['The Movie Graph']} 2016 by 
+            p.mdl-typography--font-light #{localesMenu['The Movie Graph']} - #{localesMenu['Current Year YYYY']} 
               a.android-link.mdl-typography--font-thin(href='https://twitter.com/daten_und_bass' target='_blank') daten&bass
-            p.mdl-typography--font-light Node.js Sample Implementation of 
+            p.mdl-typography--font-light #{localesMenu['A <female>']} 
+              a.android-link.mdl-typography--font-thin(href='https://nodejs.org' target='_blank') Node.js 
+              | #{localesMenu['sample implementation of']} 
               a.android-link.mdl-typography--font-thin(href='http://neo4j.com' target='_blank') Neo4j
-              |'s Movie Database
+              |'s #{localesMenu['Movie Database']}
           .mdl-mega-footer--bottom-section
             a#version-dropdown.android-link.android-link-menu.mdl-typography--font-light
               | #{localesMenu['Users']} 

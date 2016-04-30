@@ -6,10 +6,10 @@ block content
     .flixnet-logo-font.flixnet-slogan fliXnet
     .flixnet-logo-font.flixnet-sub-slogan - #{localesMenu['The Movie Graph']} -
   .flixnet-graph-section
-    div#graph
-    script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
-    script.
-      app.visualization.visualizeGraphDiv('/api/graph', '#{locale}', 960, 600, -250);
+    div(class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')#graph
+    //- script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
+    //- script.
+    //-   app.visualization.visualizeGraphDiv('/api/graph', '#{locale}', 960, 600, -250);
   .flixnet-text-section
     .mdl-typography--display-1.mdl-typography--font-thin Sample Implementation - The Famous 
       a.flixnet-link.mdl-typography--font-thin(href='http://neo4j.com' target='_blank') Neo4j 
@@ -88,5 +88,6 @@ block content
   .flixnet-mdl-card-section
     .mdl-typography--display-1-color-contrast Top Actors:
     .android-card-container.mdl-grid#TopActorsMdlCardsDiv
+      div(id='spinnerTopActorsMdlCardsDiv' class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')
       script.
         app.content.htmlElements.createNodesMdlCardsDiv('TopActorsMdlCardsDiv', '/api/graph/read/top/persons?relationshipName=ACTED_IN', '#{locale}', '#{localesCommands["Show"]}');

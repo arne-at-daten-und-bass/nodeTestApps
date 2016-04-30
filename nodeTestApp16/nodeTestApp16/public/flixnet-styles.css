@@ -114,6 +114,10 @@
   vertical-align: top;
 }
 
+.flixnet-spinner {
+  /*padding-right: 100%*/
+}
+
 /* AW: Self added for data visualization via d3js */
 
 .node{

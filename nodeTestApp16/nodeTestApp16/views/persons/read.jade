@@ -11,7 +11,7 @@ block content
     a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/persons/update/#{id}') #{localesCommands['Update']}
     a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/persons/delete/#{id}", "#{person.name}", "#{locale}/persons" )') #{localesCommands['Delete']}
   .flixnet-graph-section
-    #graph
+    div(class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')#graph
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
       app.visualization.visualizeGraphDiv('/api/graph/readGraphOfPerson/#{id}', '#{locale}', 960, 300, -5000); 
@@ -19,5 +19,6 @@ block content
     .flixnet-logo-font-white.mdl-typography--display-1.mdl-typography--font-thin Also interesting? Top actor colleagues of #{person.name}:
   .flixnet-mdl-card-section
     .android-card-container.mdl-grid#TopColleagues
-    script.
-      app.content.htmlElements.createNodesMdlCardsDiv('TopColleagues', '/api/graph/read/top/colleagues/#{id}?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");
+      div(id='spinnerTopColleagues' class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')
+      script.
+        app.content.htmlElements.createNodesMdlCardsDiv('TopColleagues', '/api/graph/read/top/colleagues/#{id}?relationshipName=ACTED_IN', '#{locale}', "#{localesCommands['Show']}");

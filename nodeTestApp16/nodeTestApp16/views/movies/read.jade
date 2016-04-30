@@ -13,13 +13,14 @@ block content
     a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(href='/#{locale}/movies/update/#{id}') #{localesCommands['Update']}
     a.flixnet-link.mdl-button.mdl-js-button.mdl-typography--text-uppercase(onclick='app.content.userInteraction.deleteNode("/#{locale}/movies/delete/#{id}", "#{movie.title}" , "#{locale}/movies")') #{localesCommands['Delete']}
   .flixnet-graph-section
-    #graph
+    div(class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')#graph
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
       app.visualization.visualizeGraphDiv('/api/graph/readGraphOfMovie/#{id}', '#{locale}', 960, 300, -5000);
   .flixnet-text-section
     .flixnet-logo-font-white.mdl-typography--display-1.mdl-typography--font-thin All actors of #{movie.title}:
   .flixnet-mdl-card-section
-    .android-card-container.mdl-grid#MovieCast 
-    script.
-      app.content.htmlElements.createNodesMdlCardsDiv('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");
+    .android-card-container.mdl-grid#MovieCast
+      div(id='spinnerMovieCast' class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')
+      script.
+        app.content.htmlElements.createNodesMdlCardsDiv('MovieCast', '/api/graph/readCastMovie/#{id}', '#{locale}', "#{localesCommands['Show']}");
