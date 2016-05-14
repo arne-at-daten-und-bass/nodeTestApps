@@ -1,6 +1,9 @@
 'use strict';
 
 var localesStringsMovies = {
+  'id': {
+    'en': {'EN': 'localesStringsMovies'},
+  },
   '<Instance>': {
     'de': {'DE': 'Film'},
     'en': {'EN': 'Movie'},
@@ -97,12 +100,19 @@ var localesStringsMovies = {
     'es': {'ES': 'Borrar película (y todas sus conexiónes)'},
     'fr': {'FR': 'Effacer film (et toutes ses relations)'},
   },
-  '<Instance> Deleted':  {
-    'de': {'DE': 'Film gelöscht'},
-    'en': {'EN': 'Movie Deleted'},
-    'es': {'ES': 'Película borrada'},
-    'fr': {'FR': 'Film effacé'},
+  'Movies deleted':  {
+    'de': {'DE': 'Gelöschte Filme'},
+    'en': {'EN': 'Movies deleted'},
+    'es': {'ES': 'Películas borrada'},
+    'fr': {'FR': 'Films effacés'},
   },
+  'All actors of':  {
+    'de': {'DE': 'Alle Schauspieler von'},
+    'en': {'EN': 'All actors of'},
+    'es': {'ES': 'Todas actores de'},
+    'fr': {'FR': 'Tous les acteurs de'},
+  },
+
 };
 
 module.exports = localesStringsMovies;

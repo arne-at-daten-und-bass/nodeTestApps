@@ -15,18 +15,23 @@ var app = (function() {
   var asLabel;
   var property;
 
+  var updateLink;
+
   function searchField(event, locale) {
-    var searchBox = document.getElementById('search-field');
-    if (event.keyCode == 13 && searchBox.value.length > 0) {
+    var searchField = document.getElementById('search-field');
+    if (event.keyCode == 13 && searchField.value.length > 0) {
       location.path = ''
-      return location = '/' + locale + '/graph/search/searchBox?searchParam=' + encodeURIComponent(searchBox.value);
+      return location = '/' + locale + '/graph/search/searchField?searchParam=' + encodeURIComponent(searchField.value);
       } else {
       return false;
     }  
   }
 
   function changeLocale(currentLocale, newLocale) {
+    var searchParam = location.search;
     var newLocation = location.pathname.replace('/' + currentLocale + '/', newLocale + '/');
+    newLocation += searchParam;
+    
     location.assign(newLocation);
   }
 
@@ -234,20 +239,20 @@ var app = (function() {
     xhr.send();
   }
 
-  function paginateNodesTableBodyBothWays() {
+  function paginateNodesTableBodyBothWays(relationshipsString, nodesString) {
     var url;
     switch (paginationNodesTable) {
       case 0:
-        url = '/api/graph/read/typeAmountRelationships';
+        url = '/api/graph/search/typeAmountRelationships';
         document.getElementById('nodesTableBodyI').textContent = 'linear_scale';
-        document.getElementById('nodesTableBodyH').textContent = 'Relationships';
+        document.getElementById('nodesTableBodyH').textContent = relationshipsString;
         document.getElementById('nodesTableBodyTh').textContent = 'Type';
         paginationNodesTable = paginationNodesTable +1;
         break;
       case 1:
-        url = '/api/graph/read/readLabelsAmountNodes';
+        url = '/api/graph/search/labelsAmountNodes';
         document.getElementById('nodesTableBodyI').textContent = 'grain';
-        document.getElementById('nodesTableBodyH').textContent = 'Nodes';
+        document.getElementById('nodesTableBodyH').textContent = nodesString;
         document.getElementById('nodesTableBodyTh').textContent = 'Label';
         paginationNodesTable = paginationNodesTable -1;
         break;
@@ -329,12 +334,12 @@ var app = (function() {
 
   function paginateGraphTableBodyBackward() {
     paginationGraphTable = paginationGraphTable - 6;
-    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', paginationGraphTable);
+    createGraphTableBody('graphTableBody', '/api/graph/relationships/readAllPaginated?pagination=', paginationGraphTable);
   }
 
   function paginateGraphTableBodyForward() {
     paginationGraphTable = paginationGraphTable + 6;
-    createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=', paginationGraphTable);
+    createGraphTableBody('graphTableBody', '/api/graph/relationships/readAllPaginated?pagination=', paginationGraphTable);
   }
 
   function createNodesMdlCardsDiv(element, url, locale, showString) {
@@ -437,8 +442,17 @@ var app = (function() {
     xhr.send();
   }
 
-  function toggleViewReadRelationship(value) {
+  function updateLinkDeactivator(updateLink, titleString) {
+    updateLink.removeAttribute('href');
+    updateLink.removeAttribute('class');
+    updateLink.className = 'mdl-button mdl-js-button mdl-typography--text-uppercase';
+    updateLink.style.opacity = '0.46';
+    updateLink.title = 'This type of relationship cannot be updated.';
+  }
+
+  function toggleViewReadRelationship(value, titleString) {
     property = document.getElementById('property');
+    updateLink = document.getElementById('updateLink'); 
 
     switch(value.row[1]) {
       case 'ACTED_IN':
@@ -446,21 +460,28 @@ var app = (function() {
         property.textContent = 'as ' + value.row[3] + '.';
         break;
       case 'DIRECTED':
-        property.style.display = 'none';
-        break;
       case 'PRODUCED':
+      case 'WROTE':
+      case 'FOLLOWS':
         property.style.display = 'none';
+        updateLinkDeactivator(updateLink, titleString);
         break;
+      // case 'PRODUCED':
+      //   property.style.display = 'none';
+      //   updateLinkDeactivator(updateLink, titleString);
+      //   break;
       case 'REVIEWED':
         property.style.display = 'block';
         property.textContent = 'Summary: ' + value.row[3] + '.';
         break;
-      case 'WROTE':
-        property.style.display = 'none';
-        break;
-      case 'FOLLOWS':
-        property.style.display = 'none';
-        break;
+      // case 'WROTE':
+      //   property.style.display = 'none';
+      //   updateLinkDeactivator(updateLink, titleString);
+      //   break;
+      // case 'FOLLOWS':
+      //   property.style.display = 'none';
+      //   updateLinkDeactivator(updateLink, titleString);
+      //   break;
       default:
         console.log('default');
     }
@@ -476,26 +497,29 @@ var app = (function() {
         asLabel.style.display = 'inline';
         break;
       case 'DIRECTED':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
       case 'PRODUCED':
+      case 'WROTE':
+      case 'FOLLOWS':
         property.style.display = 'none';
         asLabel.style.display = 'none';
         break;
+      // case 'PRODUCED':
+      //   property.style.display = 'none';
+      //   asLabel.style.display = 'none';
+      //   break;
       case 'REVIEWED':
         property.style.display = 'inline';
         asLabel.textContent = ' Summary: '
         property.textContent = value.row[4];
         break;
-      case 'WROTE':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
-      case 'FOLLOWS':
-        property.style.display = 'none';
-        asLabel.style.display = 'none';
-        break;
+      // case 'WROTE':
+      //   property.style.display = 'none';
+      //   asLabel.style.display = 'none';
+      //   break;
+      // case 'FOLLOWS':
+      //   property.style.display = 'none';
+      //   asLabel.style.display = 'none';
+      //   break;
       default:
         console.log('default');
     }
@@ -579,7 +603,7 @@ var app = (function() {
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState==4 && xhr.status==200) {
-        distincValues = JSON.parse(xhr.responseText).distinctValues;
+        distincValues = JSON.parse(xhr.responseText).data[0].row[0];
         distincValues.unshift(-1);            
         element.appendChild(optionCreator(distincValues, unknownString, false));
 
@@ -599,8 +623,8 @@ var app = (function() {
     return xhr.status==200;
   }
 
-  function deleteRelationship(url, source, type, target, nodeType) {
-    var txt = 'Delete relationship?\n' + '"' + source  + ' ' + type.toLowerCase() + ' ' + target + '"';
+  function deleteRelationship(url, source, type, target, nodeType, deleteString, deletedString) {
+    var txt = deleteString + '?:\n' + '"' + source  + ' ' + type.toLowerCase() + ' ' + target + '"';
     var r = confirm(txt);
     var xhr = new XMLHttpRequest();
 
@@ -616,7 +640,7 @@ var app = (function() {
       xhr.open('POST', encodeURI(url));
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          alert("Relationships deleted: " + JSON.parse(xhr.responseText).relationship_deleted);
+          alert(deletedString + ": " + JSON.parse(xhr.responseText).relationship_deleted);
           window.location.href = back;
         }
       };
@@ -624,8 +648,8 @@ var app = (function() {
     } 
   }
 
-  function deleteNode(url, node, nodeType) {
-    var txt = 'Delete node?\n' + '"' + node  + '"';
+  function deleteNode(url, node, nodeType, deleteString, deletedString) {
+    var txt = deleteString + ' ?:\n "' + node + '"';
     var r = confirm(txt);
     var xhr = new XMLHttpRequest();
     var back;
@@ -641,7 +665,7 @@ var app = (function() {
       xhr.open('POST', encodeURI(url));
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          alert("Nodes deleted: " + JSON.parse(xhr.responseText).nodes_deleted);
+          alert(deletedString + ': ' + JSON.parse(xhr.responseText).nodes_deleted);
           window.location.href = back;
         }
       };

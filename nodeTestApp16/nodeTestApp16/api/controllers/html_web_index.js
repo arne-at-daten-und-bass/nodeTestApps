@@ -1,13 +1,13 @@
 'use strict';
 
-var htmlWebIndex = function (localesUtils) {
+var htmlWebIndex = function (api, localesUtils) {
   var that = this;
 
   var locale = localesUtils.getDefaultLocale(); 
   var locales = localesUtils.setLocales('noLocale', locale, that.strings);
 
   var includeStats = false;
-  var resultType = ["row"];
+  var resultType = ['row'];
 
   return {
     index: function(req, res) {
@@ -26,9 +26,9 @@ var htmlWebIndex = function (localesUtils) {
 
       var query = that.movieQueries.search.readLatestFourNodes;
       var params = {};
-      var callback = that.callbacks.nodes(res, 'movies', 'index', locales, 'index_locale').web;
+      var callback = that.callbacks.graph(res, api.paths['/{locale}'].get.operationId, that.type, locales, 'index', '', 'movies').web;
 
-      resultType = ["graph"];
+      resultType = ['graph'];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },

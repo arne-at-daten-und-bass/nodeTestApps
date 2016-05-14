@@ -3,7 +3,7 @@ include ../mixins/updateForms.jade
 
 block content
   .flixnet-top-section.mdl-typography--text-center
-    .flixnet-logo-font.flixnet-sub-slogan #{slogan}:
+    .flixnet-logo-font.flixnet-sub-slogan #{localesStrings['Update Relationship']}:
     .flixnet-logo-font.mdl-typography--font-light
       br
       +relationshipUpdateForm
@@ -14,6 +14,3 @@ block content
       document.getElementById('property').value = '#{relationship.row[3]}';
 
       app.content.htmlElements.toggleViewUpdateRelationship(!{JSON.stringify(relationship)});
-
-
-

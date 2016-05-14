@@ -1,6 +1,9 @@
 'use strict';
 
 var localesStringsPersons = {
+  'id': {
+    'en': {'EN': 'localesStringsPersons'},
+  },
   '<Instance>': {
     'de': {'DE': 'Person'},
     'en': {'EN': 'Person'},
@@ -55,7 +58,7 @@ var localesStringsPersons = {
     'es': {'ES': 'Resultados por todas las personas como año de nacimiento desconocido'},
     'fr': {'FR': 'Résultats pour tous les persons avec année de naissance inconnue'},
   }, 
-  'Results for all movies': {
+  'Results for all persons': {
     'de': {'DE': 'Ergebnisse für alle Personen'},
     'en': {'EN': 'Results for all persons'},
     'es': {'ES': 'Resultados por todas las personas'},
@@ -91,11 +94,17 @@ var localesStringsPersons = {
     'es': {'ES': 'Borrar Persona (y todas sus conexiónes)'},
     'fr': {'FR': 'Effacer Person (et toutes ses relations)'},
   },
-  '<Instance> Deleted':  {
-    'de': {'DE': 'Person gelöscht'},
-    'en': {'EN': 'Person Deleted'},
-    'es': {'ES': 'Persona borrada'},
-    'fr': {'FR': 'Person effacé'},
+  'Persons deleted':  {
+    'de': {'DE': 'Gelöschte Personen'},
+    'en': {'EN': 'Persons deleted'},
+    'es': {'ES': 'Personas borradas'},
+    'fr': {'FR': 'Persons effacés'},
+  },
+  'Also interesting? Top actor colleagues of':  {
+    'de': {'DE': 'Auch interessant? Top Schauspielerkollegen von'},
+    'en': {'EN': 'Also interesting? Top actor colleagues of'},
+    'es': {'ES': '¿Interesante también? Top colegas actores de'},
+    'fr': {'FR': 'Intéressant aussi? Top collègues acteur de '},
   },
 };
 

@@ -3,7 +3,9 @@ include mixins/readBulkMdlCards.jade
 
 block content
   .flixnet-top-section.mdl-typography--text-center
-    .flixnet-logo-font.flixnet-slogan fliXnet
+    a.flixnet-logo-font.flixnet-slogan fli
+      a.flixnet-logo-font.flixnet-slogan(style='color: #8bc34a;') X
+        a.flixnet-logo-font.flixnet-slogan net
     .flixnet-logo-font.flixnet-sub-slogan - #{localesMenu['The Movie Graph']} -
   .flixnet-graph-section
     div(class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')#graph
@@ -17,7 +19,8 @@ block content
     .mdl-typography--title.mdl-typography--font-thin Modelling, storing and retrieving data as a graph.
     br
     .mdl-typography--display-1.mdl-typography--font-thin An HTML Web App and a JSON only API - Both Based on 
-      a.flixnet-link.mdl-typography--font-thin(href='https://nodejs.org' target='_blank') NodeJS
+      a.flixnet-link.mdl-typography--font-thin(href='https://nodejs.org' target='_blank') NodeJS 
+      a.flixnet-link.mdl-typography--font-thin(href='http://expressjs.com' target='_blank') Express
     .mdl-typography--title.mdl-typography--font-thin Full-Stack JavaScript.
     br
     .mdl-typography--display-1.mdl-typography--font-thin Automatic API Validation and Documentation - via 
@@ -40,13 +43,13 @@ block content
     .mdl-typography--title.mdl-typography--font-thin Optimized for cross-device Use.
   .flixnet-mdl-card-section
     br
-    .mdl-typography--display-1-color-contrast Key Facts:
+    .mdl-typography--display-1-color-contrast #{localesMenu['The Movie Graph']} #{localesStrings['(... as Tables ;-> )']}:
     .android-card-container.mdl-grid
       .mdl-cell.mdl-cell--4-col.mdl-shadow--3dp
         .mdl-card__media
           i(id='nodesTableBodyI').flixnet-material-icons.material-icons linear_scale
         .mdl-card__title
-          h4(id='nodesTableBodyH').mdl-card__title-text Relationships
+          h4(id='nodesTableBodyH').mdl-card__title-text #{localesStrings['Relationships']}
         .mdl-card__supporting-text(style='overflow: auto;')   
           table(style='width: 100%;').mdl-data-table.mdl-js-data-table
             thead
@@ -55,17 +58,15 @@ block content
                 th Total Amount
             tbody(id='nodesTableBody')
           a.android-link.mdl-button.mdl-js-button 
-            i.material-icons(id='nodesTableBodyBackward') navigate_before
-            i.material-icons(id='nodesTableBodyForward') navigate_next
+            i.material-icons(id='nodesTableBodyBackward' onclick = "app.content.htmlElements.paginateNodesTableBodyBothWays(\'#{localesStrings['Relationships']}\', \'#{localesStrings['Nodes']}\')") navigate_before
+            i.material-icons(id='nodesTableBodyForward' onclick = "app.content.htmlElements.paginateNodesTableBodyBothWays(\'#{localesStrings['Relationships']}\', \'#{localesStrings['Nodes']}\')") navigate_next
         script.
-          app.content.htmlElements.createNodesTableBody('nodesTableBody', '/api/graph/read/typeAmountRelationships'); 
-          document.getElementById('nodesTableBodyBackward').onclick = app.content.htmlElements.paginateNodesTableBodyBothWays;
-          document.getElementById('nodesTableBodyForward').onclick = app.content.htmlElements.paginateNodesTableBodyBothWays;
+          app.content.htmlElements.createNodesTableBody('nodesTableBody', '/api/graph/search/typeAmountRelationships'); 
       .mdl-cell.mdl-cell--8-col.mdl-shadow--3dp
         .mdl-card__media
           i.flixnet-material-icons.material-icons blur_on
         .mdl-card__title
-          h4.mdl-card__title-text Graph
+          h4.mdl-card__title-text #{localesStrings['<Instance>']}
         .mdl-card__supporting-text(style='overflow: auto;')        
           table(style='width: 100%;').mdl-data-table.mdl-js-data-table
             thead
@@ -76,18 +77,16 @@ block content
                 th.mdl-data-table__cell--non-numeric Target
             tbody(id='graphTableBody')
           a.android-link.mdl-button.mdl-js-button
-            i.material-icons(id='graphTableBodyBackward') navigate_before
-            i.material-icons(id='graphTableBodyForward') navigate_next
+            i.material-icons(id='graphTableBodyBackward' onclick = 'app.content.htmlElements.paginateGraphTableBodyBackward()') navigate_before
+            i.material-icons(id='graphTableBodyForward' onclick = 'app.content.htmlElements.paginateGraphTableBodyForward()') navigate_next
           script.
-            app.content.htmlElements.createGraphTableBody('graphTableBody', '/api/graph/read/RelationshipsPagination?pagination=');
-            document.getElementById('graphTableBodyBackward').onclick = app.content.htmlElements.paginateGraphTableBodyBackward;
-            document.getElementById('graphTableBodyForward').onclick = app.content.htmlElements.paginateGraphTableBodyForward;
+            app.content.htmlElements.createGraphTableBody('graphTableBody', '/api/graph/relationships/readAllPaginated?pagination=');
   .flixnet-mdl-card-section
-    .mdl-typography--display-1-color-contrast Latest Movies:
+    .mdl-typography--display-1-color-contrast #{localesStrings['Latest Movies']}:
     +moviesReadBulkMdlCards
   .flixnet-mdl-card-section
-    .mdl-typography--display-1-color-contrast Top Actors:
+    .mdl-typography--display-1-color-contrast #{localesStrings['Top Actors']}:
     .android-card-container.mdl-grid#TopActorsMdlCardsDiv
       div(id='spinnerTopActorsMdlCardsDiv' class='mdl-spinner mdl-js-spinner is-active flixnet-spinner')
       script.
-        app.content.htmlElements.createNodesMdlCardsDiv('TopActorsMdlCardsDiv', '/api/graph/read/top/persons?relationshipName=ACTED_IN', '#{locale}', '#{localesCommands["Show"]}');
+        app.content.htmlElements.createNodesMdlCardsDiv('TopActorsMdlCardsDiv', '/api/graph/search/topPersons?relationshipName=ACTED_IN', '#{locale}', '#{localesCommands["Show"]}');

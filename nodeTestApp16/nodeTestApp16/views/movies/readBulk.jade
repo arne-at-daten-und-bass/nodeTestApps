@@ -20,5 +20,5 @@ block content
     br
     +moviesReadBulkMdlCards
   script.
-    app.content.htmlElements.createOptionsReadBulk(document.getElementById('released'), '/api/movies/read/distinct?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
+    app.content.htmlElements.createOptionsReadBulk(document.getElementById('released'), '/api/movies/search/distinctProperties?propertyName=released', '#{inQueryParam}', "#{localesStrings['Unknown']}");
 

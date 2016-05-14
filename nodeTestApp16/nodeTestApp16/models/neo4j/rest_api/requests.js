@@ -14,7 +14,7 @@ var requests = {
           ca: process.env.DB_HTTPS_CA,
           json: { statements: [{ statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats }] }, 
         }, function(err, res) {
-           // console.log(JSON.stringify(err));
+           console.log(JSON.stringify(err));
             callback(err, res.body);
           }
         );

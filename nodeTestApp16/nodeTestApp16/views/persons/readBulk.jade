@@ -16,9 +16,9 @@ block content
       else
         .flixnet-logo-font.mdl-typography--font-light.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons of']} #{inQueryParam} : 
     else
-      .flixnet-logo-font.mdl-typography--font-light.mdl-typography--display-1-color-contrast #{localesStrings['Results for all movies']}:
+      .flixnet-logo-font.mdl-typography--font-light.mdl-typography--display-1-color-contrast #{localesStrings['Results for all persons']}:
     br   
     +personsReadBulkMdlCards
   script.
-    app.content.htmlElements.createOptionsReadBulk(document.getElementById('born'), '/api/persons/read/distinct?propertyName=born', '#{inQueryParam}', '#{localesStrings["Unknown"]}');
+    app.content.htmlElements.createOptionsReadBulk(document.getElementById('born'), '/api/persons/search/distinctProperties?propertyName=born', '#{inQueryParam}', '#{localesStrings["Unknown"]}');
   

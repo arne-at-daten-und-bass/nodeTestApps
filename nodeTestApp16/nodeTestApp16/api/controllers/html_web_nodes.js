@@ -1,17 +1,19 @@
 'use strict';
 
 // HTML Web Only:
-var htmlWebNodes = function (localesUtils) {
+var htmlWebNodes = function (api, localesUtils) {
   var that = this;
+
+  var basePath = '/{locale}/' + that.nodeTypePlural;
+  var idPathTemplate = '/{id}';
+
+  var includeStats = false;
+  var resultType = ['row'];
 
   var locale = localesUtils.getDefaultLocale(); 
   var locales = localesUtils.setLocales('noLocale', locale, that.strings);
 
-  var includeStats = false;
-  var resultType = ["row"];
-
   return {
-
     getCreate: function(req, res) {
       locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
       locale = req.swagger.params.locale.value;
@@ -25,9 +27,9 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = that.queries.create;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, '', locales, 'create').web; // @TODO: Move crudType (enum) to app or context config or take function name/object literal property 'create'as parameter  (did not work yet because of missing this due to DI)
-      
-      resultType = ["row"];
+      var callback = that.callbacks.nodes(res, api.paths[basePath + '/create'].post.operationId, that.nodeType, locales).web;
+
+      resultType = ['row'];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }, 
@@ -48,14 +50,14 @@ var htmlWebNodes = function (localesUtils) {
         }
 
         params = that.params.otherParams.set(req.swagger.params);
-        callback = that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk', '', req.swagger.params[that.inQueryParams].value).web;
+        callback = that.callbacks.nodes(res, api.paths[basePath].get.operationId, that.nodeTypePlural, locales, that.templateFolder + '/readBulk', '', req.swagger.params[that.inQueryParams].value).web;
       } else {
         query = that.queries.readBulkNoParam;
         params = {};
-        callback =  that.callbacks.nodes(res, that.nodeTypePlural, that.templateFolder + '/readBulk', locales, 'readBulk').web;
+        callback = that.callbacks.nodes(res, api.paths[basePath].get.operationId, that.nodeTypePlural, locales, that.templateFolder + '/readBulk').web;
       }
 
-      resultType = ["graph"];
+      resultType = ['graph'];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     }, 
@@ -64,11 +66,11 @@ var htmlWebNodes = function (localesUtils) {
       locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
       locale = req.swagger.params.locale.value;
 
-      resultType = ["row"];
+      resultType = ['row'];
 
       var query = that.queries.read;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'read', req.swagger.params.id.value).web;
+      var callback = that.callbacks.nodes(res, api.paths[basePath + '/read' + idPathTemplate].get.operationId, that.nodeType, locales, that.templateFolder + '/read', req.swagger.params.id.value).web;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
@@ -79,9 +81,9 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = that.queries.getUpate;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/update' , locales, 'getUpdate', that.params.otherParams.get().id).web;
+      var callback = that.callbacks.nodes(res, api.paths[basePath + '/update' + idPathTemplate].get.operationId, that.nodeType, locales, that.templateFolder + '/update', that.params.otherParams.get().id).web;
       
-      resultType = ["row"];
+      resultType = ['row'];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
@@ -92,36 +94,22 @@ var htmlWebNodes = function (localesUtils) {
 
       var query = that.queries.update;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/read', locales, 'update', req.swagger.params.id.value).web;
-      
-      resultType = ["row"];
+      var callback = that.callbacks.nodes(res, api.paths[basePath + '/update' + idPathTemplate].post.operationId, that.nodeType, locales, that.templateFolder + '/read', req.swagger.params.id.value).web;
+            
+      resultType = ['row'];
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);
     },
 
-    // getDelete: function(req, res) {
-    //   locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
-    //   locale = req.swagger.params.locale.value;
-
-    //   var query = that.queries.getDelete;
-    //   var params = that.params.otherParams.set(req.swagger.params);
-    //   var callback = that.callbacks.nodes(res, that.nodeType, that.templateFolder + '/delete', locales, 'getDelete', that.params.otherParams.get().id).web;
-      
-      
-    //   resultType = ["row"];
-
-    //   that.requests.cypherRequest(query, params, resultType, includeStats, callback);
-    // },
-
     delete: function(req, res) {
-      // locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
-      // locale = req.swagger.params.locale.value;
+      locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
+      locale = req.swagger.params.locale.value;
 
       var query = that.queries.delete;
       var params = that.params.otherParams.set(req.swagger.params);
-      var callback = that.callbacks.nodes(res, that.nodeType, '', '', 'delete').web;
+      var callback = that.callbacks.nodes(res, api.paths[basePath + '/delete' + idPathTemplate].post.operationId, that.nodeType, locales).web;
       
-      resultType = ["row"];
+      resultType = ['row'];
       includeStats = true;
 
       that.requests.cypherRequest(query, params, resultType, includeStats, callback);

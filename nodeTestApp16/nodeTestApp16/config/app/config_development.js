@@ -15,7 +15,7 @@ var appConfig = {
 
   web: function() {
     var web = {
-      ip: '172.17.0.3', // not used
+      ip: '172.17.0.2', // not used
       http: {
         port: 10010, // not used
       },
@@ -34,7 +34,7 @@ var appConfig = {
 
   db: function() {
     var db = {
-      ip: '172.17.0.4',
+      ip: '172.17.0.3',
       headers: {
         Authorization: process.env.DB_PASS,
         'Content-Type': 'application/json',
