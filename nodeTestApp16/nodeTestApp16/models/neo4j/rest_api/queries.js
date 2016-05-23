@@ -40,7 +40,7 @@ var queries = {
   movies: function() {
     var queries = {
       create: 'CREATE (m:Movie {properties}) RETURN m, id(m)',
-      read: 'MATCH (m) WHERE id(m)={id} RETURN m',
+      read: 'MATCH (m:Movie), WHERE id(m)={id} RETURN m',
       readBulkParam: 'MATCH (m:Movie { released: {released} }) RETURN m',
       readBulkWhereNotExistsParam: 'MATCH (m:Movie) WHERE NOT exists(m.released) RETURN m',
       readBulkNoParam: 'MATCH (m:Movie) RETURN m',
@@ -62,7 +62,7 @@ var queries = {
   persons: function() {
     var queries = {
       create: 'CREATE (p:Person {properties}) RETURN p, id(p)',
-      read: 'MATCH (p) WHERE id(p)={id} RETURN p',
+      read: 'MATCH (p:Person) WHERE id(p)={id} RETURN p',
       readBulkParam: 'MATCH (p:Person { born: {born} }) RETURN p',
       readBulkWhereNotExistsParam: 'MATCH (p:Person) WHERE NOT exists(p.born) RETURN p',
       readBulkNoParam: 'MATCH (p:Person) RETURN p',
