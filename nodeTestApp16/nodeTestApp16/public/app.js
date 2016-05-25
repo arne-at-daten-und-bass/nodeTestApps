@@ -386,7 +386,7 @@ var app = (function() {
                   innnerIMovieMedia.className = 'material-icons';
                   innnerIMovieMedia.style.opacity = '0.46';
                   if (element === 'MovieCast') {
-                    console.log(element);
+                    // console.log(element);
                     innnerIMovieMedia.textContent = 'perm_contact_calendar \v'; 
                   } else {
                     innnerIMovieMedia.textContent = 'movie \v';
@@ -437,6 +437,17 @@ var app = (function() {
         });
         document.getElementById(element).removeChild(document.getElementById('spinner'+element));
         document.getElementById(element).appendChild(documentFragment);
+      }
+      else if (xhr.readyState === 4 && xhr.status === 400 || xhr.status === 404 || xhr.status === 500) {
+
+        if (element === 'TopColleagues') {
+          document.getElementById('OptionalTopColleagues').style.display = 'none';
+          document.getElementById('spinnerTopColleagues').style.display = 'none';  
+        }
+        if (element === 'MovieCast') {
+          document.getElementById('OptionalMovieCast').style.display = 'none';
+          document.getElementById('spinnerMovieCast').style.display = 'none';  
+        }
       }
     };
     xhr.send();
@@ -597,15 +608,17 @@ var app = (function() {
 
   function createOptionsReadBulk(element, url, inQueryParam, unknownString) {
     var xhr = new XMLHttpRequest();
-    var distincValues; 
+    var distinctValues; 
 
     xhr.open('GET', encodeURI(url));
 
     xhr.onreadystatechange = function() {
-      if (xhr.readyState==4 && xhr.status==200) {
-        distincValues = JSON.parse(xhr.responseText).data[0].row[0];
-        distincValues.unshift(-1);            
-        element.appendChild(optionCreator(distincValues, unknownString, false));
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        distinctValues = JSON.parse(xhr.responseText).data[0].row[0];
+        if(JSON.parse(xhr.responseText).data[0].row[1] === false) {
+          distinctValues.unshift(-1); 
+        }        
+        element.appendChild(optionCreator(distinctValues, unknownString, false));
 
         if(inQueryParam.length > 0) {
           element.value = inQueryParam;
@@ -630,7 +643,7 @@ var app = (function() {
 
     var back;
     if (urlValidator(document.referrer)){
-      console.log(urlValidator(document.referrer));
+      // console.log(urlValidator(document.referrer));
       back = document.referrer;
     } else {
       back = window.location.origin + '/' + nodeType;
@@ -641,6 +654,14 @@ var app = (function() {
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           alert(deletedString + ": " + JSON.parse(xhr.responseText).relationship_deleted);
+          window.location.href = back;
+        }
+        else if (xhr.readyState === 4 && xhr.status === 404) {
+          alert('The relationship to delete no longer exists');
+          window.location.href = back;
+        }
+        else if (xhr.readyState === 4 && xhr.status === 400 || xhr.status === 500) {
+          alert('Something went wrong');
           window.location.href = back;
         }
       };
@@ -666,6 +687,14 @@ var app = (function() {
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           alert(deletedString + ': ' + JSON.parse(xhr.responseText).nodes_deleted);
+          window.location.href = back;
+        }
+        else if (xhr.readyState === 4 && xhr.status === 404) {
+          alert('The node to delete no longer exists');
+          window.location.href = back;
+        }
+        else if (xhr.readyState === 4 && xhr.status === 400 || xhr.status === 500) {
+          alert('Something went wrong');
           window.location.href = back;
         }
       };

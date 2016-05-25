@@ -30,7 +30,7 @@ var htmlWebGraph = function (api, localesUtils) {
 
         var resultType = ['row'];
 
-        that.requests.cypherBatch(query0, params0, query1, params1, callback);
+        that.requests.web.cypherBatch(query0, params0, query1, params1, callback, locales, res);
       },
 
       create: function(req, res) {
@@ -60,7 +60,7 @@ var htmlWebGraph = function (api, localesUtils) {
 
         resultType = ['row', 'graph'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback); 
+        that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
       },
 
       read: function(req, res) {
@@ -73,7 +73,7 @@ var htmlWebGraph = function (api, localesUtils) {
 
         var resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
       },
 
       getUpdate: function(req, res) {
@@ -86,7 +86,7 @@ var htmlWebGraph = function (api, localesUtils) {
 
         var resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
       },
 
       update: function(req, res) {
@@ -113,7 +113,7 @@ var htmlWebGraph = function (api, localesUtils) {
 
         var resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
       },
 
       delete: function(req, res) {
@@ -127,7 +127,7 @@ var htmlWebGraph = function (api, localesUtils) {
         var resultType = ['row'];
         includeStats = true;
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
       },
     },
     search: {
@@ -143,7 +143,7 @@ var htmlWebGraph = function (api, localesUtils) {
 
         resultType = ['graph'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
       },
     },
   }; 

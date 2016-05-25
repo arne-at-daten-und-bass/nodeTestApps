@@ -40,7 +40,7 @@ var queries = {
   movies: function() {
     var queries = {
       create: 'CREATE (m:Movie {properties}) RETURN m, id(m)',
-      read: 'MATCH (m:Movie), WHERE id(m)={id} RETURN m',
+      read: 'MATCH (m:Movie) WHERE id(m)={id} RETURN m',
       readBulkParam: 'MATCH (m:Movie { released: {released} }) RETURN m',
       readBulkWhereNotExistsParam: 'MATCH (m:Movie) WHERE NOT exists(m.released) RETURN m',
       readBulkNoParam: 'MATCH (m:Movie) RETURN m',
@@ -49,7 +49,7 @@ var queries = {
       delete: 'MATCH (m) WHERE id(m)={id} DETACH DELETE m',
       search: {
         distinctProperties: {
-          released: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released)',
+          released: 'MATCH (m:Movie) WITH m ORDER BY m.released RETURN collect(DISTINCT m.released), all (x in collect(m) WHERE exists(x.released))',
         },
         readLatestFourNodes: 'MATCH (m:Movie) RETURN m ORDER BY m.released DESC LIMIT 4',
         readAllTitles: 'MATCH (m:Movie) RETURN m.title, id(m) ORDER BY m.title',
@@ -71,7 +71,7 @@ var queries = {
       delete: 'MATCH (p) WHERE id(p)={id} DETACH DELETE p',
       search: {
         distinctProperties: {
-          born: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born)',
+          born: 'MATCH (p:Person) WITH p ORDER BY p.born RETURN collect(DISTINCT p.born), all (x in collect(p) WHERE exists(x.born))',
         },
         readAllNames: 'MATCH (p:Person) RETURN p.name, id(p) ORDER BY p.name',
       }

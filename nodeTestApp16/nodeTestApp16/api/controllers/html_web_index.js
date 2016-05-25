@@ -30,7 +30,7 @@ var htmlWebIndex = function (api, localesUtils) {
 
       resultType = ['graph'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     },
 
     about: function(req, res) {

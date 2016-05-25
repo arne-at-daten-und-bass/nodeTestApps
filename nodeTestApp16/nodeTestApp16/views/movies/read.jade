@@ -17,7 +17,7 @@ block content
     script(src='//d3js.org/d3.v3.min.js' charset='utf-8')
     script.
       app.visualization.visualizeGraphDiv('/api/graph/readGraphOfMovie/#{id}', '#{locale}', 960, 300, -5000);
-  .flixnet-text-section
+  .flixnet-text-section#OptionalMovieCast
     .flixnet-logo-font-white.mdl-typography--display-1.mdl-typography--font-thin #{localesStrings['All actors of']} #{movie.title}:
   .flixnet-mdl-card-section
     .android-card-container.mdl-grid#MovieCast

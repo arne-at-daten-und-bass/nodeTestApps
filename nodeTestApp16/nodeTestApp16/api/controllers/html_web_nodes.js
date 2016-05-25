@@ -31,7 +31,7 @@ var htmlWebNodes = function (api, localesUtils) {
 
       resultType = ['row'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     }, 
 
     readBulk: function(req, res) {
@@ -59,7 +59,7 @@ var htmlWebNodes = function (api, localesUtils) {
 
       resultType = ['graph'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     }, 
 
     read: function(req, res) {
@@ -72,7 +72,7 @@ var htmlWebNodes = function (api, localesUtils) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, api.paths[basePath + '/read' + idPathTemplate].get.operationId, that.nodeType, locales, that.templateFolder + '/read', req.swagger.params.id.value).web;
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     },
 
     getUpdate: function(req, res) {
@@ -85,7 +85,7 @@ var htmlWebNodes = function (api, localesUtils) {
       
       resultType = ['row'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     },
 
     update: function(req, res) {
@@ -98,7 +98,7 @@ var htmlWebNodes = function (api, localesUtils) {
             
       resultType = ['row'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     },
 
     delete: function(req, res) {
@@ -112,7 +112,7 @@ var htmlWebNodes = function (api, localesUtils) {
       resultType = ['row'];
       includeStats = true;
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.web.cypherRequest(query, params, resultType, includeStats, callback, locales, res);
     }
   };
 };

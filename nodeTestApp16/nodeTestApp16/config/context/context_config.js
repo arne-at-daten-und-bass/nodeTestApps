@@ -8,6 +8,7 @@ var dbConfig = require('../app').db();
 var queries = require('../../models/neo4j/rest_api/queries');
 var params = require('../../models/neo4j/rest_api/params');
 var callbacks = require('../../models/neo4j/rest_api/callbacks')(api);
+var errorHandlers = require('../../models/neo4j/rest_api/errorHandlers');
 var requests = require('../../models/neo4j/rest_api/requests');
 
 var localesMenuApp = require('../locales/locales_menu_app');
@@ -37,7 +38,7 @@ var context = {
     queries: queries.graph(),
     params: params,
     callbacks: callbacks,
-    requests: requests.db(dbConfig),
+    requests: requests.db(dbConfig, errorHandlers),
     movieQueries: queries.movies(),
     personQueries: queries.persons(),
     relationships: {
@@ -61,7 +62,7 @@ var context = {
       queries: queries.movies(),
       params: params,
       callbacks: callbacks,
-      requests: requests.db(dbConfig),
+      requests: requests.db(dbConfig, errorHandlers),
       search: {
         type: 'search',
       },
@@ -78,7 +79,7 @@ var context = {
       queries: queries.persons(),
       params: params,
       callbacks: callbacks,
-      requests: requests.db(dbConfig),
+      requests: requests.db(dbConfig, errorHandlers),
       search: {
         type: 'search',
       },

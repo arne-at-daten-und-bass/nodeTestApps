@@ -20,7 +20,7 @@ var jsonApiGraph = function (api) {
 
       resultType = ['graph'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
 
     readGraphOfMovie: function(req, res) {
@@ -30,7 +30,7 @@ var jsonApiGraph = function (api) {
 
       resultType = ['graph'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
 
     readGraphOfPerson: function(req, res) {
@@ -40,7 +40,7 @@ var jsonApiGraph = function (api) {
 
       resultType = ['graph'];
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
     relationships:{
       readAllPaginated: function(req, res) {
@@ -50,7 +50,7 @@ var jsonApiGraph = function (api) {
 
         resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
     },
     search: {
@@ -61,7 +61,7 @@ var jsonApiGraph = function (api) {
 
         resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
 
       typeAmountRelationships: function(req, res) {
@@ -71,7 +71,7 @@ var jsonApiGraph = function (api) {
 
         resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
 
       topPersons: function(req, res) {
@@ -83,7 +83,7 @@ var jsonApiGraph = function (api) {
 
         resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
 
       movieCast: function(req, res) {
@@ -93,7 +93,7 @@ var jsonApiGraph = function (api) {
 
         resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
 
       topColleagues: function(req, res) {
@@ -105,7 +105,7 @@ var jsonApiGraph = function (api) {
 
         resultType = ['row'];
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
     },
   };

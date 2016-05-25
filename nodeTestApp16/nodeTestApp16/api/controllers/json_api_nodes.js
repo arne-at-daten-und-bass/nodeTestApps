@@ -17,7 +17,7 @@ var jsonApiNodes = function (api) {
       var params = that.params.inBodyParams.set(req.swagger.params, that.nodeType);
       var callback = that.callbacks.nodes(res, api.paths[basePath].post.operationId, that.nodeType).api;
       
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
 
     readBulk: function(req, res) {
@@ -25,7 +25,7 @@ var jsonApiNodes = function (api) {
       var params = (req.swagger.params[that.inQueryParams].value) ? that.params.otherParams.set(req.swagger.params) : {} ;
       var callback = that.callbacks.nodes(res, api.paths[basePath].get.operationId, that.nodeTypePlural).api;
       
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     }, 
 
     read: function(req, res) {
@@ -33,7 +33,7 @@ var jsonApiNodes = function (api) {
       var params = that.params.otherParams.set(req.swagger.params);
       var callback = that.callbacks.nodes(res, api.paths[basePath + idPathTemplate].get.operationId, that.nodeType).api;
       
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
 
     update: function(req, res) {
@@ -41,7 +41,7 @@ var jsonApiNodes = function (api) {
       var params = that.params.inBodyParams.set(req.swagger.params, that.nodeType);
       var callback = that.callbacks.nodes(res, api.paths[basePath + idPathTemplate].put.operationId, that.nodeType).api;
       
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
 
     delete: function(req, res) {
@@ -51,7 +51,7 @@ var jsonApiNodes = function (api) {
 
       includeStats = true;
 
-      that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+      that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
     },
     search: {
       distinctProperties: function(req, res) {
@@ -61,7 +61,7 @@ var jsonApiNodes = function (api) {
         var params = {};
         var callback = that.callbacks.nodes(res, api.paths[basePathSearch + '/distinctProperties'].get.operationId, that.nodeType).search.api;
 
-        that.requests.cypherRequest(query, params, resultType, includeStats, callback);
+        that.requests.api.cypherRequest(query, params, resultType, includeStats, callback, res);
       },
     },
   };
