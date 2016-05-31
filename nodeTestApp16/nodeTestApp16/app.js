@@ -1,12 +1,13 @@
 'use strict';
 
 var express = require('express');
-var router = express.Router();
+// var router = express.Router();
 var path = require('path');
 var https = require('https');
+
+var helmet = require('helmet');
 var forceSSL = require('express-force-ssl');
 var app_config = require('./config/app');
-
 var options = {key: process.env.WEB_HTTPS_KEY, cert: process.env.WEB_HTTPS_CRT};
 
 var SwaggerExpress = require('swagger-express-mw');
@@ -17,7 +18,10 @@ var app = require('express')();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.set('trust proxy', 'loopback, 172.17.0.4');
+
 // Force to use ONLY HTTPS
+app.use(helmet());
 app.set("forceSSLOptions", { httpsPort: app_config.web().https.port });
 app.use(forceSSL);
 
