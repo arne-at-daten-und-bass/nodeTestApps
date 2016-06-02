@@ -4,6 +4,7 @@
 .DS_Store
 **/.DS_Store
 **/data/
+**/data_old/
 **/arangoDBFoxx/
 **/.sublime-project
 **/.sublime-workspace
