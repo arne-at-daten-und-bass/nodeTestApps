@@ -8,3 +8,4 @@
 **/arangoDBFoxx/
 **/.sublime-project
 **/.sublime-workspace
+*/**/config_production.js
