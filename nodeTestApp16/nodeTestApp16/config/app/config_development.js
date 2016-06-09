@@ -6,8 +6,9 @@ var appConfig = {
   environment: function() {
     var environment = {
       name: 'development',
-      directory: '../../../nodeTestAppsEnvironments/nodeTestApp16Env',
-      file:'/development/nodeApp16Env.json',
+      // directory: '../../../nodeTestAppsEnvironments/nodeTestApp16Env/development/',
+      directory: process.env.APP_CONFIG_ENV_DIR,
+      file:'nodeTestApp16Env.json',
     };
 
     return environment;
@@ -15,17 +16,14 @@ var appConfig = {
 
   web: function() {
     var web = {
-      ip: '172.17.0.2', // not used
+      ip: '192.168.3.11', // not used
       http: {
         port: 10010, // not used
       },
-      test: {
-        port: 10011,
-      },
       https: {
         port: 10011,
-        key: '/development/ssl/node/node-key.pem',
-        crt: '/development/ssl/node/node-pub.pem',
+        key: 'pki/nodejs/nodejs_nodeTestApp16Dev_key.pem',
+        crt: 'pki/nodejs/nodejs_nodeTestApp16Dev_pub.pem',
       },
     };
 
@@ -34,7 +32,7 @@ var appConfig = {
 
   db: function() {
     var db = {
-      ip: '172.17.0.3',
+      ip: '192.168.3.12',
       headers: {
         Authorization: process.env.DB_PASS,
         'Content-Type': 'application/json',
@@ -45,7 +43,7 @@ var appConfig = {
       },
       https: {
         port: 7473,
-        ca: '/development/ssl/ca-root.pem',
+        ca: 'pki/ca_nodeTestApp16Dev_root.pem',
 
         // url: 'https://' + db.ip  + ':' + db.https.port + '/db/data/transaction/commit'
       },
@@ -73,17 +71,21 @@ var appConfig = {
   var env = {};
   var file = appConfig.environment().directory + appConfig.environment().file;
 
-  if (fs.existsSync(file)) {
+  // if (fs.existsSync(file)) 
+  try {
     env = fs.readFileSync(file, 'UTF-8');
     env = JSON.parse(env);
     Object.keys(env).forEach(function(key) {
       process.env[key] = env[key];
     });
-  } else {
-    console.log('No .env-file found.');
+  } catch (err) {
+    if(err.code === 'ENOENT') {
+      console.log('No .env-file found.');
+    } else {
+      console.log('Reading .env-file failed.');
+    }
+    throw (err);
   }
-
-  // return env;
 })();
 
 (function loadOtherFiles () {
