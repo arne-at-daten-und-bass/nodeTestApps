@@ -213,7 +213,8 @@ var app = (function() {
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        elementArray = JSON.parse(xhr.responseText).data;
+        // elementArray = JSON.parse(xhr.responseText).data;
+        elementArray = parseJsonTryer(xhr.responseText).data;
         elementArray.forEach(function (element, index) {
 
           var outerTr = document.createElement('tr');
@@ -278,7 +279,8 @@ var app = (function() {
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        elementArray = JSON.parse(xhr.responseText).data;
+        // elementArray = JSON.parse(xhr.responseText).data;
+        elementArray = parseJsonTryer(xhr.responseText).data;
         elementArray.forEach(function (element, index) {
 
           var outerTr = document.createElement('tr');
@@ -352,7 +354,8 @@ var app = (function() {
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        elementArray = JSON.parse(xhr.responseText).data;
+        // elementArray = JSON.parse(xhr.responseText).data;
+        elementArray = parseJsonTryer(xhr.responseText).data;
         
         if (element === 'TopColleagues' && elementArray.length === 0) {
           document.getElementById('OptionalTopColleagues').style.display = 'none';
@@ -608,14 +611,18 @@ var app = (function() {
 
   function createOptionsReadBulk(element, url, inQueryParam, unknownString) {
     var xhr = new XMLHttpRequest();
-    var distinctValues; 
+    var distinctValues;
+    var isPropertyInAll;
 
     xhr.open('GET', encodeURI(url));
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        distinctValues = JSON.parse(xhr.responseText).data[0].row[0];
-        if(JSON.parse(xhr.responseText).data[0].row[1] === false) {
+        // distinctValues = JSON.parse(xhr.responseText).data[0].row[0];
+        distinctValues = parseJsonTryer(xhr.responseText).data[0].row[0];;
+        isPropertyInAll = parseJsonTryer(xhr.responseText).data[0].row[1];
+        // if(JSON.parse(xhr.responseText).data[0].row[1] === false) {
+        if(isPropertyInAll === false) {
           distinctValues.unshift(-1); 
         }        
         element.appendChild(optionCreator(distinctValues, unknownString, false));
@@ -653,7 +660,8 @@ var app = (function() {
       xhr.open('POST', encodeURI(url));
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          alert(deletedString + ": " + JSON.parse(xhr.responseText).relationship_deleted);
+          // alert(deletedString + ": " + JSON.parse(xhr.responseText).relationship_deleted);
+          alert(deletedString + ": " + parseJsonTryer(xhr.responseText).relationship_deleted);
           window.location.href = back;
         }
         else if (xhr.readyState === 4 && xhr.status === 404) {
@@ -686,7 +694,8 @@ var app = (function() {
       xhr.open('POST', encodeURI(url));
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          alert(deletedString + ': ' + JSON.parse(xhr.responseText).nodes_deleted);
+          // alert(deletedString + ': ' + JSON.parse(xhr.responseText).nodes_deleted);
+          alert(deletedString + ': ' + parseJsonTryer(xhr.responseText).nodes_deleted);
           window.location.href = back;
         }
         else if (xhr.readyState === 4 && xhr.status === 404) {
@@ -700,6 +709,19 @@ var app = (function() {
       };
       xhr.send();
     } 
+  }
+
+  function parseJsonTryer(jsonToParse) {
+    var result;
+
+    try {
+      result = JSON.parse(jsonToParse);
+    } catch(err) {
+      alert(err.message);
+    }
+    console.log(typeof result);
+
+    return result;
   }
 
   return {
