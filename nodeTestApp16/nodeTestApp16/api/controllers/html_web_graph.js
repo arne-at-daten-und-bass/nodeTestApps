@@ -132,8 +132,6 @@ var htmlWebGraph = function (api, localesUtils) {
     },
     search: {
       searchField: function(req, res) {
-
-        console.log(basePathSearch);
         locales = localesUtils.setLocales(locale, req.swagger.params.locale.value, that.strings); 
         locale = req.swagger.params.locale.value;
 
