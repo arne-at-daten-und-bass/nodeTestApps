@@ -43,6 +43,16 @@ var params = {
             } else {
               paramsToNeo[key] = parseInt(paramsFromSwagger[key].value);
             }
+            if (key === 'property' ) { 
+              if (paramsFromSwagger.type.value === 'ACTED_IN') {
+                var arrStrings = [];
+                arrStrings = paramsFromSwagger[key].value.trim().replace(/ /g, '').split(',')
+                paramsToNeo[key] = arrStrings;
+              }
+              if (paramsFromSwagger.type.value === 'REVIEWED') {
+                paramsToNeo[key] = paramsFromSwagger[key].value
+              }
+            }
           } else if (paramsFromSwagger[key].schema.in === 'query' ) {
             if (key === 'searchParam') {
               if (isNaN(paramsFromSwagger[key].value)) {
@@ -61,7 +71,7 @@ var params = {
           }
         }
       });
-
+      console.log(paramsToNeo);
       return paramsToNeo;
     },
 

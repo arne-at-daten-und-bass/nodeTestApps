@@ -7,7 +7,7 @@ var queries = {
       readGraphOfMovie: 'MATCH path = (n:Movie)-[r]-(m) WHERE id(n)={id} RETURN path',
       readGraphOfPerson: 'MATCH path = (n:Person)-[r]-(m) WHERE id(n)={id} RETURN path',
       relationships:{
-        create_ACTED_IN: 'MATCH (p:Person), (m:Movie) WHERE id(p)={source} AND id(m)={target} CREATE (p)-[r:ACTED_IN {roles: [{property}] }]->(m) RETURN p.name, type(r), id(r), m.title, r.roles',
+        create_ACTED_IN: 'MATCH (p:Person), (m:Movie) WHERE id(p)={source} AND id(m)={target} CREATE (p)-[r:ACTED_IN {roles: {property} }]->(m) RETURN p.name, type(r), id(r), m.title, r.roles',
         create_DIRECTED: 'MATCH (p:Person), (m:Movie) WHERE id(p)={source} AND id(m)={target} CREATE (p)-[r:DIRECTED]->(m) RETURN p.name, type(r), id(r), m.title',
         create_FOLLOWS: 'MATCH (p:Person), (p2:Person) WHERE id(p)={source} AND id(p2)={target} CREATE (p)-[r:FOLLOWS]->(p2) RETURN p.name, type(r), id(r), p2.name', 
         create_PRODUCED: 'MATCH (p:Person), (m:Movie) WHERE id(p)={source} AND id(m)={target} CREATE (p)-[r:PRODUCED]->(m) RETURN p.name, type(r), id(r), m.title',

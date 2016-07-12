@@ -10,7 +10,7 @@ var appConfig = {
       directory: process.env.APP_CONFIG_ENV_DIR,
       file:'nodeTestApp16Env.json',
     };
-
+    console.log(process.env.APP_CONFIG_ENV_DIR);
     return environment;
   },
 
@@ -22,8 +22,11 @@ var appConfig = {
       },
       https: {
         port: 10011,
-        key: 'pki/nodejs/nodejs_nodeTestApp16Dev_key.pem',
-        crt: 'pki/nodejs/nodejs_nodeTestApp16Dev_pub.pem',
+        // key: '/etc/ssl/dev01s03_wb01_key.pem',
+        key: process.env.APP_CONFIG_ENV_DIR + 'dev01s03_wb01_key.pem',
+        crt: process.env.APP_CONFIG_ENV_DIR + 'dev01s03_wb01_pub.pem',
+        // key: 'pki/nodejs/nodejs_nodeTestApp16Dev_key.pem',
+        // crt: 'pki/nodejs/nodejs_nodeTestApp16Dev_pub.pem',
       },
     };
 
@@ -43,8 +46,9 @@ var appConfig = {
       },
       https: {
         port: 7473,
-        ca: 'pki/ca_nodeTestApp16Dev_root.pem',
-
+        // ca: '/etc/ssl/ca_nodeTestApp16Dev_root.pem',
+        // ca: 'pki/ca_nodeTestApp16Dev_root.pem',
+        ca: process.env.APP_CONFIG_ENV_DIR + 'ca_nodeApp01Dev_root.pem',
         // url: 'https://' + db.ip  + ':' + db.https.port + '/db/data/transaction/commit'
       },
       request: {

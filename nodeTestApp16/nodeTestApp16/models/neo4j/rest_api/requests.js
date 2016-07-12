@@ -46,7 +46,7 @@ var requests = {
             json: { statements: [{ statement: query, parameters: params, resultDataContents: resultType, includeStats: includeStats }] }, 
           }, function(err, res) {
               var nodesDeleted = 0
-             console.log(JSON.stringify(err));
+             // console.log(JSON.stringify(err));
              if(res.body.results[0] && res.body.results[0].stats) {
               nodesDeleted = res.body.results[0].stats.nodes_deleted;
              }
@@ -88,7 +88,7 @@ var requests = {
             }, ], 
           }, function(err, res) {
               // console.log(err);
-              // console.log(JSON.stringify(res));
+              console.log(JSON.stringify(res));
 
               if (err) {
                 errorHandlers.web.nodejsError(err, locales, resNodejs);

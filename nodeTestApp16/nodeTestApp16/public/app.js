@@ -468,10 +468,10 @@ var app = (function() {
     property = document.getElementById('property');
     updateLink = document.getElementById('updateLink'); 
 
-    switch(value.row[1]) {
+    switch(value[1]) {
       case 'ACTED_IN':
         property.style.display = 'block';
-        property.textContent = 'as ' + value.row[3] + '.';
+        property.textContent = 'as ' + value[3] + '.';
         break;
       case 'DIRECTED':
       case 'PRODUCED':
@@ -486,7 +486,7 @@ var app = (function() {
       //   break;
       case 'REVIEWED':
         property.style.display = 'block';
-        property.textContent = 'Summary: ' + value.row[3] + '.';
+        property.textContent = 'Summary: ' + value[3] + '.';
         break;
       // case 'WROTE':
       //   property.style.display = 'none';
@@ -504,11 +504,13 @@ var app = (function() {
   function toggleViewUpdateRelationship(value) {
     asLabel = document.getElementById('asLabel')
     property = document.getElementById('property');
+    asHint = document.getElementById('asHint');
 
-    switch(value.row[1]) {
+    switch(value[1]) {
       case 'ACTED_IN':
         property.style.display = 'inline';
         asLabel.style.display = 'inline';
+        asHint.style.display = 'inline';
         break;
       case 'DIRECTED':
       case 'PRODUCED':
@@ -516,6 +518,7 @@ var app = (function() {
       case 'FOLLOWS':
         property.style.display = 'none';
         asLabel.style.display = 'none';
+        asHint.style.display = 'none';
         break;
       // case 'PRODUCED':
       //   property.style.display = 'none';
@@ -524,7 +527,7 @@ var app = (function() {
       case 'REVIEWED':
         property.style.display = 'inline';
         asLabel.textContent = ' Summary: '
-        property.textContent = value.row[4];
+        property.textContent = value[4];
         break;
       // case 'WROTE':
       //   property.style.display = 'none';
@@ -561,6 +564,8 @@ var app = (function() {
         target.options.length = 0;
         target.appendChild(movieList.cloneNode(true));
         asLabel.style.display = 'inline';
+        asHint.style.display = 'inline';
+        property.required = true;
         property.placeholder = 'Role (in English)';
         property.size=20;
         property.style.display = 'inline';
@@ -572,16 +577,20 @@ var app = (function() {
         target.options.length = 0;
         target.appendChild(movieList.cloneNode(true));
         asLabel.style.display = 'none';
+        asHint.style.display = 'none';
         if(valueText === 'REVIEWED') {
           property.placeholder='Summary (in English)';
           property.size=50;
           property.style.display = 'inline';
+          property.required = true;
         } else {
           property.style.display = 'none';
+          property.required = false;
         }  
         break;
       case 'FOLLOWS':
         asLabel.style.display = 'none';
+        asHint.style.display = 'none';
         property.style.display = 'none';
         target.options.length = 0;
         target.appendChild(personsList.cloneNode(true));
