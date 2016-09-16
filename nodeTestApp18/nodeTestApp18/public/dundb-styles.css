@@ -1,0 +1,512 @@
+
+body::before {
+  /*background-image: url('images/Barcelona_mies_v_d_rohe_pavillon_weltausstellung1999_03.jpg');*/
+  background-size: cover;
+  background-attachment: fixed;
+  content: '';
+  will-change: transform;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  position: fixed;
+}
+
+
+@media (max-width: 479px) {
+  #flixnet-pic1, #cypherme-pic1 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/HOME_page_1.png'); 
+    border-bottom: 1px solid rgb(244,67,54);
+  }
+
+  #flixnet-pic2 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ALL_MOVIES_page.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+  }
+
+  #cypherme-pic2 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ALL_MOVIES_page.png'); 
+    border-bottom: 1px solid rgb(244,67,54);
+  }
+
+  #flixnet-pic3, #cypherme-pic3 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/HOME_page_2.png'); 
+    border-bottom: 1px solid rgb(76,175,80);
+  }
+
+  #flixnet-pic4 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ONE_PERSON_page.png'); 
+    border-bottom: 1px solid rgb(76,175,80);
+  }
+
+  #flixnet-pic5 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/SITE_MENU.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+  }
+
+  #flixnet-pic6 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/SEARCH_Results_page.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+  }
+}
+@media (min-width: 480px) and (max-width: 839px) {
+  .dundb-site__posts__flixnet-pics:hover, /*.dundb-site__posts__flixnet-pics:focus, .dundb-site__posts__flixnet-pics:active,*/
+  .dundb-site__posts__cypherme-pics:hover /*, .dundb-site__posts__cypherme-pics:focus, .dundb-site__posts__cypherme-pics:active*/
+/*  .dundb-site__posts__flixnet-pics:focus:hover:active,
+  .dundb-site__posts__cypherme-pics:focus:hover:active*/ {
+    z-index: 10;
+    position: relative !important;
+  }
+
+  .dundb-site__posts__flixnet-pics:hover .mdl-card__media, /*.dundb-site__posts__flixnet-pics:focus .mdl-card__media, .dundb-site__posts__flixnet-pics:active .mdl-card__media,*/
+  .dundb-site__posts__cypherme-pics:hover .mdl-card__media  /*, .dundb-site__posts__cypherme-pics:focus .mdl-card__media, .dundb-site__posts__cypherme-pics:active .mdl-card__media*/  
+/*  .dundb-site__posts__flixnet-pics:focus:hover:active .mdl-card__media,
+  .dundb-site__posts__cypherme-pics:focus:hover:active .mdl-card__media*/ {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 1px; 
+  }
+
+  #flixnet-pic1, #cypherme-pic1 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/HOME_page_1.png'); 
+    border-bottom: 1px solid rgb(244,67,54);
+    transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+  }
+
+  #flixnet-pic2 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ALL_MOVIES_page.png'); 
+    border-bottom: 1px solid rgb(244,67,54);
+    transform-origin: right top;
+    -ms-transform-origin: right top;
+    -webkit-transform-origin: right top;
+  }
+
+  #cypherme-pic2 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ALL_MOVIES_page.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+    transform-origin: right top;
+    -ms-transform-origin: right top;
+    -webkit-transform-origin: right top;
+  }
+
+  #flixnet-pic3, #cypherme-pic3 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/HOME_page_2.png'); 
+    border-bottom: 1px solid rgb(76,175,80);
+    transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+  }
+
+  #flixnet-pic4 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ONE_PERSON_page.png'); 
+    border-bottom: 1px solid rgb(76,175,80);
+    transform-origin: right top;
+    -ms-transform-origin: right top;
+    -webkit-transform-origin: right top;
+  }
+
+  #flixnet-pic5 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/SITE_MENU.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+    transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+  }
+
+  #flixnet-pic6 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/SEARCH_Results_page.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+    transform-origin: right top;
+    -ms-transform-origin: right top;
+    -webkit-transform-origin: right top;
+  }
+}
+
+@media (min-width: 840px) {
+  .dundb-site__posts__flixnet-pics:hover, /*.dundb-site__posts__flixnet-pics:focus, .dundb-site__posts__flixnet-pics:active,*/
+  .dundb-site__posts__cypherme-pics:hover /*, .dundb-site__posts__cypherme-pics:focus, .dundb-site__posts__cypherme-pics:active*/ 
+/*  .dundb-site__posts__flixnet-pics:focus:hover:active,
+  .dundb-site__posts__cypherme-pics:focus:hover:active */{
+    z-index: 10;
+    position: relative !important;
+  }
+
+  .dundb-site__posts__flixnet-pics:hover .mdl-card__media, /*.dundb-site__posts__flixnet-pics:focus .mdl-card__media, .dundb-site__posts__flixnet-pics:active .mdl-card__media,*/
+  .dundb-site__posts__cypherme-pics:hover .mdl-card__media /*, .dundb-site__posts__cypherme-pics:focus .mdl-card__media, .dundb-site__posts__cypherme-pics:active .mdl-card__media  */  
+/*  .dundb-site__posts__flixnet-pics:focus:hover:active .mdl-card__media, 
+  .dundb-site__posts__cypherme-pics:focus:hover:active .mdl-card__media */{
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 1px; 
+  }
+
+  #flixnet-pic1, #cypherme-pic1 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/HOME_page_1.png'); 
+    border-bottom: 1px solid rgb(244,67,54);
+    transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+  }
+
+  #flixnet-pic2, #cypherme-pic2 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/HOME_page_2.png'); 
+    border-bottom: 1px solid rgb(76,175,80);
+    transform-origin: center top;
+    -ms-transform-origin: center top;
+    -webkit-transform-origin: center top;
+  }
+
+  #flixnet-pic3, #cypherme-pic3 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/SITE_MENU.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+    transform-origin: right top;
+    -ms-transform-origin: right top;
+    -webkit-transform-origin: right top;
+  }
+
+  #flixnet-pic4 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ALL_MOVIES_page.png'); 
+    border-bottom: 1px solid rgb(244,67,54);
+    transform-origin: left top;
+    -ms-transform-origin: left top;
+    -webkit-transform-origin: left top;
+  }
+
+  #flixnet-pic5 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/ONE_PERSON_page.png'); 
+    border-bottom: 1px solid rgb(76,175,80);
+    transform-origin: center top;
+    -ms-transform-origin: center top;
+    -webkit-transform-origin: center top;
+  }
+
+  #flixnet-pic6 {
+    background-image: url('https://raw.githubusercontent.com/daten-und-bass/fliXnet/master/public/images/screenshots/SEARCH_Results_page.png'); 
+    border-bottom: 1px solid rgb(3, 169, 244);
+    transform-origin: right top;
+    -ms-transform-origin: right top;
+    -webkit-transform-origin: right top;
+  }  
+}
+
+@media (max-width: 512px)  and (-webkit-min-device-pixel-ratio: 1.5),
+       (max-width: 512px)  and (min-resolution: 1.5dppx),
+       (max-width: 1024px) and (-webkit-max-device-pixel-ratio: 1.5),
+       (max-width: 1024px) and (max-resolution: 1.5dppx) {
+  body::before {
+    background-image: url('images/Barcelona_mies_v_d_rohe_pavillon_weltausstellung1999_03.jpg');
+  }
+}
+
+@media (min-width: 513px)  and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 1.5),
+       (min-width: 513px)  and (max-width: 1024px) and (min-resolution: 1.5dppx),
+       (min-width: 1025px) and (max-width: 2048px) and (-webkit-max-device-pixel-ratio: 1.5),
+       (min-width: 1025px) and (max-width: 2048px) and (max-resolution: 1.5dppx)  {
+  body::before {
+    background-image: url('images/Barcelona_mies_v_d_rohe_pavillon_weltausstellung1999_03_2048.jpg');
+  }
+}
+
+@media (min-width: 1025px) and (-webkit-min-device-pixel-ratio: 1.5),
+       (min-width: 1025px) and (min-resolution: 1.5dppx),
+       (min-width: 2049px) and (-webkit-max-device-pixel-ratio: 1.5),
+       (min-width: 2049px) and (max-resolution: 1.5dppx) {
+  body::before {
+    background-image: url('images/Barcelona_mies_v_d_rohe_pavillon_weltausstellung1999_03_2880.jpg');
+  }
+}
+body .dundb-site {
+  /*font-family: 'Roboto', 'Helvetica', sans-serif;*/
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Casper */
+.dundb-site__header {
+    text-align: center;
+    overflow: visible;
+    background-color: white;
+}
+
+
+.dundb-site__header .mdl-menu .mdl-navigation__link {
+  color: #757575;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.dundb-site__title {
+    margin: 10px 0 0px 0;
+    font-size: 3rem;
+    letter-spacing: -2px;
+    font-weight: 900;
+    font-family: "Open Sans", sans-serif;
+    color: #fff;
+}
+
+.dundb-site__description {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    font-weight: 400;
+    /*font-family: "Merriweather", serif;*/
+    font-family: "Courier New", Courier, monospace !important;
+    letter-spacing: 0.01rem;
+    /*color: rgba(255,255,255,0.8);*/
+    color: white;
+}
+
+.mdl-layout .mdl-layout__content {
+  padding-top: 84px;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dundb-site .mdl-card {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  /*min-height: 360px;*/
+  background-color: transparent;
+  overflow: visible !important;
+}
+
+.dundb-site .mdl-card__media {
+  box-sizing: border-box;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  /*padding: 24px;*/
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  cursor: pointer;
+}
+
+.dundb-site .dundb-site__posts {
+  max-width: 1000px;
+  padding: 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__dundb {
+  font-family: "Courier New", Courier, monospace !important;
+  padding-bottom: 36px;
+  display: block; 
+  text-align: center; 
+  color: white;
+  border-top: 1px solid rgb(255, 235, 59);
+}
+
+.dundb-site__posts__dundb-ruler {
+  border-top: 1px solid rgb(255, 235, 59);
+  padding-top: 0px; 
+  padding-bottom: 0px; 
+  margin-top: 0px; 
+  margin-bottom: 48px;
+}
+
+.dundb-site__posts__ruler {
+  border-top: 1px solid rgb(255, 235, 59);
+  padding-top: 0px; 
+  padding-bottom: 0px; 
+  margin-top: 48px !important; 
+  margin-bottom: 0px;
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__nosql .mdl-card__media {
+  color: white;
+  display: block; 
+  text-align: center; 
+  border-bottom: 1px solid rgb(244,67,54);
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__nodejs .mdl-card__media {
+  background-image: url('/images/nodejs.png'); 
+  border-bottom: 1px solid rgb(76,175,80);
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__docker .mdl-card__media {
+  background-image: url('/images/docker.png'); 
+  border-bottom: 1px solid rgb(3, 169, 244);
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__blog, 
+.dundb-site .dundb-site__posts .dundb-site__posts__flixnet,
+.dundb-site .dundb-site__posts .dundb-site__posts__cypherme,
+.dundb-site .dundb-site__posts .dundb-site__posts__research {
+  margin-top: 48px; 
+  background-color: white; 
+  opacity:0.9;
+  overflow: visible;
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__blog .mdl-card__title p,
+.dundb-site .dundb-site__posts .dundb-site__posts__flixnet .mdl-card__title p,
+.dundb-site .dundb-site__posts .dundb-site__posts__cypherme .mdl-card__title p,
+.dundb-site .dundb-site__posts .dundb-site__posts__research .mdl-card__title p {
+  padding-left: 16px;
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__blog h4, 
+.dundb-site .dundb-site__posts .dundb-site__posts__flixnet h4,
+.dundb-site .dundb-site__posts .dundb-site__posts__cypherme h4,
+.dundb-site .dundb-site__posts .dundb-site__posts__research h4 {
+  padding-bottom: 0;
+  margin-bottom: 0px;
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__blog p, 
+.dundb-site .dundb-site__posts .dundb-site__posts__flixnet p,
+.dundb-site .dundb-site__posts .dundb-site__posts__cypherme p,
+.dundb-site .dundb-site__posts .dundb-site__posts__research p {
+  padding-bottom: 0;
+  margin-bottom: 0px;
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__blog button:hover, 
+.dundb-site .dundb-site__posts .dundb-site__posts__flixnet button:hover,
+.dundb-site .dundb-site__posts .dundb-site__posts__cypherme button:hover, 
+.dundb-site .dundb-site__posts .dundb-site__posts__research button:hover {
+  background-color: rgba(255, 235, 59, 0.7); 
+}
+
+.dundb-site .dundb-site__posts .dundb-site__posts__blog .mdl-card__supporting-text, 
+.dundb-site .dundb-site__posts .dundb-site__posts__flixnet .mdl-card__supporting-text,
+.dundb-site .dundb-site__posts .dundb-site__posts__cypherme .mdl-card__supporting-text,
+.dundb-site .dundb-site__posts .dundb-site__posts__research .mdl-card__supporting-text {
+  width: auto;
+}
+
+#nosql-text, #nodejs-text, #docker-text, #blog-text, #flixnet-text, #cypherme-text, #research-text {
+  box-sizing: border-box;
+  padding: 16px;
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#blog-button, #flixnet-button, #cypherme-button, #research-button {
+  position: relative !important;
+  float: right;
+} 
+
+
+#flixnet-pics-switch, #cypherme-pics-switch {
+  float: right; 
+  padding-right:30px;
+}
+
+
+.dundb-site__posts__flixnet-pics .mdl-card__media,
+.dundb-site__posts__cypherme-pics .mdl-card__media {
+  position: relative !important;
+  transition: all .25s ease-out;
+  -webkit-transition: all .25s ease-out;
+  -ms-transition: all .25s ease-out;
+}
+
+
+#flixnet-pic1, #cypherme-pic1 {
+
+}
+
+#flixnet-pic2, #cypherme-pic2 {
+
+}
+
+#flixnet-pic3, #cypherme-pic3 {
+
+}
+
+#flixnet-pic4 {
+
+}
+
+#flixnet-pic5 {
+
+}
+
+#flixnet-pic6 {
+
+}
+
+/* MDL Header */
+
+.social-btn {
+  background-position: center;
+  /*background-size: contain;*/
+  background-repeat: no-repeat;
+  background-color: transparent;
+  margin: 0 16px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.46;
+  /*border-radius: 2px;*/
+}
+.social-btn__twitter {
+  opacity: 0.95;
+  background-image: url('https://www.gstatic.com/images/icons/material/system/2x/post_twitter_white_24dp.png');
+}
+.social-btn__github {
+  /*opacity: 0.6;*/
+  background-color: transparent !important;
+  background-image: url('/images/github.png');
+}
+
+}
+.social-btn__share {
+  color: rgba(0, 0, 0, 0.54);
+  background: white !important;
+}
+
+.dundb-footer {
+  margin-top: 80px;
+  height: 120px;
+  padding: 40px;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
+  background-color: white !important;
+  box-sizing: border-box;
+}
+
+.dundb-card--border {
+  border-bottom: 1px solid rgb(255, 235, 59);
+}
+
+
+
+
+
+

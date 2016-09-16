@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>daten&amp;bass</title>
+  <meta name="description" content="data needs bass." />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <link rel="stylesheet" type="text/css" href="/dundb-styles.css"/>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.yellow-lime.min.css">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+</head>
+<body>
+  <div class="dundb-site mdl-layout mdl-js-layout is-upgraded">
+    <header class="dundb-site__header mdl-layout__header mdl-layout__header--transparent mdl-color-text--white">
+      <div class="mdl-layout__header-row" >
+        <div class="mdl-layout-spacer"></div>
+        <div>
+          <nav class="mdl-navigation ">
+            <a class="mdl-navigation__link mdl-color-text--white" href="">blog</a>
+          </nav>
+        </div>
+        <div style="position: relative !important;">
+          <button id="language" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons" role="presentation">language</i>
+            <span class="visuallyhidden">show language</span>
+          </button>
+          <ul for="language" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect">
+            <li class="mdl-menu__item"><a class="mdl-navigation__link">Deutsch</a></li>
+            <li class="mdl-menu__item"><a class="mdl-navigation__link">English</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h1 class="dundb-site__title">daten&amp;bass</h1>
+        <h2 class="dundb-site__description">data needs bass.</h2>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="dundb-site__posts mdl-grid">
+        <div class="dundb-site__posts__dundb mdl-cell mdl-cell--12-col">
+          <div>
+            <p style="font-size: 1.5rem !important; padding-top: 12px;">{ data (#nosql) | full-stack javascript (#nodejs) | container (#docker) } <br> &amp;&amp; <br> { cloud | legal | privacy }</p>
+          </div>
+        </div>
+        <div class="dundb-site__posts__nosql mdl-card mdl-cell mdl-cell--4-col">
+          <div class="mdl-card__media">
+            <p style="padding-top: 48px; font-size: 70px;"><strong>#n</strong><strong class="mdl-color-text--red">o</strong><strong>sql</strong></p>
+            <p style="color:white; font-size: 16px; margin-top:10%;">data with bas<span class="mdl-color-text--red">[</span>s<span class="mdl-color-text--red">|</span>e<span class="mdl-color-text--red">]</span>.</p> 
+          </div>
+          <div id="nosql-text" class="mdl-card__supporting-text" style="color:white;">
+            <div><strong>data</strong></div>
+            <div> <span>d&amp;b expertise</span></div>
+          </div>
+        </div>
+        <div class="dundb-site__posts__nodejs mdl-card mdl-cell mdl-cell--4-col">
+          <div class="mdl-card__media"></div>
+          <div id="nodejs-text"  class="mdl-card__supporting-text" style="color:white;">
+            <div><strong>development</strong></div>
+            <div><span>d&amp;b expertise</span></div>
+          </div>
+        </div>
+        <div class="dundb-site__posts__docker mdl-card mdl-cell mdl-cell--4-col">
+          <div class="mdl-card__media">
+          </div>
+          <div id="docker-text" class="mdl-card__supporting-text" style="color:white;">
+            <div><strong>deployment</strong></div>
+            <div><span>d&amp;b expertise</span></div>
+          </div>
+        </div>
+{{!--         <div class="dundb-site__posts__dundb mdl-cell mdl-cell--12-col" style="padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 48px;"></div> --}}
+        <div class="dundb-site__posts__dundb-ruler mdl-cell mdl-cell--12-col"></div>
+        <div class="dundb-site__posts__blog mdl-card mdl-cell mdl-cell--12-col mdl-shadow--4dp">
+          <div class="mdl-card__title mdl-color-text--grey-600 dundb-card--border">
+            <img src="/images/3e721a9277d17a2c8d1a2d60da7fba4c.png" width="64" height="64" style="padding-right: 8px;">
+            <h3 style="color:rgb(118,118,119);">blog</h3>
+            <p class="mdl-card__subtitle-text">our latest blog news</p>
+          </div>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600 dundb-card--border">
+            <h4>First Blog Post <span class="mdl-color-text--red">Neo4j</span> Title</h4>
+            <p>Modelling, storing and retrieving data as a <span class="mdl-color-text--red">graph</span>. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph.</p>
+            <h4>Second Blog Post <span class="mdl-color-text--green">JavaScript</span> Longer Title</h4>
+            <p>Full-Stack JavaScript. Full-Stack <span class="mdl-color-text--green">JavaScript</span> . Full-Stack JavaScript.Full-Stack JavaScript.</p>
+            <h4>Third Title <span class="mdl-color-text--red">NoSQL</span></h4>
+            <p>REST. SOA. Microservices. <span class="mdl-color-text--red">ArangoDB</span> Microservices.</p>
+            <div id="blog-button" >
+              <ul class="mdl-menu mdl-js-menu mdl-menu--top-right mdl-js-ripple-effect" for="blog-more">
+                <li class="mdl-menu__item">blog</li>
+              </ul>
+              <button id="blog-more" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">more_vert</i>
+                <span class="visuallyhidden">show more</span>
+              </button>
+            </div>
+          </div>
+          <div id="blog-text" class="mdl-card__supporting-text">
+            <div><strong>news</strong></div>
+            <div><span>d&amp;b blog</span></div>
+          </div>
+        </div>
+{{!--         <div class="dundb-site__posts__dundb mdl-cell mdl-cell--12-col" style="padding-top: 0px; padding-bottom: 0px; margin-top: 48px; margin-bottom: 0px;"></div> --}}
+        <div class="dundb-site__posts__ruler mdl-cell mdl-cell--12-col"></div>
+        <div id="flixnet_post" class="dundb-site__posts__flixnet mdl-card mdl-cell mdl-cell--12-col mdl-shadow--4dp">
+          <div class="mdl-card__title mdl-color-text--grey-600 dundb-card--border">
+            <h3><span style="color:rgb(118,118,119);">fli</span><span style="color:rgb(135,195,74);">X</span><span style="color:rgb(118,118,119);">net</span></h3>
+            <p class="mdl-card__subtitle-text">our containerized node.js sample implementation of neo4j's graph movie database via openAPI (swagger)</p>
+          </div>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600 dundb-card--border">
+            <h4>Sample Implementation - The Famous <span class="mdl-color-text--red">Neo4j</span>  Movie Database</h4>
+            <p>Modelling, storing and retrieving data as a graph.</p>
+            <h4>An HTML Web App and a JSON only API - Both Based on <span class="mdl-color-text--green">NodeJS Express</span></h4>
+            <p>Full-Stack JavaScript.</p>
+            <h4>Automatic API Validation and Documentation - via <span class="mdl-color-text--green">OpenAPI</span> (Swagger)</h4>
+            <p>REST. SOA. Microservices. Or whatever you might call it.</p>
+            <h4>Besides D3JS - Plain <span class="mdl-color-text--green">JavaScript</span> without Framework Dependencies</h4>
+            <p>HTML templating server-side via Jade.</p>
+            <p>XHR for client-side calls to the JSON API.</p>
+            <h4>Using <span class="mdl-color-text--green">Material Design Lite</span> Layouts and Components</h4>
+            <p>Optimized for cross-device Use.</p>
+            <h4>Easy, Reproducible Deployment - Based on <span class="mdl-color-text--light-blue">Docker</span></h4>
+            <p>Containerized Infrastructure.</p>        
+            <div id="flixnet-button" >
+              <ul class="mdl-menu mdl-js-menu mdl-menu--top-right mdl-js-ripple-effect" for="flixnet-more">
+                <li class="mdl-menu__item">demo</li>
+                <li class="mdl-menu__item">source</li>
+                <li class="mdl-menu__item">info</li>
+              </ul>
+              <button id="flixnet-more" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">more_vert</i>
+                <span class="visuallyhidden">show more</span>
+              </button>
+            </div>
+          </div>
+          <div id="flixnet-text" class="mdl-card__supporting-text">
+            <div><strong>fliXnet</strong></div>
+            <div><span>d&amp;b apps</span></div>
+          </div>
+        </div>
+        <div class="dundb-site__posts__flixnet-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="flixnet-pic1" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__flixnet-pics mdl-card  mdl-cell mdl-cell--4-col">
+          <div id="flixnet-pic2" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__flixnet-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="flixnet-pic3" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__flixnet-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="flixnet-pic4" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__flixnet-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="flixnet-pic5" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__flixnet-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="flixnet-pic6" class="mdl-card__media"></div>
+        </div>
+        <div id="flixnet-pics_actions" class="mdl-card__actions dundb-card--border mdl-cell mdl-cell--12-col">
+          <div></div>
+          <div id="flixnet-pics-switch">
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" title="enlarge pics" for="flixnet-pics_switch">
+              <input type="checkbox" id="flixnet-pics_switch" class="mdl-switch__input" checked>
+            </label>
+          </div>
+        </div>
+        <div id="cypherme_post" class="dundb-site__posts__cypherme mdl-card mdl-cell mdl-cell--12-col mdl-shadow--4dp">
+          <div class="mdl-card__title mdl-color-text--grey-600 dundb-card--border">
+            <h3><span style="color:rgb(118,118,119);">cypher</span><span style="color:rgb(255, 235, 59);">Me</span></h3>
+            <p class="mdl-card__subtitle-text">two-factor paper passwords</p>
+          </div>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600 dundb-card--border">
+            <h4>First <span class="mdl-color-text--green">JavaScript</span></h4>
+            <p>Modelling, storing and retrieving data as a graph.</p>
+            <h4>Second <span class="mdl-color-text--green">JavaScript</span></h4>
+            <p>Full-Stack <span class="mdl-color-text--green">JavaScript</span>. Full-Stack JavaScript. Full-Stack JavaScript.</p>
+            <h4>Third Title <span class="mdl-color-text--light-blue">Deployment</span> </h4>
+            <p>REST. SOA. <span class="mdl-color-text--light-blue">Docker</span>.</p>
+            <div id="cypherme-button" >
+              <ul class="mdl-menu mdl-js-menu mdl-menu--top-right mdl-js-ripple-effect" for="cypherme-more">
+                <li class="mdl-menu__item">demo</li>
+                <li class="mdl-menu__item">source</li>
+                <li class="mdl-menu__item">info</li>
+              </ul>
+              <button id="cypherme-more" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">more_vert</i>
+                <span class="visuallyhidden">show more</span>
+              </button>
+            </div>
+          </div>
+          <div id="cypherme-text" class="mdl-card__supporting-text">
+            <div><strong>cypherMe</strong></div>
+            <div><span>d&amp;b apss</span></div>
+          </div>
+        </div>
+        <div class="dundb-site__posts__cypherme-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="cypherme-pic1" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__cypherme-pics mdl-card  mdl-cell mdl-cell--4-col">
+          <div id="cypherme-pic2" class="mdl-card__media"></div>
+        </div>
+        <div class="dundb-site__posts__cypherme-pics mdl-card mdl-cell mdl-cell--4-col">
+          <div id="cypherme-pic3" class="mdl-card__media"></div>
+        </div>
+        <div id="cypherme-pics_actions" class="mdl-card__actions dundb-card--border mdl-cell mdl-cell--12-col">
+          <div></div>
+          <div id="cypherme-pics-switch">
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" title="enlarge pics" for="cypherme-pics_switch">
+              <input type="checkbox" id="cypherme-pics_switch" class="mdl-switch__input" checked>
+            </label>
+          </div>
+        </div>
+        <div class="dundb-site__posts__research mdl-card mdl-cell mdl-cell--12-col mdl-shadow--4dp">
+          <div class="mdl-card__title mdl-color-text--grey-600 dundb-card--border">
+           <img src="/images/3e721a9277d17a2c8d1a2d60da7fba4c.png" width="64" height="64" style="padding-right:8px">
+            <h3 style="color:rgb(118,118,119);">research</h3>
+            <p class="mdl-card__subtitle-text">our latest research news</p>
+          </div>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600 dundb-card--border">
+            <h4><span class="mdl-color-text--red">NoSQL</span>: First research Post Title</h4>
+            <p>Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph.</p>
+            <h4><span class="mdl-color-text--green">Develpoment</span>: Second research Post Longer Title</h4>
+            <p>Full-Stack JavaScript. Full-Stack JavaScript. Full-Stack JavaScript.Full-Stack JavaScript.</p>
+            <h4><span class="mdl-color-text--light-blue">Docker</span>: Third Title</h4>
+            <p>REST. SOA. Microservices. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph. Modelling, storing and retrieving data as a graph.</p>
+            <div id="research-button">
+              <ul class="mdl-menu mdl-js-menu mdl-menu--top-right mdl-js-ripple-effect" for="research-more">
+                <li class="mdl-menu__item">research</li>
+              </ul>
+              <button id="research-more" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">more_vert</i>
+                <span class="visuallyhidden">show more</span>
+              </button>
+            </div>
+          </div>
+          <div id="research-text" class="mdl-card__supporting-text">
+            <div><strong>data | development | deployment</strong></div>
+            <div><span>d&amp;b research</span></div>
+          </div>
+        </div>
+{{!--         <div class="dundb-site__posts__dundb mdl-cell mdl-cell--12-col" style="padding-top: 0px; padding-bottom: 0px; margin-top: 48px; margin-bottom: 0px;"></div> --}}
+        <div class="dundb-site__posts__ruler mdl-cell mdl-cell--12-col"></div>
+      </div>
+      <footer class="dundb-footer mdl-mini-footer">
+        <div class="mdl-mini-footer--left-section">
+          <div class="mdl-logo" style="color:grey">daten&amp;bass</div>
+          <button class="mdl-mini-footer--social-btn social-btn social-btn__twitter">
+            <span class="visuallyhidden">Twitter</span>
+          </button>
+          <button class="mdl-mini-footer--social-btn social-btn social-btn__github">
+            <span class="visuallyhidden">Github</span>
+          </button>
+        </div>
+        <div class="mdl-mini-footer--right-section">
+          <ul class="mdl-mini-footer__link-list">
+              <li><a href="#">Imprint</a></li>
+              <li><a href="#">Privacy &amp; Terms</a></li>
+              <li><a href="#">Photo</a></li>
+          </ul>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <script type="text/javascript">    
+    Array.prototype.forEach.call(document.querySelectorAll('.dundb-site__posts__flixnet-pics .mdl-card__media'), function(currentElement, currentIndex) {
+        console.log(currentIndex);
+        // var scale = document.getElementById('flixnet_post').offsetWidth / currentElement.offsetWidth;
+        currentElement.onmouseover = function () {
+          if(document.getElementById('flixnet-pics_switch').checked) {
+            var scale = document.getElementById('flixnet_post').offsetWidth / currentElement.offsetWidth;
+            currentElement.style.transform = ("scale(" + scale +")");
+
+            if (window.innerWidth > 480 && window.innerWidth <= 839 && currentIndex > 3) {
+              document.getElementById('flixnet-pics_actions').style.marginBottom = "200px";
+            }
+
+            if (window.innerWidth > 840) {
+              if (currentIndex < 3) {
+                document.getElementById('flixnet-pics_actions').style.marginBottom = "200px";
+              } else {
+                document.getElementById('flixnet-pics_actions').style.marginBottom = "400px";
+              }
+            } 
+          }
+        };
+        currentElement.onmouseout = function () {
+          currentElement.style.transform = ("scale(1)");
+          document.getElementById('flixnet-pics_actions').style.marginBottom = "initial";
+        };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.dundb-site__posts__cypherme-pics .mdl-card__media'), function(currentElement) {
+        var scale = document.getElementById('cypherme_post').offsetWidth / currentElement.offsetWidth;
+        currentElement.onmouseover = function () {
+          if(document.getElementById('cypherme-pics_switch').checked) {
+            var scale = document.getElementById('cypherme_post').offsetWidth / currentElement.offsetWidth;
+            currentElement.style.transform = ("scale(" + scale +")");
+            document.getElementById('cypherme-pics_actions').style.marginBottom = "400px";
+          }
+        };
+        currentElement.onmouseout = function () {
+          currentElement.style.transform = ("scale(1)");
+          document.getElementById('cypherme-pics_actions').style.marginBottom = "initial";
+        };
+    });
+  </script>
+</body>
+</html>
